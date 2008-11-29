@@ -1,0 +1,30 @@
+<h2>Įmonės darbuotojai</h2>
+
+<button onclick="$('new_employee').appear()">Naujo darbuotojo registracija</button>
+
+<div id="new_employee" style="display: none">
+  <%= render :partial => 'add_employee' %>
+</div>
+
+<table>
+  <tr>
+    <th>Vardas, pavardė</th>
+    <th>Skyrius</th>
+    <th>Email</th>
+    <th>Pareigos</th>
+  </tr>
+
+<% for employee in @employees %>
+  <tr>
+    <td><%= link_to h(employee.full_name), employee %></td>
+    <td><%= link_to h(employee.sector.name), employee.sector %></td>
+    <td><%=h employee.email %></td>
+    <td><%=h employee.position.name %></td>
+    <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+    <td><%= link_to 'Destroy', employee, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= will_paginate @employees %>

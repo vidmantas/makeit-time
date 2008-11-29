@@ -1,0 +1,23 @@
+<% title "#{@employee.full_name} įdirbis projekte #{@project.name}" %>
+<table>
+  <tr>
+    <th>Mėnesis</th>
+    <% Activity.all.each do |a| %>
+      <th><%=h a.name %></th>
+    <% end %>
+    <th>Viso (val.)</th>
+  </tr>
+  
+  <% while @start.to_s[0..6] != @end.to_s[0..6] do %>
+    <% total = 0 -%>
+      <tr>
+        <td><%= @start.to_s[0..6] %></td>
+        <% Activity.all.each do |a| %>
+          <% time = @project.employee_hours_by_month_and_activity(@employee, @start, a) -%>
+          <% total += time -%>
+          <td><%= time %></td>
+        <% end %>
+        <td><%= total %></td>
+      </tr>
+  <% @start += 1.month end %>
+</table>

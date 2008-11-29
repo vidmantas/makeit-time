@@ -1,0 +1,45 @@
+<% title "Skyriaus #{@sector.name} ataskaita" %>
+
+<script type="text/javascript">
+  function unselect() {
+    $('duration_half').checked    = false;
+    $('duration_quarter').checked = false;
+    $('duration_month').checked   = false;
+  }
+</script>
+
+<p>
+  <b>Name:</b>
+  <%=h @sector.name %>
+</p>
+
+<p>
+  <b>Manager:</b>
+  <%= link_to h(@sector.manager.full_name), @sector.manager %>
+</p>
+
+<p>
+  <% form_remote_for "time", :url => { :action => 'report', :id => @sector.id }, :update => 'report' do |f| %>
+    Metai: <%= select_tag :year, options_for_select(Project.distinct_years) %> 
+    <%= submit_tag 'Metų ataskaita', :onclick => "unselect()" %><br />
+    <br />
+    <%= radio_button_tag 'duration', 'half' %> Pusmetis <%= select_tag :half, options_for_select(halfs) %><br />
+    <%= radio_button_tag 'duration', 'quarter' %> Ketvirtis <%= select_tag :quarter, options_for_select(quarters) %><br />
+    <%= radio_button_tag 'duration', 'month' %> Mėnesis <%= select_tag :month, options_for_select(months)  %><br />
+
+    <%= submit_tag 'Parodyti' %>
+  <% end %>
+</p>
+
+<div id="report">
+  Pasirinkite ataskaitos laikotarpį.
+</div>
+
+<h3>Darbuotojai</h3>
+
+<% @sector.employees.each do |e| %>
+  <p><%= link_to h(e.full_name), e %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_sector_path(@sector) %> |
+<%= link_to 'Back', sectors_path %>

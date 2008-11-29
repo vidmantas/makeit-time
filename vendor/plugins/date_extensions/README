@@ -1,0 +1,27 @@
+DateExtensions
+==============
+
+Dead simple plugin to extend Date object with following methods:
+ - each_month_until
+
+
+Example
+=======
+
+Date.parse('2008-01-01').each_month_until(Date.parse('2008-08-20')) do |month|
+  puts "Hey, another great month #{month}!"
+end
+
+Outputs:
+
+Hey, another great month 2008-01-01!
+Hey, another great month 2008-02-01!
+Hey, another great month 2008-03-01!
+Hey, another great month 2008-04-01!
+Hey, another great month 2008-05-01!
+Hey, another great month 2008-06-01!
+Hey, another great month 2008-07-01!
+Hey, another great month 2008-08-01!
+
+
+Copyright (c) 2008 Vidmantas Kabošis, released under the MIT license

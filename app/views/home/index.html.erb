@@ -1,0 +1,31 @@
+<h2>Laiko fiksavimas</h2>
+
+<div id="add_task">
+  <%= render :partial => 'tasks/add_task' %>
+</div>
+
+<h2>Fiksuotas laikas</h2>
+
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Projektas</th>
+    <th>Veikla</th>
+    <th>Trukmė</th>
+    <th>Aprašymas</th>
+    <th></th>
+  </tr>
+  
+  <% @tasks.each do |t| %>
+    <tr>
+      <td><%= t.date %></td>
+      <td><%= link_to t.project.name, t.project %></td>
+      <td><%= t.activity.name %></td>
+      <td><%= t.hours_spent %></td>
+      <td><%= t.description %></td>
+      <td><button>Edit</button></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @tasks %>

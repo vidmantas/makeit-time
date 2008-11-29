@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  project_id: 1
+  employee_id: 1
+  activity_id: 1
+  date: 2008-11-24
+  description: MyString
+  hours_spent: 1
+
+two:
+  project_id: 1
+  employee_id: 1
+  activity_id: 1
+  date: 2008-11-24
+  description: MyString
+  hours_spent: 1

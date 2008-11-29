@@ -1,0 +1,23 @@
+<h1>Skyriai</h1>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Skyrius</th>
+    <th>Manager</th>
+  </tr>
+
+<% for sector in @sectors %>
+  <tr>
+    <td><%= sector.code %></td>
+    <td><%= link_to h(sector.name), sector %></td>
+    <td><%= link_to h(sector.manager.full_name), sector.manager %></td>
+    <td><%= link_to 'Edit', edit_sector_path(sector) %></td>
+    <td><%= link_to 'Destroy', sector, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New sector', new_sector_path %>

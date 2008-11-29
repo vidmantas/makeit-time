@@ -1,0 +1,53 @@
+<% hours_total = @this_sector + @other_sectors -%>
+
+<p>
+  Įdirbis iš viso: <%= @all_sectors  %>
+</p>
+
+<p>
+  Įdirbis skyriaus projektuose: <%= @this_sector %>
+</p>
+
+<p>
+  Įdirbis kitų skyrių projektuose: <%= @other_sectors %>
+</p>
+
+
+<b>Nedarbingumas:  <%= @theory_hours - hours_total %> val. (<%= ((@theory_hours - hours_total)*100)/@theory_hours %> %)</b>
+
+<h3>Kitų skyrių įdirbis: </h3>
+Viso: <%= @sector.other_sectors_hours(@start_date, @end_date) %>
+
+<% Sector.all_except(@sector.id).each do |sector| %>
+  <p><b><%= sector.name %></b> <%= sector.hours_for_sector(@sector, @start_date, @end_date) %> val.</p>
+<% end -%>
+
+<h3>Projektai</h3>
+<table>
+  <tr>
+    <th>#</th>
+    <th>Projektas</th>
+    <th>Vadovas</th>
+    <th>Skyrius</th>
+    <th>Pradžia</th>
+    <th>Pabaiga</th>
+    <th>Įdirbis</th>
+    <th>Šio sk. darbuotojų</th>
+    <th>Kitų</th>
+  </tr>
+<% @sector.projects(@start_date, @end_date).each do |project| %>
+  <% this_sector_hours   = project.hours(@start_date, @end_date, [@sector.id]) -%>
+  <% other_sectors_hours = project.hours(@start_date, @end_date, Sector.all_except(@sector.id).map(&:id)) %>
+  <tr>
+    <td><%=h project.code %></td>
+    <td><%= link_to h(project.name), project %></td>
+    <td><%= link_to h(project.manager.full_name), project.manager %></td>
+    <td><%= link_to h(project.manager.sector.name), project.manager.sector %></td>
+    <td><%= project.start_date %></td>
+    <td><%= project.end_date %></td>
+    <td><%= this_sector_hours + other_sectors_hours %></td>
+    <td><%= this_sector_hours %></td>
+    <td><%= other_sectors_hours %></td>
+  </tr>
+<% end %>
+</table>

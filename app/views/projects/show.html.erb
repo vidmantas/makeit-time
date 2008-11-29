@@ -1,0 +1,42 @@
+<% title "Projekto #{@project.name} ataskaita" %>
+<p>
+  <b>Projekto kodas:</b>
+  <%= h @project.code %>
+</p>
+
+<p>
+  <b>Manager:</b>
+  <%= link_to h(@project.manager.full_name), @project.manager %> (<%= link_to h(@project.manager.sector.name), @project.manager.sector %>)
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @project.name %>
+</p>
+
+<p>
+  <b>Start date:</b>
+  <%=h @project.start_date %>
+</p>
+
+<p>
+  <b>End date:</b>
+  <%=h @project.end_date %>
+</p>
+
+<p>
+  <%= link_to 'Edit', edit_project_path(@project) %> |
+</p>
+
+<p>
+<%= @graph %>
+</p>
+
+<% @project.sectors.each do |s| %>
+  <h3><%= s.name %> - <%= s.total_hours %> val.</h3>
+  <% s.employees.each do |e| %>
+    <% if @project.employees.include?(e) %>
+      <%= link_to h(e.full_name), e %> - <%= e.hours_spent_in_project(@project.id) %> val.<br />
+    <% end %>
+  <% end %>
+<% end %>

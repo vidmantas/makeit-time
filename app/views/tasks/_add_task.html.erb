@@ -1,0 +1,28 @@
+
+<% remote_form_for @task, :update => 'add_task' do |f| %>
+    <%= f.error_messages %>
+
+  <p>
+    <%= f.label :project_id %><br />
+    <%= f.collection_select :project_id, current_user.projects, :id, :name, {:prompt => true}  %>
+  </p>
+  <p>
+    <%= f.label :activity_id %><br />
+    <%= f.collection_select :activity_id, Activity.all, :id, :name, {:prompt => true} %>
+  </p>
+  <p>
+    <%= f.label :date %><br />
+    <%= f.text_field :date %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :hours_spent %><br />
+    <%= f.text_field :hours_spent %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>

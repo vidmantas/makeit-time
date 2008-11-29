@@ -1,0 +1,33 @@
+<p>
+  <b>Project:</b>
+  <%=h @task.project_id %>
+</p>
+
+<p>
+  <b>Employee:</b>
+  <%=h @task.employee_id %>
+</p>
+
+<p>
+  <b>Activity:</b>
+  <%=h @task.activity_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%=h @task.date %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @task.description %>
+</p>
+
+<p>
+  <b>Hours spent:</b>
+  <%=h @task.hours_spent %>
+</p>
+
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>

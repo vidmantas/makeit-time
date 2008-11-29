@@ -1,0 +1,32 @@
+<% remote_form_for @project, :update => 'add_project' do |f| %>
+  <%= f.error_messages %>
+  
+  <p>
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </p>
+  
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <%= f.label :manager_id %><br />
+    <%= f.collection_select :manager_id, Employee.all_sorted, :id, :name_with_sector %>
+  </p>
+
+  <p>
+    <%= f.label :start_date %><br />
+    <%= f.text_field :start_date %>
+    <%= calendar 'project_start_date' %>
+  </p>
+  <p>
+    <%= f.label :end_date %><br />
+    <%= f.text_field :end_date %>
+    <%= calendar 'project_end_date' %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>

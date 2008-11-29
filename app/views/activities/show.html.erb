@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @activity.name %>
+</p>
+
+<p>
+  <b>Is billable:</b>
+  <%=h @activity.is_billable %>
+</p>
+
+
+<%= link_to 'Edit', edit_activity_path(@activity) %> |
+<%= link_to 'Back', activities_path %>

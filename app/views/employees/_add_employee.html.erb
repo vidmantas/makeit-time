@@ -1,0 +1,29 @@
+<% remote_form_for @employee, :update => 'new_employee' do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name %>
+  </p>
+  <p>
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name %>
+  </p>
+  <p>
+    <%= f.label :sector_id %><br />
+    <%= f.collection_select :sector_id, Sector.all, :id, :name %>
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :position_id %><br />
+    <%= f.collection_select :position_id, Position.all, :id, :name %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<a href="javascript:;" onclick="$('new_employee').toggle()">Uždaryti</a>
