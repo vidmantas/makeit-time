@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081124151054) do
+ActiveRecord::Schema.define(:version => 20081202160606) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -28,8 +28,10 @@ ActiveRecord::Schema.define(:version => 20081124151054) do
     t.integer  "position_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "login",       :limit => 25
   end
 
+  add_index "employees", ["login"], :name => "index_employees_on_login"
   add_index "employees", ["position_id"], :name => "index_employees_on_position_id"
   add_index "employees", ["sector_id"], :name => "index_employees_on_sector_id"
 
@@ -71,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20081124151054) do
     t.datetime "updated_at"
   end
 
+  add_index "sectors", ["code"], :name => "index_sectors_on_code"
   add_index "sectors", ["manager_id"], :name => "index_sectors_on_manager_id"
 
   create_table "tasks", :force => true do |t|

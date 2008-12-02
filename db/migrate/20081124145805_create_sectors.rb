@@ -9,6 +9,7 @@ class CreateSectors < ActiveRecord::Migration
     end
     
     add_index :sectors, 'manager_id'
+    add_index :sectors, 'code'
   end
 
   def self.down

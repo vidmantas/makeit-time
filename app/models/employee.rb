@@ -4,7 +4,7 @@ class Employee < ActiveRecord::Base
   belongs_to :position
   has_and_belongs_to_many :projects
   
-  validates_presence_of :first_name, :last_name, :sector_id, :email, :position_id
+  validates_presence_of :login, :first_name, :sector_id, :position_id
   
   named_scope :all_sorted, :order => 'first_name, last_name'
   

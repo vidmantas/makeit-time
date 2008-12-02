@@ -19,9 +19,10 @@
 </p>
 
 <p>
-  <% form_remote_for "time", :url => { :action => 'report', :id => @sector.id }, :update => 'report' do |f| %>
+  <% form_remote_for "time", :url => { :action => 'report', :id => @sector.id }, 
+    :update => 'report',:loading => "$('loading').show();", :complete => "$('loading').hide();" do |f| %>
     Metai: <%= select_tag :year, options_for_select(Project.distinct_years) %> 
-    <%= submit_tag 'Metų ataskaita', :onclick => "unselect()" %><br />
+    <%= submit_tag 'Metų ataskaita', :onclick => "unselect()" %> <span id="loading" style="display:none"><%= image_tag("loading.gif") %></span><br />
     <br />
     <%= radio_button_tag 'duration', 'half' %> Pusmetis <%= select_tag :half, options_for_select(halfs) %><br />
     <%= radio_button_tag 'duration', 'quarter' %> Ketvirtis <%= select_tag :quarter, options_for_select(quarters) %><br />

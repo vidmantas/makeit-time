@@ -23,7 +23,7 @@ class Sector < ActiveRecord::Base
   end
   
   def hours_spent(start_date, end_date, manager_sector = true)
-    manager_projects_ids = Project.find(:all, :conditions => ['manager_id = ?', self.manager_id]).map(&:id)
+    manager_projects_ids = Project.find(:all, :conditions => ['manager_id IN(?)', self.employees.map(&:id)]).map(&:id)
       
     sql = "
         SELECT 
@@ -41,7 +41,8 @@ class Sector < ActiveRecord::Base
   end
   
   def other_sectors_hours(start_date, end_date)
-    manager_projects_ids = Project.find(:all, :conditions => ['manager_id = ?', self.manager_id]).map(&:id)
+    manager_projects_ids = Project.find(:all, :conditions => ['manager_id IN(?)', self.employees.map(&:id)]).map(&:id)
+    
     sql = "
         SELECT 
           SUM(hours_spent) AS 'total'
@@ -52,7 +53,7 @@ class Sector < ActiveRecord::Base
   end
   
   def hours_for_sector(sector, start_date, end_date)
-    manager_projects_ids = Project.find(:all, :conditions => ['manager_id = ?', sector.manager_id]).map(&:id)
+    manager_projects_ids = Project.find(:all, :conditions => ['manager_id IN(?)', sector.employees.map(&:id)]).map(&:id)
     sql = "
         SELECT 
           SUM(hours_spent) AS 'total'
