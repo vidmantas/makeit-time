@@ -1,0 +1,7 @@
+analysis:
+  name: Analysis
+  is_billable: true
+
+programming:
+  name: Programming
+  is_billable: true

@@ -1,0 +1,30 @@
+jonas:
+  first_name: Jonas
+  last_name: Jonaitis
+  sector: first
+  email: jonas@jonaitis.lt
+  position: manager
+  login: jonas
+
+dede_sigitas:
+  first_name: Dede
+  last_name: Sigitas
+  sector: first
+  email: dede@sigitas.lt
+  position: developer
+  login: sigitas
+
+bronius:
+  first_name: Bronius
+  last_name: Broniauskas
+  sector: second
+  email: bronius@broniauskas.lt
+  position: manager
+  login: bronius
+
+teta_liucija:
+  first_name: Teta
+  last_name: Liucija
+  sector: second
+  position: developer
+  login: liucija

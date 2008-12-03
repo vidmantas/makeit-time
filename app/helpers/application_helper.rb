@@ -18,4 +18,8 @@ module ApplicationHelper
       });
     CODE
   end
+  
+  def loader
+    render :partial => 'shared/loader'
+  end
 end

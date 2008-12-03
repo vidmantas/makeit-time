@@ -1,0 +1,55 @@
+achema_pirma:
+  project: achema
+  employee: jonas
+  activity: analysis
+  date: 2007-01-06
+  hours_spent: 5
+
+achema_antra:
+  project: achema
+  employee: dede_sigitas
+  activity: programming
+  date: 2007-02-15
+  hours_spent: 8
+
+achema_trecia:
+  project: achema
+  employee: bronius
+  activity: programming
+  date: 2007-02-01
+  hours_spent: 6
+
+achema_ketvirta:
+  project: achema
+  employee: jonas
+  activity: programming
+  date: 2007-03-01
+  hours_spent: 5
+
+teo_pirma:
+  project: teo
+  employee: bronius
+  activity: analysis
+  date: 2007-02-28
+  hours_spent: 4
+
+teo_antra:
+  project: teo
+  employee: teta_liucija
+  activity: analysis
+  date: 2007-02-28
+  hours_spent: 3
+
+teo_trecia:
+  project: teo
+  employee: jonas
+  activity: programming
+  date: 2007-03-01
+  hours_spent: 7
+
+teo_ketvirta:
+  project: teo
+  employee: jonas
+  activity: programming
+  date: 2007-03-02
+  hours_spent: 130 # possible because yml import to database don't validate data

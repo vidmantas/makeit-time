@@ -1,0 +1,40 @@
+<table>
+  <tr>
+    <th>Laikotarpis/padalinys</th>
+    <% @sectors.each do |sector| %>
+      <th><%= link_to h(sector.name), sector %></th>
+    <% end %>
+    <th>Visa įmonė</th>
+  </tr>
+  
+  <% @periods.each do |period| %>
+    <% sum = { :time_usage => 0, :theor_hours => 0, :overtime => 0 } %>
+    <tr>
+      <td><%= period[:name] %></td>
+      <% @sectors.each do |s| %>
+        <% sum[:time_usage]   += time_usage = s.time_usage_for(period[:starts], period[:ends]).to_i %>
+        <% sum[:theor_hours]  += theor_hours = s.theoretical_hours(period[:starts], period[:ends]).to_i %>
+        <% sum[:overtime]     += overtime = s.overtime(period[:starts], period[:ends]).to_i %>
+        <% inactivity = s.inactivity_percent(period[:starts], period[:ends]) %>
+        <% overtime_percent = s.overtime_percent(period[:starts], period[:ends]) %>
+        <td>
+          Viso: <%= time_usage %> val.<br />
+          Galimas laikas: <%= theor_hours %> val.<br />
+          Viršvalandžiai: <%= overtime %> val.<br />
+          Galėjo būti, bet nebuvo išdirbta: <%= inactivity %> % <br />
+          Viršvalandžių: <%= overtime_percent %> % 
+        </td>
+      <% end %>
+      <td>
+        <% inactivity = (((sum[:theor_hours] - sum[:time_usage]) * 100) / sum[:theor_hours]).round  %> 
+        <% overtime = ((sum[:overtime] * 100)/sum[:theor_hours]).round  %>
+        Viso: <%= sum[:time_usage] %> val.<br />
+        Galimas laikas: <%= sum[:theor_hours] %> val.<br />
+        Viršvalandžiai: <%= sum[:overtime] %><br />
+        Galėjo būti, bet nebuvo išdirbta: <%= inactivity %> % <br />
+        Viršvalandžių: <%= overtime %> %
+      </td>
+    </tr>
+  <% end %>
+  
+</table>

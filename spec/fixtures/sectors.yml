@@ -1,0 +1,9 @@
+first:
+  code: 1
+  name: First sector
+  manager: jonas
+  
+second:
+  code: 2
+  name: Second sector
+  manager: bronius
