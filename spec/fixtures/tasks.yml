@@ -26,6 +26,13 @@ achema_ketvirta:
   date: 2007-03-01
   hours_spent: 5
 
+achema_penkta:
+  project: achema
+  employee: jonas
+  activity: programming
+  date: 2008-01-03
+  hours_spent: 1
+
 teo_pirma:
   project: teo
   employee: bronius
@@ -53,3 +60,60 @@ teo_ketvirta:
   activity: programming
   date: 2007-03-02
   hours_spent: 130 # possible because yml import to database don't validate data
+
+mif_pirma:
+  project: mif
+  employee: bronius
+  activity: programming
+  date: 2007-03-28
+  hours_spent: 8
+
+teo_penkta: 
+  project: teo
+  employee: bronius
+  activity: programming
+  date: 2007-04-29
+  hours_spent: 7
+
+# switches
+mif_antra:
+  project: mif
+  employee: bronius
+  activity: analysis
+  date: 2008-01-01
+  hours_spent: 2
+
+teo_sesta:
+  project: teo
+  employee: bronius
+  activity: analysis
+  date: 2008-01-02
+  hours_spent: 3
+
+mif_trecia:
+  project: mif
+  employee: bronius
+  activity: analysis
+  hours_spent: 2
+  date: 2008-01-03
+
+mif_ketvirta:
+  project: mif
+  employee: teta_liucija
+  activity: analysis
+  date: 2008-01-01
+  hours_spent: 2
+
+teo_septinta:
+  project: teo
+  employee: teta_liucija
+  activity: analysis
+  date: 2008-01-02
+  hours_spent: 3
+
+mif_penkta:
+  project: mif
+  employee: teta_liucija
+  activity: analysis
+  hours_spent: 2
+  date: 2008-01-03

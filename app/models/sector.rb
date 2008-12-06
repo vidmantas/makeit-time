@@ -5,9 +5,9 @@ class Sector < ActiveRecord::Base
   has_many :employees, :order => 'first_name, last_name'
   
   named_scope :all_except, lambda{ |*args| {
-    :conditions => ['id != ?', args.first],
-    :order      => 'name'
-  }}
+      :conditions => ['id != ?', args.first],
+      :order      => 'name'
+    }}
     
   def self.all_for_project(project_id, manager_sector_id)
     Sector.find_by_sql ["SELECT 
@@ -92,8 +92,7 @@ class Sector < ActiveRecord::Base
     sql = "
       SELECT SUM(`hours_spent`) AS `total_hours`
       FROM tasks t
-      INNER JOIN employees e ON e.id = t.employee_id
-      WHERE e.id IN(?) AND t.date >= ? AND t.date <= ?
+      WHERE t.employee_id IN(?) AND t.date >= ? AND t.date <= ?
     "
     Sector.find_by_sql([sql, employees_ids, start_date, end_date]).first.total_hours
   end
@@ -104,12 +103,11 @@ class Sector < ActiveRecord::Base
   end
   
   def overtime(start_date, end_date)
-    sql = 'SELECT e.id, (SUM(hours_spent) - 130) AS overtime, DATE_FORMAT(date, "%Y-%m") AS month
+    sql = 'SELECT t.employee_id, (SUM(hours_spent) - 130) AS overtime, DATE_FORMAT(date, "%Y-%m") AS month
       FROM tasks t
-      INNER JOIN employees e ON e.id = t.employee_id 
-      WHERE e.id IN(?) AND t.date >= ? AND t.date <= ?
-      GROUP BY month, e.id
-      ORDER BY e.id, month'
+      WHERE t.employee_id IN(?) AND t.date >= ? AND t.date <= ?
+      GROUP BY month, t.employee_id
+      ORDER BY t.employee_id, month'
     times = Task.find_by_sql([sql, self.employees.map(&:id), start_date, end_date])
     
     total = 0
@@ -129,5 +127,37 @@ class Sector < ActiveRecord::Base
     @theor_hours    ||= theoretical_hours(start_date, end_date).to_f
     @overtime_hours ||= overtime(start_date, end_date).to_f
     return ((@overtime_hours * 100)/@theor_hours).round
+  end
+  
+  def total_switches(start_date, end_date)
+    total = 0
+    
+    self.employees.each do |employee|
+      ids = Task.find(:all, :select => 'project_id', 
+        :conditions => ['employee_id = ? AND date >= ? AND date <= ?',
+          employee.id, start_date, end_date], :order => 'date').map(&:project_id)
+      
+      #logger.warn "IDS=#{ids.inspect}"
+      
+      # Sugrupuojam ids pagal persijungimus, tarpinius "ignoruojam"
+      # rezultatas: [[1, 2], [2, 1], [1, 3], [3, 4], [4, 8]] ir t.t.
+      switches = []
+      ids.each_with_index do |task, index|
+        switches << [task, ids[index+1]] if task != ids[index+1] 
+      end
+      
+      # Jeigu yra situacija [1, 2], [2, 1] - tai yra persijungimas
+      switches.each_with_index do |switch, index|
+        total += 1 if !switches[index+1].nil? and switch.first == switches[index+1].last
+      end
+    end
+    
+    total
+  end
+  
+  def switches_for_hours(start_date, end_date, hours = 1000)
+    total_switches = total_switches(start_date, end_date)
+    total_hours    = time_usage_for(start_date, end_date).to_f
+    sprintf("%.2f", total_switches/(total_hours/hours))
   end
 end

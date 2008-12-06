@@ -1,0 +1,24 @@
+<h2>„Persijungimo“ ataskaita</h2>
+
+<table>
+  <tr>
+    <th>Laikotarpis/Padalinys</th>
+    <% @sectors.each do |sector| -%>
+      <th><%= link_to h(sector.name), sector %></th>
+    <% end -%>
+    <th>Visa įmonė</th>
+  </tr>
+  
+  <% @periods.reverse.each do |period| -%>
+    <% total_switches = 0.0 %>
+    <tr>
+      <td><%= period[:name] %></td>
+      <% @sectors.each do |sector| -%>
+        <% switches = sector.switches_for_hours(period[:starts], period[:ends]) %>
+        <% total_switches += switches.to_f %>
+        <td><%= switches %></td>
+      <% end -%>
+      <td><%= total_switches %></td>
+    </tr>
+  <% end -%>
+</table>

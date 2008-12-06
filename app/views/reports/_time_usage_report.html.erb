@@ -7,7 +7,7 @@
     <th>Visa įmonė</th>
   </tr>
   
-  <% @periods.each do |period| %>
+  <% @periods.reverse.each do |period| %>
     <% sum = { :time_usage => 0, :theor_hours => 0, :overtime => 0 } %>
     <tr>
       <td><%= period[:name] %></td>
