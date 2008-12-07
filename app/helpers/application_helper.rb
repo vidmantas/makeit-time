@@ -1,7 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def title(page_title)
-    content_for(:title) { " Timetrack | #{page_title}" }
+    content_for(:title) { "MakeIT Timetrack: #{page_title}" }
   end
   
   # TODO
@@ -21,5 +21,13 @@ module ApplicationHelper
   
   def loader
     render :partial => 'shared/loader'
+  end
+end
+
+# FIXME: dunno where is the right place to put this
+class Fixnum
+  def format_h
+    # TODO: fix this when we store minutes, not hours in database
+    to_s + ':00'
   end
 end

@@ -9,16 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081202160606) do
+ActiveRecord::Schema.define(:version => 20081202204803) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
     t.boolean  "is_billable"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_enterable", :default => true
   end
 
   add_index "activities", ["is_billable"], :name => "index_activities_on_is_billable"
+  add_index "activities", ["is_enterable"], :name => "index_activities_on_is_enterable"
 
   create_table "employees", :force => true do |t|
     t.string   "first_name"

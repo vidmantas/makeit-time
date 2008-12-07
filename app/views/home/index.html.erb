@@ -8,24 +8,34 @@
 
 <table>
   <tr>
-    <th>Data</th>
-    <th>Projektas</th>
-    <th>Veikla</th>
-    <th>Trukmė</th>
-    <th>Aprašymas</th>
-    <th></th>
+    <th style="width: 90px">Data</th>
+    <th style="width: 190px">Projektas</th>
+    <th style="width: 140px">Veikla</th>
+    <th style="width: 80px">Trukmė</th>
   </tr>
   
   <% @tasks.each do |t| %>
-    <tr>
+    <% @odd = cycle('', 'odd') %>
+    <tr class="<%=@odd%>">
       <td><%= t.date %></td>
-      <td><%= link_to t.project.name, t.project %></td>
+      <td><%= link_to t.project.name, employee_project_url(current_user, t.project) %></td>
       <td><%= t.activity.name %></td>
-      <td><%= t.hours_spent %></td>
-      <td><%= t.description %></td>
-      <td><button>Edit</button></td>
+      <td class="hours"><%= t.hours_spent.format_h %></td>
+    </tr>
+    <tr class="description <%=@odd%>">
+      <td></td>
+      <td colspan="2">
+        <% if t.description.to_s.empty? %>
+          <span class="none">Aprašymas nepateiktas</span>
+        <% else %>
+          <%= t.description %>
+        <% end %>
+      </td>
+      <td><button>Redaguoti</button></td>
     </tr>
   <% end %>
 </table>
 
-<%= will_paginate @tasks %>
+<p>
+  <%= will_paginate @tasks %>
+</p>

@@ -1,3 +1,7 @@
+<h2><%= link_to h(@employee.sector.name), @employee.sector %> &rarr; 
+    <%= link_to h(@employee.full_name), @employee %> &rarr;
+    <%= link_to h(@project.name), employee_project_url(@project, @employee) %></h2>
+
 <% title "#{@employee.full_name} įdirbis projekte #{@project.name}" %>
 <table>
   <tr>
@@ -10,7 +14,7 @@
   
   <% while @start.to_s[0..6] != @end.to_s[0..6] do %>
     <% total = 0 -%>
-      <tr>
+      <tr class="<%= cycle('', 'odd') %>">
         <td><%= @start.to_s[0..6] %></td>
         <% Activity.all.each do |a| %>
           <% time = @project.employee_hours_by_month_and_activity(@employee, @start, a) -%>

@@ -4,7 +4,7 @@ class Project < ActiveRecord::Base
   belongs_to :manager, :class_name => 'Employee'
   
   validates_uniqueness_of :code
-  validates_presence_of :code, :name, :start_date, :end_date
+  validates_presence_of :code, :name, :start_date, :end_date, :manager_id
   
   def employee_hours_by_month_and_activity(employee, month, activity)
     employee.tasks.sum(:hours_spent, 
@@ -61,6 +61,10 @@ class Project < ActiveRecord::Base
     end_dates   = Project.find(:all, :select => "DISTINCT(YEAR(end_date)) AS 'year'").map(&:year)
     
     (start_dates + end_dates).uniq.sort.reverse
+  end
+  
+  def all_hours
+    self.tasks.sum(:hours_spent)
   end
   
   def hours(start_date, end_date, sectors_ids)

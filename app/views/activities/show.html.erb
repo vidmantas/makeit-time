@@ -8,6 +8,10 @@
   <%=h @activity.is_billable %>
 </p>
 
+<p>
+  <b>Is enterable:</b>
+  <%=h @activity.is_enterable %>
+</p>
 
 <%= link_to 'Edit', edit_activity_path(@activity) %> |
 <%= link_to 'Back', activities_path %>

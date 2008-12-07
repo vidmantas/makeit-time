@@ -1,28 +1,29 @@
-
 <% remote_form_for @task, :update => 'add_task' do |f| %>
-    <%= f.error_messages %>
+  <%= f.error_messages %>
 
-  <p>
-    <%= f.label :project_id %><br />
-    <%= f.collection_select :project_id, current_user.projects, :id, :name, {:prompt => true}  %>
-  </p>
-  <p>
-    <%= f.label :activity_id %><br />
-    <%= f.collection_select :activity_id, Activity.all, :id, :name, {:prompt => true} %>
-  </p>
-  <p>
-    <%= f.label :date %><br />
-    <%= f.text_field :date %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </p>
-  <p>
-    <%= f.label :hours_spent %><br />
-    <%= f.text_field :hours_spent %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
-  </p>
+  <!-- look ma, tables. -->
+  <table>
+    <tr>
+      <th><%= f.label :date, 'Data' %></th>
+      <th><%= f.label :project_id, 'Projektas' %></th>
+      <th><%= f.label :activity_id, 'Veikla' %></th>
+      <th><%= f.label :hours_spent, 'Įdirbis' %></th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :date, {:style => 'width: 80px'} %></td>
+      <td><%= f.collection_select :project_id, current_user.projects, :id, :name, 
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 200px'} %></td>
+      <td><%= f.collection_select :activity_id, Activity.enterable, :id, :name, 
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 150px'} %></td>
+      <td><%= f.text_field :hours_spent, {:style => 'width: 30px'} %> val.</td>
+    </tr>
+    <tr>
+      <th colspan="4"><%= f.label :description, 'Aprašymas' %></th>
+    </tr>
+    <tr>
+      <td colspan="3"><%= f.text_field :description, {:style => 'width: 450px'} %></td>
+      <td><%= f.submit "Įvesti" %></td>
+    </tr>
+  </table>
+
 <% end %>

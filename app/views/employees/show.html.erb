@@ -1,39 +1,38 @@
-<% title "#{@employee.full_name}" %>
-
-<%= link_to h(@employee.sector.name), @employee.sector %> → <%= h @employee.full_name %>
-
-<p>
-  <b>First name:</b>
-  <%=h @employee.first_name %>
-</p>
+<h2><%= link_to h(@employee.sector.name), @employee.sector %> &rarr; 
+    <%= link_to h(@employee.full_name), @employee %></h2>
 
 <p>
-  <b>Last name:</b>
-  <%=h @employee.last_name %>
+  <%= link_to 'Redaguoti', edit_employee_path(@employee) %>
 </p>
 
-<p>
-  <b>Sector:</b>
-  <%= link_to h(@employee.sector.name), @employee.sector %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%=h @employee.email %>
-</p>
-
-<p>
-  <b>Position:</b>
-  <%=h @employee.position.name %>
-</p>
+<table>
+    <tr>
+        <th style="width: 185px">Vardas</th>
+        <th style="width: 185px">Pavardė</th>
+        <th style="width: 130px">Skyrius</th>
+    </tr>
+    <tr>
+        <td><%= h(@employee.first_name) %></td>
+        <td><%= h(@employee.last_name) %></td>
+        <td><%= link_to h(@employee.sector.name), @employee.sector %></td>
+    </tr>
+    <tr>
+        <th colspan="2">El. pašto adresas</th>
+        <th>Pareigos</th>
+    </tr>
+    <tr>
+        <td colspan="2" style="width: 300px"><%= mail_to @employee.email, @employee.email%></td>
+        <td><%= h(@employee.position.name) %></td>
+    </tr>
+</table>
 
 <h2>Projektai</h2>
 
 <table>
   <tr>
-    <th>#</th>
-    <th>Projektas</th>
-    <th>Projekto vadovas</th>
+    <th style="width: 30px">#</th>
+    <th style="width: 130px">Projektas</th>
+    <th style="width: 185px">Projekto vadovas</th>
     <th>Pradžia</th>
     <th>Pabaiga</th>
     <th>Įdirbis</th>
@@ -42,14 +41,17 @@
   <% @projects.each do |p| %>
     <tr>
       <td><%=h p.code %></td>
-      <td><%= link_to p.name, employee_project_url(@employee, p) %></td>
+      <td>
+        <%= link_to p.name, employee_project_url(@employee, p) %>
+        <% if p.manager == @employee %>
+          <%= image_tag 'project-manager.png', :title => 'Darbuotojas yra šio projekto vadovas' %>
+        <% end %>
+      </td>
       <td><%= link_to p.manager.full_name, p.manager %></td>
       <td><%= @employee.started_in_project(p.id) %></td>
       <td><%= @employee.finished_in_project(p.id) %></td>
-      <td><%= @employee.hours_spent_in_project(p.id) %></td>
+      <td class="hours"><%= @employee.hours_spent_in_project(p.id).format_h %></td>
     </tr>
   <% end %>
 </table>
 
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>

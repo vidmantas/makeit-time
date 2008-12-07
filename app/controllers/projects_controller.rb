@@ -1,8 +1,11 @@
 class ProjectsController < ApplicationController
+  PROJECTS_PER_PAGE = 20
+  
   # GET /projects
   # GET /projects.xml
   def index
-    @projects = Project.find(:all)
+    @projects = Project.paginate :page => params[:page], :per_page => PROJECTS_PER_PAGE, 
+      :order => ['-id'], :include => [:manager]
     @project  = Project.new
     
     respond_to do |format|
@@ -16,6 +19,7 @@ class ProjectsController < ApplicationController
       @project = Project.find(params[:id])
       @employee = Employee.find(params[:employee_id])
       @start = @employee.started_in_project(@project.id)
+      # BUG: this crashes when '--' is returned
       @end   = @employee.finished_in_project(@project.id) + 1.month
       render :template => 'employees/project_report'
     else
@@ -44,7 +48,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(params[:project])
     
     if @project.save
-      flash[:notice] = 'Project was successfully created.'
+      flash[:notice] = 'Projektas buvo sėkmingai išsaugotas.'
       render :update do |page|
         page.redirect_to :action => 'index'
       end
@@ -60,7 +64,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        flash[:notice] = 'Project was successfully updated.'
+        flash[:notice] = 'Projekto duomenys buvo sėkmingai atnaujinti.'
         format.html { redirect_to(@project) }
         format.xml  { head :ok }
       else

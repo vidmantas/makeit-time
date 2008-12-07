@@ -1,6 +1,8 @@
-<h1>Projektai</h1>
+<h2>Projektai</h2>
 
-<button onclick="$('add_project').appear()">Naujo projekto registracija</button>
+<p id="add_project_button">
+  <button onclick="$('add_project_button').hide(); $('add_project').appear()">Naujo projekto registracija</button>
+</p>
 
 <div id="add_project" style="display: none">
   <%= render :partial => 'add_project' %>
@@ -8,26 +10,30 @@
 
 <table>
   <tr>
-    <th>#</th>
-    <th>Projektas</th>
-    <th>Projekto vadovas</th>
+    <th style="width: 30px">#</th>
+    <th style="width: 150px">Pavadinimas</th>
+    <th style="width: 155px">Projekto vadovas</th>
     <th>Skyrius</th>
     <th>Pradžia</th>
     <th>Pabaiga</th>
   </tr>
-
 <% for project in @projects %>
-  <tr>
+  <tr class="<%= cycle('', 'odd') %>">
     <td><%=h project.code %></td>
     <td><%= link_to h(project.name), project %></td>
     <td><%= link_to h(project.manager.full_name), project.manager %></td>
     <td><%= link_to h(project.manager.sector.name), project.manager.sector %></td>
     <td><%=h project.start_date %></td>
     <td><%=h project.end_date %></td>
+    <!--
     <td><%= link_to 'Edit', edit_project_path(project) %></td>
     <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+    -->
   </tr>
 <% end %>
 </table>
 
-<br />
+<p>
+  <%= will_paginate @projects %>
+</p>
+

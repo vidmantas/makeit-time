@@ -1,32 +1,39 @@
-<h1>Editing employee</h1>
+<h2><%= link_to h(@employee.sector.name), @employee.sector %> &rarr; 
+    <%= link_to h(@employee.full_name), @employee %></h2>
 
 <% form_for(@employee) do |f| %>
   <%= f.error_messages %>
 
+  <table>
+    <tr>
+      <th><%= f.label :first_name, 'Vardas' %></th>
+      <th><%= f.label :last_name, 'Pavardė' %></th>
+      <th><%= f.label :sector_id, 'Skyrius' %></th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :first_name, {:style => 'width: 185px'} %></td>
+      <td><%= f.text_field :last_name, {:style => 'width: 185px'} %></td>
+      <td><%= f.collection_select :sector_id, Sector.all, :id, :name,
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+    </tr>
+    <tr>
+      <th colspan="2"><%= f.label :email, 'El. paštas' %></th>
+      <th><%= f.label :email, 'Pareigos' %></th>
+    </tr>
+    <tr>
+      <td colspan="2"><%= f.text_field :email, {:style => 'width: 390px'} %></td>
+      <td><%= f.collection_select :position_id, Position.all, :id, :name,
+              {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+    </tr>
+    <tr>
+      <th colspan="3"><%= f.label :login, 'Prisijungimo vardas' %></th>
+    </tr>
+    <tr>
+      <td colspan="3"><%= f.text_field :login, {:style => 'width: 390px'} %></td>
+    </tr>
+  </table>
   <p>
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </p>
-  <p>
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </p>
-  <p>
-    <%= f.label :sector_id %><br />
-    <%= f.text_field :sector_id %>
-  </p>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :position_id %><br />
-    <%= f.text_field :position_id %>
-  </p>
-  <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Išsaugoti" %>
+    <%= link_to 'Atšaukti', @employee %>
   </p>
 <% end %>
-
-<%= link_to 'Show', @employee %> |
-<%= link_to 'Back', employees_path %>

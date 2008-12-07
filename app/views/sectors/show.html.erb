@@ -1,4 +1,15 @@
-<% title "Skyriaus #{@sector.name} ataskaita" %>
+<h2><%= link_to h(@sector.name), @sector %></h2>
+
+<table>
+  <tr>
+    <th style="width: 385px">Skyriaus vadovas</th>
+  </tr>
+  <tr>
+    <td><%= link_to h(@sector.manager.full_name), @sector.manager %></td>
+  </tr>
+</table>
+
+<h2>Ataskaitos</h2>
 
 <script type="text/javascript">
   function unselect() {
@@ -9,38 +20,32 @@
 </script>
 
 <p>
-  <b>Name:</b>
-  <%=h @sector.name %>
-</p>
-
-<p>
-  <b>Manager:</b>
-  <%= link_to h(@sector.manager.full_name), @sector.manager %>
-</p>
-
-<p>
   <% form_remote_for "time", :url => { :action => 'report', :id => @sector.id }, 
     :update => 'report', :loading => "$('loading').show();", :complete => "$('loading').hide();" do |f| %>
-    Metai: <%= select_tag :year, options_for_select(Project.distinct_years) %> 
-    <%= submit_tag 'Metų ataskaita', :onclick => "unselect()" %> <%= loader %><br />
-    <br />
-    <%= radio_button_tag 'duration', 'half' %> Pusmetis <%= select_tag :half, options_for_select(halfs) %><br />
-    <%= radio_button_tag 'duration', 'quarter' %> Ketvirtis <%= select_tag :quarter, options_for_select(quarters) %><br />
-    <%= radio_button_tag 'duration', 'month' %> Mėnesis <%= select_tag :month, options_for_select(months)  %><br />
-
+    Metai: <%= select_tag :year, options_for_select(Project.distinct_years) %>
+    <%= radio_button_tag 'duration', '', :checked => true %> Metai
+    <%= radio_button_tag 'duration', 'half' %> Pusmetis <%= select_tag :half, options_for_select(halfs) %>
+    <%= radio_button_tag 'duration', 'quarter' %> Ketvirtis <%= select_tag :quarter, options_for_select(quarters) %>
+    <%= radio_button_tag 'duration', 'month' %> Mėnesis <%= select_tag :month, options_for_select(months)  %>
     <%= submit_tag 'Parodyti' %>
   <% end %>
 </p>
 
 <div id="report">
-  Pasirinkite ataskaitos laikotarpį.
+  <p>Pasirinkite ataskaitos laikotarpį.</p>
 </div>
 
-<h3>Darbuotojai</h3>
+<h2>Darbuotojai</h2>
 
+<table>
+  <tr>
+    <th style="width: 385px">Vardas, Pavardė</th>
+    <th style="width: 185px">Pareigos</th>
+  </tr>
 <% @sector.employees.each do |e| %>
-  <p><%= link_to h(e.full_name), e %></p>
+  <tr class="<%= %>">
+    <td><%= link_to h(e.full_name), e %></td>
+    <td><%=h e.position.name %></td>
+  </tr>
 <% end %>
-
-<%= link_to 'Edit', edit_sector_path(@sector) %> |
-<%= link_to 'Back', sectors_path %>
+</table>

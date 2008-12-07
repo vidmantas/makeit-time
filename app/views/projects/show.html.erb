@@ -1,42 +1,55 @@
-<% title "Projekto #{@project.name} ataskaita" %>
-<p>
-  <b>Projekto kodas:</b>
-  <%= h @project.code %>
-</p>
+<h2><%= link_to h(@project.manager.sector.name), @project.manager.sector %> &rarr;
+    <%= link_to h(@project.name), @project %></h2>
 
 <p>
-  <b>Manager:</b>
-  <%= link_to h(@project.manager.full_name), @project.manager %> (<%= link_to h(@project.manager.sector.name), @project.manager.sector %>)
+  <%= link_to 'Redaguoti', edit_project_path(@project) %>
 </p>
 
-<p>
-  <b>Name:</b>
-  <%=h @project.name %>
-</p>
+<table>
+  <tr>
+    <th style="width: 80px">Kodas</th>
+    <th colspan="2" style="width: 300px">Pavadinimas</th>
+    <th style="width: 180px">Projekto vadovas</th>
+  </tr>
+  <tr>
+    <td><%=h @project.code %></td>
+    <td colspan="2"><%=h @project.name %></td>
+    <td><%= link_to h(@project.manager.full_name), @project.manager %></td>
+  </tr>
+  <tr>
+    <th>Pradžia</th>
+    <th>Pabaiga</th>
+    <th>Įdirbis</th>
+    <th>Projekto skyrius</th>
+  </tr>
+  <tr>
+    <td><%=h @project.start_date %></td>
+    <td><%=h @project.end_date %></td>
+    <td><%=h @project.all_hours.format_h %></td>
+    <td><%= link_to h(@project.manager.sector.name), @project.manager.sector %></td>
+  </tr>
+</table>
 
 <p>
-  <b>Start date:</b>
-  <%=h @project.start_date %>
-</p>
-
-<p>
-  <b>End date:</b>
-  <%=h @project.end_date %>
-</p>
-
-<p>
-  <%= link_to 'Edit', edit_project_path(@project) %> |
-</p>
-
-<p>
-<%= @graph %>
+  <%= @graph %>
 </p>
 
 <% @project.sectors.each do |s| %>
-  <h3><%= s.name %> - <%= s.total_hours %> val.</h3>
+  <h2><%= s.name %> (<%= s.total_hours %> val.)</h2>
+  <table>
+  <tr>
+    <th style="width: 360px">Vardas, Pavardė</th>
+    <th style="width: 150px">Pareigos</th>
+    <th>Įdirbis</th>
+  </tr>
   <% s.employees.each do |e| %>
     <% if @project.employees.include?(e) %>
-      <%= link_to h(e.full_name), e %> - <%= e.hours_spent_in_project(@project.id) %> val.<br />
+    <tr class="<%= cycle('', 'odd') %>">
+      <td><%= link_to h(e.full_name), employee_project_url(e, @project) %></td>
+      <td><%= h(e.position.name) %></td>
+      <td class="hours"><%= e.hours_spent_in_project(@project.id).format_h %></td>
+    </tr>
     <% end %>
   <% end %>
+  </table>
 <% end %>

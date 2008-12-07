@@ -4,12 +4,14 @@
   <tr>
     <th>Name</th>
     <th>Is billable</th>
+    <th>Is enterable</th>
   </tr>
 
 <% for activity in @activities %>
   <tr>
     <td><%=h activity.name %></td>
     <td><%=h activity.is_billable %></td>
+    <td><%=h activity.is_enterable %></td>
     <td><%= link_to 'Show', activity %></td>
     <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
     <td><%= link_to 'Destroy', activity, :confirm => 'Are you sure?', :method => :delete %></td>

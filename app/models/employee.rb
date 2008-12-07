@@ -5,8 +5,16 @@ class Employee < ActiveRecord::Base
   has_and_belongs_to_many :projects
   
   validates_presence_of :login, :first_name, :sector_id, :position_id
+  # TODO: validate presence of last_name and email, unless if in import
+  # TODO: validate uniqueness of email?
   
   named_scope :all_sorted, :order => 'first_name, last_name'
+
+  # FIXME: Vidmantas, is this ok? :-)
+  def email=(value)
+    write_attribute(:email, value)
+    self.login = value unless self.login
+  end
   
   def full_name
     "#{self.first_name} #{self.last_name}"

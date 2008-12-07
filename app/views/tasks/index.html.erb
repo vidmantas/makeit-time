@@ -17,7 +17,7 @@
     <td><%=h task.activity_id %></td>
     <td><%=h task.date %></td>
     <td><%=h task.description %></td>
-    <td><%=h task.hours_spent %></td>
+    <td><%=h task.hours_spent.format.h %></td>
     <td><%= link_to 'Show', task %></td>
     <td><%= link_to 'Edit', edit_task_path(task) %></td>
     <td><%= link_to 'Destroy', task, :confirm => 'Are you sure?', :method => :delete %></td>

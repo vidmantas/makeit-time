@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  EMPLOYEES_PER_PAGE = 10
+  EMPLOYEES_PER_PAGE = 20
   
   # GET /employees
   # GET /employees.xml
@@ -48,7 +48,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(params[:employee])
 
     if @employee.save
-      flash[:notice] = 'Darbuotojas išsaugotas sėkmingai'
+      flash[:notice] = 'Darbuotojas sukurtas sėkmingai.'
       render :update do |page|
         page.redirect_to :action => 'index'
       end
@@ -64,7 +64,7 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.update_attributes(params[:employee])
-        flash[:notice] = 'Employee was successfully updated.'
+        flash[:notice] = 'Darbuotojo duomenys buvo išsaugoti sėkmingai.'
         format.html { redirect_to(@employee) }
         format.xml  { head :ok }
       else

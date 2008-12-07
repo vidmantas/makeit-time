@@ -21,7 +21,7 @@
   </p>
   <p>
     <%= f.label :position_id %><br />
-    <%= f.text_field :position_id %>
+    <%= f.collection_select :position_id, Position.all, :id, :name, {:prompt => true} %></td>
   </p>
   <p>
     <%= f.submit "Create" %>

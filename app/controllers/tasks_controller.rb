@@ -43,7 +43,7 @@ class TasksController < ApplicationController
     @task = Task.new(params[:task].merge(:employee_id => current_user.id))
 
     if @task.save
-      flash[:notice] = 'Task was successfully created.'
+      flash[:notice] = 'Užduotis sėkmingai įvesta.'
       render :update do |page|
         page.redirect_to :back rescue redirect_to '/'
       end      

@@ -1,29 +1,32 @@
 <% remote_form_for @employee, :update => 'new_employee' do |f| %>
   <%= f.error_messages %>
-
+  
+  <table>
+    <tr>
+      <th><%= f.label :first_name, 'Vardas' %></th>
+      <th><%= f.label :last_name, 'Pavardė' %></th>
+      <th><%= f.label :sector_id, 'Skyrius' %></th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :first_name, {:style => 'width: 185px'} %></td>
+      <td><%= f.text_field :last_name, {:style => 'width: 185px'} %></td>
+      <td><%= f.collection_select :sector_id, Sector.all, :id, :name,
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+    </tr>
+    <tr>
+      <th colspan="2"><%= f.label :email, 'El. paštas' %></th>
+      <th><%= f.label :email, 'Pareigos' %></th>
+    </tr>
+    <tr>
+      <td colspan="2"><%= f.text_field :email, {:style => 'width: 390px'} %></td>
+      <td><%= f.collection_select :position_id, Position.all, :id, :name,
+              {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+    </tr>
+  </table>
   <p>
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
-  </p>
-  <p>
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
-  </p>
-  <p>
-    <%= f.label :sector_id %><br />
-    <%= f.collection_select :sector_id, Sector.all, :id, :name %>
-  </p>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :position_id %><br />
-    <%= f.collection_select :position_id, Position.all, :id, :name %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
+    <%= f.submit "Registruoti" %>
+    <a href="javascript:;" onclick="$('add_employee').toggle(); $('add_employee_button').show()">Atšaukti</a>
   </p>
 <% end %>
 
-<a href="javascript:;" onclick="$('new_employee').toggle()">Uždaryti</a>
+

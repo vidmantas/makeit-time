@@ -1,32 +1,33 @@
 <% remote_form_for @project, :update => 'add_project' do |f| %>
   <%= f.error_messages %>
-  
-  <p>
-    <%= f.label :code %><br />
-    <%= f.text_field :code %>
-  </p>
-  
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
 
+  <table>
+    <tr>
+      <th style="width: 80px"><%= f.label :code, 'Kodas' %></th>
+      <th colspan="2" style="width: 300px"><%= f.label :name, 'Pavadinimas' %></th>
+      <th style="width: 180px"><%= f.label :manager_id, 'Projekto vadovas' %></th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :code, {:style => 'width: 75px'} %></td>
+      <td colspan="2"><%= f.text_field :name, {:style => 'width: 290px'} %></td>
+      <td><%= f.collection_select :manager_id, Employee.all_sorted, :id, :name_with_sector,
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 170px'} %></td>
+    </tr>
+    <tr>
+      <th><%= f.label :start_date, 'Pradžia' %></th>
+      <th><%= f.label :end_date, 'Pabaiga' %></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :start_date, {:style => 'width: 75px'} %></td>
+      <td><%= f.text_field :end_date, {:style => 'width: 75px'} %></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
   <p>
-    <%= f.label :manager_id %><br />
-    <%= f.collection_select :manager_id, Employee.all_sorted, :id, :name_with_sector %>
-  </p>
-
-  <p>
-    <%= f.label :start_date %><br />
-    <%= f.text_field :start_date %>
-    <%= calendar 'project_start_date' %>
-  </p>
-  <p>
-    <%= f.label :end_date %><br />
-    <%= f.text_field :end_date %>
-    <%= calendar 'project_end_date' %>
-  </p>
-  <p>
-    <%= f.submit "Create" %>
+    <%= f.submit "Sukurti" %>
+    <a href="javascript:;" onclick="$('add_project').toggle(); $('add_project_button').show()">Atšaukti</a>
   </p>
 <% end %>
