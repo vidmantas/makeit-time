@@ -73,10 +73,10 @@ Rails::Initializer.run do |config|
   # Please note that observers generated using script/generate observer need to have an _observer suffix
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
   
-  config.gem 'mislav-will_paginate', :version => '~> 2.2.3', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'hpricot'
-  config.gem 'rspec',       :lib => 'spec'
-  config.gem 'rspec-rails', :lib => "spec/rails"
+  config.gem 'rspec', :lib => 'spec'
+  #config.gem 'rspec-rails', :lib => "spec/rails"
 end
 
 include Hpricot
