@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081202204803) do
+ActiveRecord::Schema.define(:version => 20081207123903) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -60,9 +60,11 @@ ActiveRecord::Schema.define(:version => 20081202204803) do
     t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "duration"
   end
 
   add_index "projects", ["code"], :name => "index_projects_on_code"
+  add_index "projects", ["duration"], :name => "index_projects_on_duration"
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
   add_index "projects", ["manager_id"], :name => "index_projects_on_manager_id"
   add_index "projects", ["start_date"], :name => "index_projects_on_start_date"

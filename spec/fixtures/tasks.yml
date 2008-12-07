@@ -117,3 +117,17 @@ mif_penkta:
   activity: analysis
   hours_spent: 2
   date: 2008-01-03
+
+progress_pirma:
+  project: progress
+  employee: jonas
+  activity: analysis
+  hours_spent: 20
+  date: 2005-02-01
+
+progress_antra:
+  project: progress
+  employee: dede_sigitas
+  activity: programming
+  hours_spent: 30
+  date: 2005-06-01

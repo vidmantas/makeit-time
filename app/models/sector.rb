@@ -1,4 +1,6 @@
 class Sector < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+
   NORMAL_WORK_LOAD = 130
   
   belongs_to :manager, :class_name => 'Employee'
@@ -68,23 +70,26 @@ class Sector < ActiveRecord::Base
   def projects(start_date, end_date, this_sector_first = true)
     sql = "
       SELECT 
-	p.id, 
-        p.code,
-	p.name,
-	p.start_date,
-	p.end_date,
-        p.manager_id
+	p.*
       FROM tasks t
-      INNER JOIN employees e ON e.id = t.employee_id
       INNER JOIN projects p ON p.id = t.project_id
       INNER JOIN employees m ON m.id = p.manager_id
       WHERE 
         t.date >= ? AND t.date <= ?
-        AND e.id IN(?)
+        AND t.employee_id IN(?)
       GROUP BY p.id ORDER BY "
     sql << " m.sector_id = #{self.id} DESC, " if this_sector_first
     sql << " p.name"
     Project.find_by_sql [sql, start_date, end_date, self.employees.map(&:id)]
+  end
+  
+  def has_projects(start_date, end_date)
+    employees_ids = self.employees.map(&:id)
+    conditions = 'manager_id IN(?) 
+      AND ((start_date BETWEEN DATE(?) AND DATE(?) OR end_date BETWEEN DATE(?) AND DATE(?))
+      OR (DATE(?) BETWEEN start_date AND end_date OR DATE(?) BETWEEN start_date AND end_date))'
+    Project.find(:all, 
+      :conditions => [conditions, employees_ids, start_date, end_date, start_date, end_date, start_date, end_date])
   end
   
   def time_usage_for(start_date, end_date)
@@ -103,11 +108,11 @@ class Sector < ActiveRecord::Base
   end
   
   def overtime(start_date, end_date)
-    sql = 'SELECT t.employee_id, (SUM(hours_spent) - 130) AS overtime, DATE_FORMAT(date, "%Y-%m") AS month
+    sql = "SELECT t.employee_id, (SUM(hours_spent) - #{NORMAL_WORK_LOAD}) AS overtime, DATE_FORMAT(date, \"%Y-%m\") AS month
       FROM tasks t
       WHERE t.employee_id IN(?) AND t.date >= ? AND t.date <= ?
       GROUP BY month, t.employee_id
-      ORDER BY t.employee_id, month'
+      ORDER BY t.employee_id, month"
     times = Task.find_by_sql([sql, self.employees.map(&:id), start_date, end_date])
     
     total = 0
@@ -118,15 +123,15 @@ class Sector < ActiveRecord::Base
   end
   
   def inactivity_percent(start_date, end_date)
-    @theor_hours  = theoretical_hours(start_date, end_date).to_f
-    @actual_hours = time_usage_for(start_date, end_date).to_f # will be cached
-    return (((@theor_hours - @actual_hours) * 100) / @theor_hours).round
+    theor_hours  = theoretical_hours(start_date, end_date).to_f
+    actual_hours = time_usage_for(start_date, end_date).to_f # will be cached
+    return (((theor_hours - actual_hours) * 100) / theor_hours).round
   end
   
   def overtime_percent(start_date, end_date)
-    @theor_hours    ||= theoretical_hours(start_date, end_date).to_f
-    @overtime_hours ||= overtime(start_date, end_date).to_f
-    return ((@overtime_hours * 100)/@theor_hours).round
+    theor_hours    = theoretical_hours(start_date, end_date).to_f
+    overtime_hours = overtime(start_date, end_date).to_f
+    return ((overtime_hours * 100)/theor_hours).round
   end
   
   def total_switches(start_date, end_date)
@@ -160,4 +165,88 @@ class Sector < ActiveRecord::Base
     total_hours    = time_usage_for(start_date, end_date).to_f
     sprintf("%.2f", total_switches/(total_hours/hours))
   end
+  
+  def income(start_date, end_date)
+    income_for_short_projects(start_date, end_date).to_f + 
+      income_for_medium_projects(start_date, end_date).to_f + 
+      income_for_long_projects(start_date, end_date).to_f
+  end
+  
+   # iki 6 men trukmes
+  def income_for_short_projects(start_date, end_date)
+    projects_ids = self.has_projects(start_date, end_date).map(&:id)
+    sql = "SELECT SUM(t.hours_spent) AS 'total_hours' 
+      FROM tasks t
+      INNER JOIN projects p ON p.id = t.project_id
+      WHERE p.id IN(?) AND p.duration <= 6 AND p.end_date <= ?
+    "
+    Sector.find_by_sql([sql, projects_ids, end_date]).first.total_hours 
+  end
+  
+  # 7-18 men trukmes: 40% projekto vidury, 60% - pasibaigus
+  def income_for_medium_projects(start_date, end_date)
+    total = 0.0
+    
+    start_date = to_date(start_date)
+    end_date   = to_date(end_date)
+    
+    self.has_projects(start_date, end_date).each do |project|
+      if project.duration.to_i >= 7 and project.duration.to_i <= 18
+        # 40%
+        first_payment_on = project.start_date + (project.duration / 2).months
+        if first_payment_on >= start_date and first_payment_on <= end_date
+          total += project.total_value * 0.4
+        end
+        
+        # 60%
+        if project.end_date >= start_date and project.end_date <= end_date
+          total += project.total_value * 0.6
+        end
+      end
+    end
+
+    total
+  end
+  
+  def income_for_long_projects(start_date, end_date)
+    total = 0.0
+    
+    start_date = to_date(start_date)
+    end_date   = to_date(end_date)
+    
+    self.has_projects(start_date, end_date).each do |project|
+      if project.duration.to_i > 18
+        # 20% - 8 menesi
+        payment_on = project.start_date + 7.months
+        if payment_on >= start_date and payment_on <= end_date
+          total += project.total_value * 0.2
+        end
+        
+        # 20% - 15 menesi
+        payment_on = project.start_date + 14.months
+        if payment_on >= start_date and payment_on <= end_date
+          total += project.total_value * 0.2
+        end
+        
+        # 60% - pabaigoje
+        if project.end_date >= start_date and project.end_date <= end_date
+          total += project.total_value * 0.6
+        end
+      end
+    end
+    
+    total
+  end
+  
+  protected
+  
+  def to_date(date)
+    if date.respond_to?(:month)
+      date
+    else
+      Time.parse(date).to_date
+    end
+  end
+  
+  memoize :overtime, :theoretical_hours, :time_usage_for, :has_projects
 end

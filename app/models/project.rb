@@ -1,10 +1,14 @@
 class Project < ActiveRecord::Base
+  extend ActiveSupport::Memoizable
+  
   has_many :tasks, :dependent => :destroy
   has_and_belongs_to_many :employees
   belongs_to :manager, :class_name => 'Employee'
   
   validates_uniqueness_of :code
   validates_presence_of :code, :name, :start_date, :end_date, :manager_id
+  
+  before_save :set_duration
   
   def employee_hours_by_month_and_activity(employee, month, activity)
     employee.tasks.sum(:hours_spent, 
@@ -76,5 +80,19 @@ class Project < ActiveRecord::Base
       WHERE e.sector_id IN(?) AND t.date >= ? AND t.date <= ? AND t.project_id = ?"
     
     Project.find_by_sql([sql, sectors_ids, start_date, end_date, self.id]).first.total_hours.to_i
+  end
+  
+  def total_value
+    self.tasks.sum(:hours_spent)
+  end
+  
+  memoize :total_value
+  
+  protected
+  
+  def set_duration
+    months = 0
+    self.start_date.each_month_until(self.end_date) { months += 1 }
+    self.duration = months
   end
 end
