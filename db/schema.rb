@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081207123903) do
+ActiveRecord::Schema.define(:version => 20081208170257) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -30,7 +30,16 @@ ActiveRecord::Schema.define(:version => 20081207123903) do
     t.integer  "position_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "login",       :limit => 25
+    t.string   "login",             :limit => 25
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.integer  "login_count"
+    t.datetime "last_request_at"
+    t.datetime "last_login_at"
+    t.datetime "current_login_at"
+    t.string   "last_login_ip"
+    t.string   "current_login_ip"
   end
 
   add_index "employees", ["login"], :name => "index_employees_on_login"

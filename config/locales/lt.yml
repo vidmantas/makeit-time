@@ -1,0 +1,42 @@
+lt:
+  login: "Prisijungimo vardas"
+  password: "Slaptažodis"
+  login_submit: "Prisijungti"
+  unable_to_login: "Prisijungti nepavyko"
+  login_successful: "Sėkmingai prisijungėte!"
+  logout_successful: "Sėkmingtai atsijungėte!"
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "Nepavyko išsaugoti {{model}} dėl vienos klaidos"
+          other: "Nepavyko išsaugoti {{model}} dėl {{count}} klaidų"
+        body: "Aptiktos klaidos šiuose laukeliuose:"
+
+      messages:
+        blank: "turi būti nurodytas"
+        empty: "turi būti užpildytas"
+        not_a_number: "turi būti skaičius"
+        invalid: "neteisingas"
+      models:
+        employee:
+          attributes:
+            last_name:
+              blank: "turi būti įrašyta"
+            position_id:
+              blank: "turi būti nurodytos"
+    models:
+      task: "užduoties"
+      employee: "darbuotojo"
+
+    attributes:
+      task:
+        hours_spent: "Įdirbis"
+        project_id: "Projektas"
+        activity_id: "Veiklos tipas"
+      employee:
+        sector_id: "Sektorius"
+        last_name: "Pavardė"
+        position_id: "Pareigos"
+        email: "El. paštas"
+        first_name: "Vardas"

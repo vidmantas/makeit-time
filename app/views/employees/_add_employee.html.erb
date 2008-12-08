@@ -15,12 +15,12 @@
     </tr>
     <tr>
       <th colspan="2"><%= f.label :email, 'El. paštas' %></th>
-      <th><%= f.label :email, 'Pareigos' %></th>
+      <th><%= f.label :position_id, 'Pareigos' %></th>
     </tr>
     <tr>
       <td colspan="2"><%= f.text_field :email, {:style => 'width: 390px'} %></td>
       <td><%= f.collection_select :position_id, Position.all, :id, :name,
-              {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+              {:prompt => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
     </tr>
   </table>
   <p>

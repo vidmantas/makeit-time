@@ -6,24 +6,25 @@
     <meta http-equiv="Content-Type" http-equiv="text/html; charset=utf-8" />
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'calendar/calendar', 'calendar/calendar-setup', 'calendar/calendar-lt-utf8', 'swfobject' %>
-    <%= stylesheet_link_tag 'calendar-custom' %>
-    <%= stylesheet_link_tag 'main' %>
+    <%= stylesheet_link_tag 'main', 'calendar-custom' %>
   </head>
   <body>
     
     <div id="toolbar">
       
       <h1>MakeIT Time</h1>
+      <% if current_user %>
       <ul>
-        <li class="active"><a href="/">Mano laikas</a></li>
+        <li class="active"><a href="/home">Įdirbis</a></li>
         <li><a href="/employees">Darbuotojai</a></li>
         <li><a href="/projects">Projektai</a></li>
         <li><a href="/sectors">Skyriai</a></li>
-        <li><a href="/reports/time_usage/">Darbo laiko išnaudojimo/viršvalandžių ataskaita</a></li>
-        <li><a href="/reports/switching">„Persijungimo“ ataskaita</a></li>
-        <li><a href="/reports/progress">Nebaigto darbo vertės ataskaita</a></li>
-        <li class="last"><a href="/logout">Atsijungti</a></li>
+        <li><a href="/reports/time_usage/">Viršvalandžiai</a></li>
+        <li><a href="/reports/switching">Persijungimai</a></li>
+        <li><a href="/reports/progress">Lūkesčiai</a></li>
+        <li class="last"><a href="/employee_sessions/destroy">Atsijungti</a></li>
       </ul>
+      <% end %>
       <div class="clear"></div>
     </div>
     

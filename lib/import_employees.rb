@@ -13,12 +13,14 @@ class ImportEmployees < Import
       login, sector_id = row[0].strip, row[1].strip
       
       unless Employee.find_by_login(login)
-        Employee.create(
+        e = Employee.new(
           :first_name   => login,
           :login        => login,
           :sector_id    => sector_id,
-          :position     => default_position
+          :position     => default_position,
+          :password     => login
         )
+        e.save(false) # bypass validations
       end
     end
   end

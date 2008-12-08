@@ -77,6 +77,7 @@ Rails::Initializer.run do |config|
   config.gem 'hpricot'
   config.gem 'rspec', :lib => 'spec'
   #config.gem 'rspec-rails', :lib => "spec/rails"
+  config.gem "authlogic"
 end
 
 include Hpricot

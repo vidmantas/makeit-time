@@ -1,12 +1,17 @@
 class Employee < ActiveRecord::Base
+  include RFC822
+  
+  acts_as_authentic :validate_fields => false
+
   has_many :tasks, :dependent => :destroy
   belongs_to :sector
   belongs_to :position
   has_and_belongs_to_many :projects
   
-  validates_presence_of :login, :first_name, :sector_id, :position_id
-  # TODO: validate presence of last_name and email, unless if in import
-  # TODO: validate uniqueness of email?
+  validates_presence_of :first_name, :sector_id, :position_id, :last_name, :email
+  validates_uniqueness_of :email, :if => lambda{ |e| !e.email.blank? }
+  validates_format_of :email, :with => RFC822::EmailAddress, :if => lambda{ |e| !e.email.blank? }
+  
   
   named_scope :all_sorted, :order => 'first_name, last_name'
 

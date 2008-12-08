@@ -14,12 +14,15 @@ class ImportSectors < Import
       sector_code, manager_login = row[0].strip, row[1].strip
       sector  = Sector.create(:code => sector_code, :name => "#{sector_code} skyrius")
       
-      e = Employee.create(
+      e = Employee.new(
         :first_name => manager_login,
         :login      => manager_login,
         :sector     => sector,
-        :position   => default_position
+        :position   => default_position,
+        :password   => manager_login
       )
+      e.save(false)
+      
       sector.manager = e
       sector.save
     end

@@ -4,12 +4,6 @@ module ApplicationHelper
     content_for(:title) { "MakeIT Timetrack: #{page_title}" }
   end
   
-  # TODO
-  # - add restful_authentication 
-  def current_user
-    Employee.first
-  end
-  
   def calendar(input_field, format = "%Y-%m-%d")
     javascript_tag <<-CODE
       Calendar.setup({
