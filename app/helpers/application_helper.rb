@@ -16,6 +16,14 @@ module ApplicationHelper
   def loader
     render :partial => 'shared/loader'
   end
+  
+  def menu_item(name, opts = {})
+    if opts[:controller] == controller.controller_name
+      render :partial => 'shared/active_menu_item', :locals => { :name => name, :url => url_for(opts) }
+    else
+      render :partial => 'shared/menu_item', :locals => { :name => name, :url => url_for(opts) }
+    end
+  end
 end
 
 # FIXME: dunno where is the right place to put this

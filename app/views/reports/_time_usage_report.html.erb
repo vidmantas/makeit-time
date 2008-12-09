@@ -18,21 +18,21 @@
         <% inactivity = s.inactivity_percent(period[:starts], period[:ends]) %>
         <% overtime_percent = s.overtime_percent(period[:starts], period[:ends]) %>
         <td>
-          Viso: <%= time_usage %> val.<br />
-          Galimas laikas: <%= theor_hours %> val.<br />
-          Viršvalandžiai: <%= overtime %> val.<br />
-          Galėjo būti, bet nebuvo išdirbta: <%= inactivity %> % <br />
-          Viršvalandžių: <%= overtime_percent %> % 
+          Viso: <%= currency time_usage, :precision => 0 %> val.<br />
+          Galimas laikas: <%= currency theor_hours, :precision => 0 %> val.<br />
+          Viršvalandžiai: <%= currency overtime, :precision => 0 %> val.<br />
+          Galėjo būti, bet nebuvo išdirbta: <%= percentage inactivity, :precision => 0 %> <br />
+          Viršvalandžių: <%= percentage overtime_percent, :precision => 0 %> 
         </td>
       <% end %>
       <td>
         <% inactivity = (((sum[:theor_hours] - sum[:time_usage]) * 100) / sum[:theor_hours]).round  %> 
         <% overtime = ((sum[:overtime] * 100)/sum[:theor_hours]).round  %>
-        Viso: <%= sum[:time_usage] %> val.<br />
-        Galimas laikas: <%= sum[:theor_hours] %> val.<br />
-        Viršvalandžiai: <%= sum[:overtime] %><br />
-        Galėjo būti, bet nebuvo išdirbta: <%= inactivity %> % <br />
-        Viršvalandžių: <%= overtime %> %
+        Viso: <%= currency sum[:time_usage], :precision => 0 %> val.<br />
+        Galimas laikas: <%= currency sum[:theor_hours], :precision => 0 %> val.<br />
+        Viršvalandžiai: <%= currency sum[:overtime], :precision => 0 %> val.<br />
+        Galėjo būti, bet nebuvo išdirbta: <%= percentage inactivity, :precision => 0 %> <br />
+        Viršvalandžių: <%= percentage overtime, :precision => 0 %>
       </td>
     </tr>
   <% end %>

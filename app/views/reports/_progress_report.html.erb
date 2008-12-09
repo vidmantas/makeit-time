@@ -20,8 +20,8 @@
         <td>
           Sukurta vertė: <%= currency value %><br />
           Pajamos: <%= currency income %><br />
-          Nebaigto darbo vertė: <%= currency(value - income) %> <br />
-          <%= currency((value - income) * 100 / value) %>%          
+          Nebaigto darbo vertė: <br /> <%= currency(value - income) %> 
+          (<%= percentage((value - income) * 100 / value) %>)
         </td>
         
         <% # ugly, ugly! -%>
@@ -31,8 +31,8 @@
       <td>
         Sukurta vertė: <%= currency sum[:value] %><br />
         Pajamos: <%= currency sum[:income] %><br />
-        Nebaigto darbo vertė: <%= currency(sum[:value] - sum[:income]) %><br />
-        <%= currency((sum[:value] - sum[:income]) * 100 / sum[:value]) %>%
+        Nebaigto darbo vertė: <br /><%= currency(sum[:value] - sum[:income]) %>
+        (<%= percentage((sum[:value] - sum[:income]) * 100 / sum[:value]) %>)
         
         <% @avg[0][:value] += sum[:value]
            @avg[0][:diff]  += (sum[:value] - sum[:income]) -%>
@@ -43,10 +43,10 @@
   <tr>
     <td>Vidurkis</td>
     <% @sectors.each do |s| -%>
-      <td>Vidutinė nebaigto darbo vertė: <%= currency(@avg[s.id][:diff] / @periods.size) %> <br />
-        <%= currency(@avg[s.id][:diff] * 100 / @avg[s.id][:value]) %> %</td>
+      <td>Vidutinė nebaigto darbo vertė: <br /><%= currency(@avg[s.id][:diff] / @periods.size) %> 
+        (<%= percentage(@avg[s.id][:diff] * 100 / @avg[s.id][:value]) %>)</td>
     <% end %>
     <td>Vidutinė nebaigto darbo vertė: <%= currency(@avg[0][:diff] / @periods.size)%><br />
-      <%= currency(@avg[0][:diff] * 100 / @avg[0][:value]) %> %</td>
+      (<%= percentage(@avg[0][:diff] * 100 / @avg[0][:value]) %>)</td>
   </tr>
 </table>

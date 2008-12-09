@@ -15,13 +15,12 @@
       <h1>MakeIT Time</h1>
       <% if current_user %>
       <ul>
-        <li class="active"><a href="/home">Įdirbis</a></li>
-        <li><a href="/employees">Darbuotojai</a></li>
-        <li><a href="/projects">Projektai</a></li>
-        <li><a href="/sectors">Skyriai</a></li>
-        <li><a href="/reports/time_usage/">Viršvalandžiai</a></li>
-        <li><a href="/reports/switching">Persijungimai</a></li>
-        <li><a href="/reports/progress">Lūkesčiai</a></li>
+        <%= menu_item "Įdirbis", :controller => 'home' %>
+        <%= menu_item "Darbuotojai", :controller => 'employees' %>
+        <%= menu_item "Projektai", :controller => 'projects' %>
+        <%= menu_item "Skyriai", :controller => 'sectors' %>
+        <%= menu_item "Ataskaitos", :controller => 'reports' %>
+  
         <li class="last"><a href="/employee_sessions/destroy">Atsijungti</a></li>
       </ul>
       <% end %>
