@@ -1,10 +1,21 @@
+<div class="sidebar">
+  <div class="box">
+    <h2>Prisijungimas</h2>
+    <p>Jeigu pamiršote savo prisijungimo duomenis, kreipkitės į administratorių.
+    </p>
+  </div>
+</div>
 <% form_for @user_session do |f| %>
   <%= f.error_messages :header_message => t('unable_to_login') %>
-  <%= f.label :login, t('login') %><br />
-  <%= f.text_field :login %><br />
-  <br />
-  <%= f.label :password, t('password') %><br />
-  <%= f.password_field :password %><br />
-  <br />
-  <%= f.submit t('login_submit') %>
+  <p>
+    <%= f.label :login, t('login') %>
+    <%= f.text_field :login %>
+  </p>
+  <p>
+    <%= f.label :password, t('password') %>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.submit t('login_submit') %>
+  </p>
 <% end %>

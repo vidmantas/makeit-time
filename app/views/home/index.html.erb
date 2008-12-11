@@ -1,3 +1,11 @@
+<div class="sidebar">
+  <div class="box">
+    <h2>Laiko fiksavimas</h2>
+    <p>Galite įvesti savo darbo valandas už šiandieną arba ankstesnę dieną.</p>
+    <p>Neleidžiama įvesti daugiau negu 10 darbo valandų vienai dienai.</p>
+  </div>
+</div>
+
 <h2>Laiko fiksavimas</h2>
 
 <div id="add_task">
@@ -6,36 +14,18 @@
 
 <h2>Fiksuotas laikas</h2>
 
-<table>
+<table class="joined">
   <tr>
     <th style="width: 90px">Data</th>
     <th style="width: 190px">Projektas</th>
     <th style="width: 140px">Veikla</th>
     <th style="width: 80px">Trukmė</th>
   </tr>
-  
-  <% @tasks.each do |t| %>
-    <% @odd = cycle('', 'odd') %>
-    <tr class="<%=@odd%>">
-      <td><%= t.date %></td>
-      <td><%= link_to t.project.name, employee_project_url(current_user, t.project) %></td>
-      <td><%= t.activity.name %></td>
-      <td class="hours"><%= t.hours_spent.format_h %></td>
-    </tr>
-    <tr class="description <%=@odd%>">
-      <td></td>
-      <td colspan="2">
-        <% if t.description.to_s.empty? %>
-          <span class="none">Aprašymas nepateiktas</span>
-        <% else %>
-          <%= t.description %>
-        <% end %>
-      </td>
-      <td><button>Redaguoti</button></td>
-    </tr>
-  <% end %>
 </table>
-
+<% @tasks.each do |t| %>
+  <% @odd = cycle('', 'odd') %>
+  <%= render :partial => 'tasks/show_task', :locals => { :task => t, :odd => @odd } %>
+<% end %>
 <p>
   <%= will_paginate @tasks %>
 </p>

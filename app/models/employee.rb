@@ -12,7 +12,6 @@ class Employee < ActiveRecord::Base
   validates_uniqueness_of :email, :if => lambda{ |e| !e.email.blank? }
   validates_format_of :email, :with => RFC822::EmailAddress, :if => lambda{ |e| !e.email.blank? }
   
-  
   named_scope :all_sorted, :order => 'first_name, last_name'
 
   # FIXME: Vidmantas, is this ok? :-)

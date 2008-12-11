@@ -57,15 +57,14 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
 
-    respond_to do |format|
-      if @task.update_attributes(params[:task])
-        flash[:notice] = 'Task was successfully updated.'
-        format.html { redirect_to(@task) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
-      end
+    if @task.update_attributes(params[:task].merge(:employee_id => current_user.id))
+      flash[:notice] = 'Užduotis sėkmingai išsaugota.'
+      render :update do |page|
+        page.redirect_to :back rescue redirect_to '/'
+      end      
+    else
+      # TODO: odd gets lost...
+      render :partial => 'edit_task', :locals => { :task => @task, :odd => false }
     end
   end
 

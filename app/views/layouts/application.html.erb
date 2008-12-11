@@ -22,6 +22,8 @@
         <%= menu_item "Ataskaitos", :controller => 'reports' %>
   
         <li class="last"><a href="/employee_sessions/destroy">Atsijungti</a></li>
+        <li class="last text"><%= link_to 'Prisijungęs: ' + h(current_user.full_name), current_user, 
+                                          :title => 'Peržiūrėti asmeninę informaciją' %></li>
       </ul>
       <% end %>
       <div class="clear"></div>

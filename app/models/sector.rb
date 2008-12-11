@@ -12,14 +12,16 @@ class Sector < ActiveRecord::Base
     }}
     
   def self.all_for_project(project_id, manager_sector_id)
+    # We must receive all sectors, even those where sum(hours_spent) = 0.
     Sector.find_by_sql ["SELECT 
       s.id,
       s.name, 
       SUM(t.hours_spent) AS 'total_hours'
-      FROM employees e
-      INNER JOIN tasks t ON t.employee_id = e.id 
+      FROM employees_projects ep
+      INNER JOIN employees e ON e.id = ep.employee_id
       INNER JOIN sectors s ON s.id = e.sector_id
-      WHERE t.project_id = ?
+      LEFT OUTER JOIN tasks t ON t.employee_id = e.id 
+      WHERE ep.project_id = ?
       GROUP BY e.sector_id
       ORDER BY s.id = ? DESC, total_hours DESC", 
       project_id, manager_sector_id

@@ -86,6 +86,18 @@ class Project < ActiveRecord::Base
     self.tasks.sum(:hours_spent)
   end
   
+  def candidate_employees
+    Employee.find(:all, :conditions => [
+      'id NOT IN (
+        SELECT id
+        FROM employees e
+        INNER JOIN employees_projects ep ON ep.employee_id = e.id
+        WHERE ep.project_id = ?
+      )',
+      self.id
+    ])
+  end
+  
   memoize :total_value
   
   protected

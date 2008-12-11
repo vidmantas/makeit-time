@@ -1,0 +1,17 @@
+<% remote_form_for task, :update => "task-#{task.id}-edit" do |f| -%>
+  <%= f.error_messages %>
+  <table class="joined">
+    <tr class="description <%=odd%>">
+      <td style="width: 90px"><%= f.text_field :date, {:style => 'width: 80px'} %></td>
+      <td style="width: 190px"><%= f.collection_select :project_id, current_user.projects, :id, :name, 
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 180px'} %></td>
+      <td style="width: 140px"><%= f.collection_select :activity_id, Activity.enterable, :id, :name, 
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+      <td style="width: 80px" class="hours"><%= f.text_field :hours_spent, {:style => 'width: 30px'} %> val.</td>
+    </tr>
+    <tr class="description <%=odd%>">
+      <td colspan="3"><%= f.text_field :description, {:style => 'width: 430px'} %></td>
+      <td class="hours"><%= f.submit "Išsaugoti" %></td>
+    </tr>
+  </table>
+<% end -%>

@@ -33,4 +33,35 @@
     <%= f.submit "Išsaugoti" %>
     <%= link_to 'Atšaukti', @project %>
   </p>
+  
+  <h2>Darbuotojai</h2>
+  <table>
+    <tr>
+      <th></th>
+      <th style="width: 270px">Vardas, pavardė</th>
+      <th style="width: 130px">Skyrius</th>
+      <th style="width: 130px">Pareigos</th>
+    </tr>
+    <% @employees.each do |e| %>
+    <tr class="<%= cycle('', 'odd') %>">
+      <td>
+        <input type="checkbox"
+               id="employee-<%=e.id%>"
+               name="employee_ids[]"
+               value="<%=e.id%>"
+               <%if @project.employees.include? e %>checked="checked"<% end %>
+               />
+      </td>
+      <td><%= link_to h(e.full_name), e %></td>
+      <td><%= link_to h(e.sector.name), e.sector %></td>
+      <td><%=h e.position.name %></td>
+    </tr>
+    <% end %>
+  </table>
+  <p>
+    <%= f.submit "Išsaugoti" %>
+    <%= link_to 'Atšaukti', @project %>
+  </p>
+  
 <% end %>
+

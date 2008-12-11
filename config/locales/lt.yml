@@ -18,6 +18,7 @@ lt:
         empty: "turi būti užpildytas"
         not_a_number: "turi būti skaičius"
         invalid: "neteisingas"
+        greater_than: "turi būti didesnis negu {{value}}"
       models:
         employee:
           attributes:
@@ -25,6 +26,11 @@ lt:
               blank: "turi būti įrašyta"
             position_id:
               blank: "turi būti nurodytos"
+        task:
+          attributes:
+            activity_id:
+              blank: "turi būti nurodyta"
+            
     models:
       task: "užduoties"
       employee: "darbuotojo"
@@ -33,10 +39,13 @@ lt:
       task:
         hours_spent: "Įdirbis"
         project_id: "Projektas"
-        activity_id: "Veiklos tipas"
+        activity_id: "Veikla"
       employee:
         sector_id: "Sektorius"
         last_name: "Pavardė"
         position_id: "Pareigos"
         email: "El. paštas"
         first_name: "Vardas"
+        login: "Prisijungimo vardas"
+        password: "Slaptažodis"
+

@@ -44,6 +44,13 @@ body, td, th {
     float: right;
     margin-right: 20px;
 }
+#toolbar li.text {
+    background: transparent;
+}
+#toolbar li.text a {
+    color: #000;
+    font-weight: normal;
+}
 #toolbar li.active {
     background: #67749e;    
 }
@@ -107,6 +114,10 @@ table {
     border-bottom: 1px solid #8393ca;
     margin: 0 0 10px 0;
 }
+table.joined {
+    border-bottom: none;
+    margin: 0;
+}
 th, td {
     padding: 5px 7px 4px 6px;
     whitespace: nowrap;
@@ -167,7 +178,7 @@ div.sidebar li {
 }
 
 /* login */
-form.login label {
+form.new_employee_session label {
     font-weight: bold;
     display: block;
 }

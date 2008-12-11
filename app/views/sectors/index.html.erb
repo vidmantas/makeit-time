@@ -6,7 +6,7 @@
     <th style="width: 185px">Vadovas</th>
   </tr>
 <% for sector in @sectors %>
-  <tr>
+  <tr class="<%= cycle('', 'odd') %>">
     <td><%= link_to h(sector.name), sector %></td>
     <td><%= link_to h(sector.manager.full_name), sector.manager %></td>
   </tr>

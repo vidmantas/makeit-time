@@ -42,6 +42,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
+    @employees = Employee.find(:all)
   end
 
   def create
@@ -61,7 +62,7 @@ class ProjectsController < ApplicationController
   # PUT /projects/1.xml
   def update
     @project = Project.find(params[:id])
-
+    @project.employees = Employee.find(params[:employee_ids]) if params[:employee_ids]
     respond_to do |format|
       if @project.update_attributes(params[:project])
         flash[:notice] = 'Projekto duomenys buvo sėkmingai atnaujinti.'
