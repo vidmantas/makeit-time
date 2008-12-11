@@ -1,9 +1,9 @@
 <% @avg = {0 => { :value => 0, :diff => 0 }} %>
 <% @sectors.each do |s| @avg[s.id] = { :value => 0, :diff => 0} end %>
 
-<table>
+<table class="all-right">
   <tr>
-    <th>Laikotarpis/padalinys</th>
+    <th colspan="2"></th>
     <% @sectors.each do |sector| %>
       <th><%= link_to h(sector.name), sector %></th>
     <% end %>
@@ -12,41 +12,61 @@
   
   <% @periods.reverse.each do |period| %>
     <% sum = { :value => 0, :income => 0.0 } %>
-    <tr class="<%= cycle('', 'odd') %>">
-      <td><%= period[:name] %></td>
+    <% odd = cycle('', 'odd') %>
+    <tr class="<%= odd %>">
+      <td rowspan="3"><%= period[:name] %></td>
+      <th>Sukurta vertė</th>
       <% @sectors.each do |s| %>
         <% sum[:value]   += value = s.time_usage_for(period[:starts], period[:ends]).to_i %>
         <% sum[:income]  += income = s.income(period[:starts], period[:ends]).to_f %>
         <td>
-          Sukurta vertė: <%= currency value %><br />
-          Pajamos: <%= currency income %><br />
-          Nebaigto darbo vertė: <br /> <%= currency(value - income) %> 
-          (<%= percentage((value - income) * 100 / value) %>)
+          <%= currency value %>
         </td>
-        
-        <% # ugly, ugly! -%>
         <% @avg[s.id][:value] += value
            @avg[s.id][:diff]  += (value - income) -%>
       <% end %>
       <td>
-        Sukurta vertė: <%= currency sum[:value] %><br />
-        Pajamos: <%= currency sum[:income] %><br />
-        Nebaigto darbo vertė: <br /><%= currency(sum[:value] - sum[:income]) %>
-        (<%= percentage((sum[:value] - sum[:income]) * 100 / sum[:value]) %>)
-        
-        <% @avg[0][:value] += sum[:value]
-           @avg[0][:diff]  += (sum[:value] - sum[:income]) -%>
+        <%= currency sum[:value] %>
+      </td>
+      <% @avg[0][:value] += sum[:value]
+         @avg[0][:diff]  += (sum[:value] - sum[:income]) -%>
+    </tr>
+    <tr class="<%= odd %>">
+      <th>Pajamos</th>
+      <% @sectors.each do |s| %>
+        <% income = s.income(period[:starts], period[:ends]).to_f %>
+        <td>
+          <%= currency income %>
+        </td>
+      <% end %>
+      <td>
+        <%= currency sum[:income] %>
+      </td>
+    </tr>
+    <tr class="<%= odd %>">
+      <th>Nebaigto darbo vertė</th>
+      <% @sectors.each do |s| %>
+        <% value = s.time_usage_for(period[:starts], period[:ends]).to_i %>
+        <% income = s.income(period[:starts], period[:ends]).to_f %>
+        <td>
+          <%= currency(value - income) %> (<%= percentage((value - income) * 100 / value) %>)
+        </td>
+      <% end %>
+      <td>
+        <%= currency(sum[:value] - sum[:income]) %>
+          (<%= percentage((sum[:value] - sum[:income]) * 100 / sum[:value]) %>)
       </td>
     </tr>
   <% end %>
-  
-  <tr>
-    <td>Vidurkis</td>
+
+  <% odd = cycle('', 'odd') %>
+  <tr class="<%= odd %>">
+    <th colspan="2">Nebaigto darbo vertė (vidurkis)</th>
     <% @sectors.each do |s| -%>
-      <td>Vidutinė nebaigto darbo vertė: <br /><%= currency(@avg[s.id][:diff] / @periods.size) %> 
+      <td><%= currency(@avg[s.id][:diff] / @periods.size) %> 
         (<%= percentage(@avg[s.id][:diff] * 100 / @avg[s.id][:value]) %>)</td>
     <% end %>
-    <td>Vidutinė nebaigto darbo vertė: <%= currency(@avg[0][:diff] / @periods.size)%><br />
+    <td><%= currency(@avg[0][:diff] / @periods.size)%>
       (<%= percentage(@avg[0][:diff] * 100 / @avg[0][:value]) %>)</td>
   </tr>
 </table>

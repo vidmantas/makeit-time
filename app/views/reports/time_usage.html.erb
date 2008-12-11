@@ -2,9 +2,11 @@
 
 <% remote_form_for "period", :url => { :action => 'time_usage' }, :update => 'report',
   :loading => "$('loading').show();", :complete => "$('loading').hide();" do |f| %>
+  <p>
   Pasirinkite laikotarpius: 
   <%= f.select :periods, [['Metai', 'years'], ['Ketvirčiai', 'quarters']] %>
   <%= f.submit 'Parodyti ataskaitą' %> <%= loader %>
+  </p>
 <% end %>
 
 <div id="report"></div>

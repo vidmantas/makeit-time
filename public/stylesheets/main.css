@@ -148,6 +148,9 @@ tr.description td .none {
 tr td.hours {
     text-align: right;
 }
+table.all-right td {
+    text-align: right;
+}
 
 /* sidebar */
 div.sidebar {
@@ -183,11 +186,16 @@ form.new_employee_session label {
     display: block;
 }
 
-/* enter-time */
-form.enter-time #date {
-    width: 75px;
+/* report brief */
+div.report-brief {
+    width: 450px;
+    padding: 5px 10px 5px 60px;
+    margin: 10px 0;
+    background: url(../images/pie-chart.png) no-repeat left 0px;
 }
-form.enter-time #hours {
-    width: 20px;
-    text-align: right;
+div.report-brief h3 {
+    font-size: 14px;
+}
+div.report-brief p {
+    color: #333;
 }

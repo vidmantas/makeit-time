@@ -8,7 +8,7 @@ module ReportsHelper
     if num.is_a?(Float) && (num.nan? || num.infinite?)
       num = 0
     end
-    
+
     options = { :precision => 2, :separator => ',' }.merge(opts)
     number_to_percentage(num, options)
   end
