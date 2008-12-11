@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081208170257) do
+ActiveRecord::Schema.define(:version => 2008121117290042) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20081208170257) do
     t.datetime "current_login_at"
     t.string   "last_login_ip"
     t.string   "current_login_ip"
+    t.boolean  "is_top_manager",                  :default => false
   end
 
   add_index "employees", ["login"], :name => "index_employees_on_login"

@@ -1,4 +1,6 @@
 class ReportsController < ApplicationController
+  before_filter { |c| c.assert_permission :reports_view }
+  
   def time_usage
     if request.post?
       @sectors = Sector.all

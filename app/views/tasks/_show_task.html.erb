@@ -4,7 +4,11 @@
 <table class="joined" id="task-<%=task.id%>-show">
   <tr class="<%=odd%>" >
     <td style="width: 90px"><%= task.date %></td>
-    <td style="width: 190px"><%= link_to task.project.name, employee_project_url(current_user, task.project) %></td>
+    <td style="width: 190px">
+      <%= link_to_protected task.project.name, 
+                            { :require => :projects_view, :id => task.project.id },
+                            employee_project_url(current_user, task.project) %>
+    </td>
     <td style="width: 140px"><%= task.activity.name %></td>
     <td style="width: 80px" class="hours"><%= task.hours_spent.format_h %></td>
   </tr>

@@ -1,6 +1,8 @@
 class HomeController < ApplicationController
   TASKS_PER_PAGE = 10
   
+  before_filter { |c| c.assert_permission :task_enter_personal, :url => '/projects' }
+  
   def index
     @task   = Task.new(:date => Time.now.to_s(:date))
     @tasks  = Task.paginate :page => params[:page], :per_page => TASKS_PER_PAGE,

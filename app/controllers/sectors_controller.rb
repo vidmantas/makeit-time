@@ -1,4 +1,6 @@
 class SectorsController < ApplicationController
+  before_filter { |c| c.assert_permission :sectors_view }
+  
   # GET /sectors
   # GET /sectors.xml
   def index
@@ -24,6 +26,7 @@ class SectorsController < ApplicationController
   # GET /sectors/new
   # GET /sectors/new.xml
   def new
+    assert_permission :sectors_edit
     @sector = Sector.new
 
     respond_to do |format|
@@ -34,12 +37,14 @@ class SectorsController < ApplicationController
 
   # GET /sectors/1/edit
   def edit
+    assert_permission :sectors_edit
     @sector = Sector.find(params[:id])
   end
 
   # POST /sectors
   # POST /sectors.xml
   def create
+    assert_permission :sectors_edit
     @sector = Sector.new(params[:sector])
 
     respond_to do |format|
@@ -57,6 +62,7 @@ class SectorsController < ApplicationController
   # PUT /sectors/1
   # PUT /sectors/1.xml
   def update
+    assert_permission :sectors_edit
     @sector = Sector.find(params[:id])
 
     respond_to do |format|
@@ -74,6 +80,7 @@ class SectorsController < ApplicationController
   # DELETE /sectors/1
   # DELETE /sectors/1.xml
   def destroy
+    assert_permission :sectors_edit
     @sector = Sector.find(params[:id])
     @sector.destroy
 

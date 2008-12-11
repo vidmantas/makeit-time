@@ -56,4 +56,18 @@ class Employee < ActiveRecord::Base
   def name_with_sector
     "#{self.full_name} (#{self.sector.name})"
   end
+
+  # Permissions
+  # is_project_manager says if users manages/-ed a project
+  # is_sector_manager says if user manages a sector
+  # is_top_manager (a field) says where user is in top management
+  
+  def is_project_manager
+    Project.count(:conditions => ['manager_id = ?', self.id]) > 0
+  end
+  
+  def is_sector_manager
+    self.sector.manager == self
+  end
+
 end

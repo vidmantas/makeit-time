@@ -20,15 +20,19 @@
 <% for project in @projects %>
   <tr class="<%= cycle('', 'odd') %>">
     <td><%=h project.code %></td>
-    <td><%= link_to h(project.name), project %></td>
-    <td><%= link_to h(project.manager.full_name), project.manager %></td>
-    <td><%= link_to h(project.manager.sector.name), project.manager.sector %></td>
+
+    <td><%= link_to_protected h(project.name), { :require => :projects_view, :id => project.id },
+                              project %></td>
+    
+    <td><%= link_to_protected h(project.manager.full_name), 
+                              { :require => :employees_view, :id => project.manager.id },
+                              project.manager %></td>
+                              
+    <td><%= link_to_protected h(project.manager.sector.name), 
+                              { :require => :sectors_view, :id => project.manager.sector },
+                              project.manager.sector %></td>
     <td><%=h project.start_date %></td>
     <td><%=h project.end_date %></td>
-    <!--
-    <td><%= link_to 'Edit', edit_project_path(project) %></td>
-    <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
-    -->
   </tr>
 <% end %>
 </table>

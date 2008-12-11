@@ -1,12 +1,16 @@
 <h2>Įmonės darbuotojai</h2>
 
-<p id="add_employee_button">
-  <button onclick="$('add_employee_button').hide(); $('add_employee').appear()">Naujo darbuotojo registracija</button>
-</p>
+<% if require_permission :employees_create %>
 
-<div id="add_employee" style="display: none">
-  <%= render :partial => 'add_employee' %>
-</div>
+  <p id="add_employee_button">
+    <button onclick="$('add_employee_button').hide(); $('add_employee').appear()">Naujo darbuotojo registracija</button>
+  </p>
+
+  <div id="add_employee" style="display: none">
+    <%= render :partial => 'add_employee' %>
+  </div>
+  
+<% end %>
 
 <table>
   <tr>

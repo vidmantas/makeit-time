@@ -12,8 +12,62 @@ class ApplicationController < ActionController::Base
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user
+  helper_method :current_user_session, :current_user, :require_permission, :assert_permission
   before_filter :set_user_language
+
+  def require_permission(key, options = {})
+    return false unless current_user
+    c = current_user
+    case key
+    when :task_enter_personal
+      not c.is_top_manager
+    when :employees_view_some
+      c.is_sector_manager or c.is_top_manager or c.is_project_manager
+    when :employees_view_all
+      c.is_top_manager
+    when :employees_view
+      e = Employee.find(options[:id])
+      c == e
+    when :employees_create
+      c.is_sector_manager
+    when :employees_edit
+      c.is_sector_manager and Employee.find(options[:id]).sector == c.sector
+    when :employees_destroy
+      c.is_sector_manager and Employee.find(options[:id]).sector == c.sector
+    when :projects_view_some
+      true
+    when :projects_view
+      project = Project.find(options[:id])
+      project.employees.include?(c) or 
+        project.manager == c or
+        (c.is_sector_manager and project.manager.sector == c.sector) or
+        c.is_top_manager
+    when :projects_create
+      c.is_sector_manager
+    when :projects_edit
+      project = Project.find(options[:id])
+      (c.is_sector_manager and project.manager.sector == c.sector) or
+          project.manager == c
+    when :projects_destroy
+      c.is_sector_manager and Project.find(options[:id]).sector == c.sector
+    when :sectors_view
+      c.is_sector_manager or c.is_top_manager
+    when :sectors_edit
+      false
+    when :reports_view
+      c.is_top_manager
+    else
+      false
+    end
+  end
+  
+  def assert_permission(key, options = {})
+    if not require_permission(key, options)
+      flash[:notice] = "Neturite teisių peržiūrėti šį puslapį."
+      redirect_to options.fetch(:url, '/')
+    end
+    true
+  end
   
   private
   
@@ -26,16 +80,7 @@ class ApplicationController < ActionController::Base
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.employee
   end
-
-  def require_user
-    unless current_user
-      store_location
-      flash[:notice] = "You must be logged in to access this page"
-      redirect_to new_user_session_url
-      return false
-    end
-  end
-
+  
   def store_location
     session[:return_to] = request.request_uri
   end

@@ -24,6 +24,17 @@ module ApplicationHelper
       render :partial => 'shared/menu_item', :locals => { :name => name, :url => url_for(opts) }
     end
   end
+
+  # Doesn't work. Dunno how to use variable-length argument
+  # lists in Ruby --admp
+  def link_to_protected title, protect, *args
+    permission = protect[:require]
+    if require_permission(permission, protect)
+      return link_to(title, *args)
+    else
+      return title
+    end
+  end
 end
 
 # FIXME: dunno where is the right place to put this

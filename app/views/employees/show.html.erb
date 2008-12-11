@@ -1,9 +1,11 @@
 <h2><%= link_to h(@employee.sector.name), @employee.sector %> &rarr; 
     <%= link_to h(@employee.full_name), @employee %></h2>
 
+<% if require_permission :employees_edit, :id => @employee.id %>
 <p>
   <%= link_to 'Redaguoti', edit_employee_path(@employee) %>
 </p>
+<% end %>
 
 <table>
     <tr>
