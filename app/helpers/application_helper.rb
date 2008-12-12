@@ -25,8 +25,6 @@ module ApplicationHelper
     end
   end
 
-  # Doesn't work. Dunno how to use variable-length argument
-  # lists in Ruby --admp
   def link_to_protected(title, protect, *args)
     permission = protect[:require]
     if require_permission(permission, protect)
