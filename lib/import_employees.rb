@@ -16,7 +16,7 @@ class ImportEmployees < Import
         e = Employee.new(
           :first_name   => login,
           :login        => login,
-          :sector_id    => sector_id,
+          :sector       => Sector.find_by_code(sector_id),
           :position     => default_position,
           :password     => login
         )

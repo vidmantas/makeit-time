@@ -7,3 +7,8 @@ second:
   code: 2
   name: Second sector
   manager: bronius
+
+vadovu:
+  code: 0
+  name: Managers
+  manager: vadas

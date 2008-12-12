@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2008121117290042) do
+ActiveRecord::Schema.define(:version => 20081212115255) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 2008121117290042) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "visible",    :default => true
   end
 
   create_table "projects", :force => true do |t|
@@ -85,6 +86,7 @@ ActiveRecord::Schema.define(:version => 2008121117290042) do
     t.integer  "manager_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "visible",                  :default => true
   end
 
   add_index "sectors", ["code"], :name => "index_sectors_on_code"

@@ -54,7 +54,11 @@ class Employee < ActiveRecord::Base
   end
   
   def name_with_sector
-    "#{self.full_name} (#{self.sector.name})"
+    if self.sector
+      "#{self.full_name} (#{self.sector.name})"
+    else
+      self.full_name
+    end
   end
 
   # Permissions
@@ -67,7 +71,7 @@ class Employee < ActiveRecord::Base
   end
   
   def is_sector_manager
-    self.sector.manager == self
+    self.is_top_manager || self.sector.manager == self
   end
   
   def in_project_managed_by(project_manager)

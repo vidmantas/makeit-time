@@ -7,7 +7,11 @@ class EmployeeSessionsController < ApplicationController
     @user_session = EmployeeSession.new(params[:employee_session])
     if @user_session.save
       flash[:notice] = I18n.t "login_successful"
-      redirect_back_or_default url_for(:controller => 'home')
+      if current_user.is_top_manager
+        redirect_back_or_default url_for(:controller => 'projects')
+      else
+        redirect_back_or_default url_for(:controller => 'home')
+      end      
     else
       render :action => :new
     end

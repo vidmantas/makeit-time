@@ -4,7 +4,7 @@ class SectorsController < ApplicationController
   # GET /sectors
   # GET /sectors.xml
   def index
-    @sectors = Sector.find(:all, :include => :manager)
+    @sectors = Sector.all(:include => :manager)
 
     respond_to do |format|
       format.html # index.html.erb

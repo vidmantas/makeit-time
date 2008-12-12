@@ -44,4 +44,29 @@ Spec::Runner.configure do |config|
   # == Notes
   # 
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
+  
+  config.before(:each, :type => :controller) do
+    Authlogic::Session::Base.controller =
+      Authlogic::ControllerAdapters::RailsAdapter.new controller
+  end
+end
+
+def login(session_stubs = {}, user_stubs = {})
+  @current_user = mock_model(Employee, user_stubs)
+  @current_user_session = mock_model(EmployeeSession, {:record => @current_user}.merge(session_stubs))
+  EmployeeSession.stub!(:find).and_return(@current_user_session)
+end
+ 
+def logout
+  @current_user = nil
+  @current_user_session = nil
+  EmployeeSession.stub!(:find).and_return(nil)
+end
+  
+def current_user
+  @current_user
+end
+ 
+def current_user_session
+  @current_user_session
 end

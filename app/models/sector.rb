@@ -7,9 +7,11 @@ class Sector < ActiveRecord::Base
   has_many :employees, :order => 'first_name, last_name'
   
   named_scope :all_except, lambda{ |*args| {
-      :conditions => ['id != ?', args.first],
+      :conditions => ['visible = ? AND id != ?', true, args.first],
       :order      => 'name'
-    }}
+  }}
+
+  named_scope :all, :conditions => ['visible = ?', true], :order => 'name'
     
   def self.all_for_project(project_id, manager_sector_id)
     # We must receive all sectors, even those where sum(hours_spent) = 0.
