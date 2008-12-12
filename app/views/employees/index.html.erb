@@ -20,13 +20,13 @@
   </tr>
 <% for employee in @employees %>
   <tr class="<%= cycle('', 'odd') %>">
-    <td><%= link_to h(employee.full_name), employee %></td>
-    <td><%= link_to h(employee.sector.name), employee.sector %></td>
+    <td><%= link_to_protected h(employee.full_name),
+                              { :require => :employees_view, :id => employee.id },
+                              employee %></td>
+    <td><%= link_to_protected h(employee.sector.name), 
+                              { :require => :sectors_view, :id => employee.sector.id },
+                              employee.sector %></td>
     <td><%=h employee.position.name %></td>
-    <!--
-    <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-    <td><%= link_to 'Destroy', employee, :confirm => 'Are you sure?', :method => :delete %></td>
-    -->
   </tr>
 <% end %>
 </table>

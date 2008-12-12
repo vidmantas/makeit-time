@@ -1,4 +1,6 @@
-<h2><%= link_to h(@employee.sector.name), @employee.sector %> &rarr; 
+<h2><%= link_to_protected h(@employee.sector.name),
+                          { :require => :sectors_view, :id => @employee.sector.id },
+                          @employee.sector %> &rarr; 
     <%= link_to h(@employee.full_name), @employee %></h2>
 
 <% if require_permission :employees_edit, :id => @employee.id %>
@@ -16,7 +18,9 @@
     <tr>
         <td><%= h(@employee.first_name) %></td>
         <td><%= h(@employee.last_name) %></td>
-        <td><%= link_to h(@employee.sector.name), @employee.sector %></td>
+        <td><%= link_to_protected h(@employee.sector.name), 
+                                  { :require => :sectors_view, :id => @employee.sector.id },
+                                  @employee.sector %></td>
     </tr>
     <tr>
         <th colspan="2">El. pašto adresas</th>
@@ -44,12 +48,19 @@
     <tr>
       <td><%=h p.code %></td>
       <td>
-        <%= link_to p.name, employee_project_url(@employee, p) %>
+        <% if require_permission(:projects_view, :id => p.id) and
+              require_permission(:employees_view, :id => @employee.id) %>
+          <%= link_to h(p.name), employee_project_url(@employee, p) %>
+        <% else %>
+          <%=h p.name %>
+        <% end %>
         <% if p.manager == @employee %>
           <%= image_tag 'project-manager.png', :title => 'Darbuotojas yra šio projekto vadovas' %>
         <% end %>
       </td>
-      <td><%= link_to p.manager.full_name, p.manager %></td>
+      <td><%= link_to_protected p.manager.full_name, 
+                                { :require => :employees_view, :id => p.manager.id },
+                                p.manager %></td>
       <td><%= @employee.started_in_project(p.id) %></td>
       <td><%= @employee.finished_in_project(p.id) %></td>
       <td class="hours"><%= @employee.hours_spent_in_project(p.id).format_h %></td>

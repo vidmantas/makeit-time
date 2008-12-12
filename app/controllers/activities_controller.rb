@@ -1,4 +1,6 @@
 class ActivitiesController < ApplicationController
+  before_filter { |c| c.assert_permission :activities_view }
+  
   # GET /activities
   # GET /activities.xml
   def index

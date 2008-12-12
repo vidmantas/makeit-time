@@ -1,4 +1,6 @@
-<h2><%= link_to h(@employee.sector.name), @employee.sector %> &rarr; 
+<h2><%= link_to_protected h(@employee.sector.name),
+                          { :require => :sectors_view, :id => @employee.sector.id },
+                          @employee.sector %> &rarr; 
     <%= link_to h(@employee.full_name), @employee %></h2>
 
 <% form_for(@employee) do |f| %>

@@ -19,7 +19,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.xml
   def show
-    assert_permission :employees_view, :id => params[:id]
+    return unless assert_permission :employees_view, :id => params[:id]
     @employee = Employee.find(params[:id], :include => [:sector, :position])
     @projects = @employee.projects
     
@@ -32,7 +32,7 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   # GET /employees/new.xml
   def new
-    assert_permission :employees_create
+    return unless assert_permission :employees_create
     @employee = Employee.new
 
     respond_to do |format|
@@ -43,14 +43,14 @@ class EmployeesController < ApplicationController
 
   # GET /employees/1/edit
   def edit
-    assert_permission :employees_edit, :id => params[:id]
+    return unless assert_permission :employees_edit, :id => params[:id]
     @employee = Employee.find(params[:id])
   end
 
   # POST /employees
   # POST /employees.xml
   def create
-    assert_permission :employees_create
+    return unless assert_permission :employees_create
     @employee = Employee.new(params[:employee])
 
     if @employee.save
@@ -66,7 +66,7 @@ class EmployeesController < ApplicationController
   # PUT /employees/1
   # PUT /employees/1.xml
   def update
-    assert_permission :employees_edit, :id => params[:id]
+    return unless assert_permission :employees_edit, :id => params[:id]
     @employee = Employee.find(params[:id])
 
     respond_to do |format|
@@ -84,7 +84,7 @@ class EmployeesController < ApplicationController
   # DELETE /employees/1
   # DELETE /employees/1.xml
   def destroy
-    assert_permission :employees_destroy, :id => params[:id]
+    return unless assert_permission :employees_destroy, :id => params[:id]
     @employee = Employee.find(params[:id])
     @employee.destroy
 

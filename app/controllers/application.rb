@@ -69,8 +69,10 @@ class ApplicationController < ActionController::Base
       else
         redirect_to options.fetch(:url, '/')
       end
+      false
+    else
+      true
     end
-    true
   end
   
   private

@@ -1,12 +1,16 @@
 <h2>Projektai</h2>
 
-<p id="add_project_button">
-  <button onclick="$('add_project_button').hide(); $('add_project').appear()">Naujo projekto registracija</button>
-</p>
+<% if require_permission :projects_create %>
 
-<div id="add_project" style="display: none">
-  <%= render :partial => 'add_project' %>
-</div>
+  <p id="add_project_button">
+    <button onclick="$('add_project_button').hide(); $('add_project').appear()">Naujo projekto registracija</button>
+  </p>
+
+  <div id="add_project" style="display: none">
+    <%= render :partial => 'add_project' %>
+  </div>
+
+<% end %>
 
 <table>
   <tr>

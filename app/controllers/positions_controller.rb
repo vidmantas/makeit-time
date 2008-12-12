@@ -1,4 +1,6 @@
 class PositionsController < ApplicationController
+  before_filter { |c| c.assert_permission :positions_view }
+  
   # GET /positions
   # GET /positions.xml
   def index

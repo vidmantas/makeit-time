@@ -1,5 +1,7 @@
-<h2><%= link_to h(@employee.sector.name), @employee.sector %> &rarr; 
-    <%= link_to h(@employee.full_name), @employee %> &rarr;
+<h2><%= link_to_protected h(@employee.sector.name),
+                          { :require => :sectors_view, :id => @employee.sector.id },
+                          @employee.sector %> &rarr; 
+    <%= link_to_protected h(@employee.full_name), @employee %> &rarr;
     <%= link_to h(@project.name), employee_project_url(@employee, @project) %></h2>
 
 <% title "#{@employee.full_name} įdirbis projekte #{@project.name}" %>

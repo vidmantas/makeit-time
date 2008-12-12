@@ -1,9 +1,13 @@
-<h2><%= link_to h(@project.manager.sector.name), @project.manager.sector %> &rarr;
+<h2><%= link_to_protected h(@project.manager.sector.name), 
+                          { :require => :sectors_view, :id => @project.manager.sector.id },
+                          @project.manager.sector %> &rarr;
     <%= link_to h(@project.name), @project %></h2>
 
-<p>
-  <%= link_to 'Redaguoti', edit_project_path(@project) %>
-</p>
+<% if require_permission :projects_edit, :id => @project.id %>
+  <p>
+    <%= link_to 'Redaguoti', edit_project_path(@project) %>
+  </p>
+<% end %>
 
 <table>
   <tr>
@@ -14,7 +18,9 @@
   <tr>
     <td><%=h @project.code %></td>
     <td colspan="2"><%=h @project.name %></td>
-    <td><%= link_to h(@project.manager.full_name), @project.manager %></td>
+    <td><%= link_to_protected h(@project.manager.full_name), 
+                              { :require => :employees_view, :id => @project.manager.id },
+                              @project.manager %></td>
   </tr>
   <tr>
     <th>Pradžia</th>
@@ -26,7 +32,9 @@
     <td><%=h @project.start_date %></td>
     <td><%=h @project.end_date %></td>
     <td><%=h @project.all_hours.format_h %></td>
-    <td><%= link_to h(@project.manager.sector.name), @project.manager.sector %></td>
+    <td><%= link_to_protected h(@project.manager.sector.name), 
+                              { :require => :sectors_view, :id => @project.manager.sector.id },
+                              @project.manager.sector %></td>
   </tr>
 </table>
 
@@ -45,7 +53,12 @@
   <% s.employees.each do |e| %>
     <% if @project.employees.include?(e) %>
     <tr class="<%= cycle('', 'odd') %>">
+      <% if require_permission(:projects_view, :id => @project.id) and
+            require_permission(:employees_view, :id => e.id) %>
       <td><%= link_to h(e.full_name), employee_project_url(e, @project) %></td>
+      <% else %>
+      <td><%=h e.full_name %></td>
+      <% end %>
       <td><%= h(e.position.name) %></td>
       <td class="hours"><%= e.hours_spent_in_project(@project.id).format_h %></td>
     </tr>

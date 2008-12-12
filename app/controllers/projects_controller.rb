@@ -17,9 +17,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    assert_permission :projects_view, :id => params[:id]
+    return unless assert_permission :projects_view, :id => params[:id]
     if params[:employee_id]
-      assert_permission :employees_view, :id => params[:id]
+      return unless assert_permission :employees_view, :id => params[:id]
       @project = Project.find(params[:id])
       @employee = Employee.find(params[:employee_id])
       @start = @employee.started_in_project(@project.id)
@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.xml
   def new
-    assert_permission :projects_create
+    return unless assert_permission :projects_create
     @project = Project.new
 
     respond_to do |format|
@@ -46,13 +46,13 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    assert_permission :projects_edit, :id => params[:id]
+    return unless assert_permission :projects_edit, :id => params[:id]
     @project = Project.find(params[:id])
     @employees = Employee.find(:all)
   end
 
   def create
-    assert_permission :projects_create
+   return unless  assert_permission :projects_create
     @project = Project.new(params[:project])
     
     if @project.save
@@ -68,7 +68,7 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   # PUT /projects/1.xml
   def update
-    assert_permission :projects_edit, :id => params[:id]
+    return unless assert_permission :projects_edit, :id => params[:id]
     @project = Project.find(params[:id])
     @project.employees = Employee.find(params[:employee_ids]) if params[:employee_ids]
     respond_to do |format|
@@ -86,7 +86,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.xml
   def destroy
-    assert_permission :projects_destroy, :id => params[:id]
+    return unless assert_permission :projects_destroy, :id => params[:id]
     @project = Project.find(params[:id])
     @project.destroy
 
