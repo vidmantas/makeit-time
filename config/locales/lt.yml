@@ -49,3 +49,7 @@ lt:
         login: "Prisijungimo vardas"
         password: "Slaptažodis"
 
+  pagination:
+    back: « Atgal
+    next: Pirmyn »
+

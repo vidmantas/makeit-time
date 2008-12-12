@@ -27,5 +27,5 @@
   <%= render :partial => 'tasks/show_task', :locals => { :task => t, :odd => @odd } %>
 <% end %>
 <p>
-  <%= will_paginate @tasks %>
+  <%= paginate @tasks %>
 </p>

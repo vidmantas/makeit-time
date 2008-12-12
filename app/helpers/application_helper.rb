@@ -27,13 +27,17 @@ module ApplicationHelper
 
   # Doesn't work. Dunno how to use variable-length argument
   # lists in Ruby --admp
-  def link_to_protected title, protect, *args
+  def link_to_protected(title, protect, *args)
     permission = protect[:require]
     if require_permission(permission, protect)
       return link_to(title, *args)
     else
       return title
     end
+  end
+  
+  def paginate(obj)
+    will_paginate obj, :previous_label => t('pagination.back'), :next_label => t('pagination.next')
   end
 end
 
