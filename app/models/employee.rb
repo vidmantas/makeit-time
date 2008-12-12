@@ -69,5 +69,9 @@ class Employee < ActiveRecord::Base
   def is_sector_manager
     self.sector.manager == self
   end
+  
+  def in_project_managed_by(project_manager)
+    self.projects.exists?(:manager_id => project_manager)
+  end
 
 end

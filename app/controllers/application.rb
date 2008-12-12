@@ -27,7 +27,11 @@ class ApplicationController < ActionController::Base
       c.is_top_manager
     when :employees_view
       e = Employee.find(options[:id])
-      c == e
+      c == e or 
+        e.in_project_managed_by(c) or
+        (c.is_sector_manager and e.sector == c.sector) or
+        (c.is_top_manager)
+      # TODO: is sector manager and e participates in project of that sector
     when :employees_create
       c.is_sector_manager
     when :employees_edit
@@ -55,7 +59,7 @@ class ApplicationController < ActionController::Base
     when :sectors_edit
       false
     when :reports_view
-      c.is_top_manager
+      c.is_sector_manager or c.is_top_manager
     else
       false
     end
