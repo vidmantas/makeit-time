@@ -64,7 +64,11 @@ class ApplicationController < ActionController::Base
   def assert_permission(key, options = {})
     if not require_permission(key, options)
       flash[:notice] = "Neturite teisių peržiūrėti šį puslapį."
-      redirect_to options.fetch(:url, '/')
+      if not current_user
+        redirect_to url_for(:controller => 'employee_sessions', :action => 'new')
+      else
+        redirect_to options.fetch(:url, '/')
+      end
     end
     true
   end

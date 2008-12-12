@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   TASKS_PER_PAGE = 10
   
-  before_filter { |c| c.assert_permission :task_enter_personal, :url => '/projects' }
+  before_filter { |c| c.assert_permission :task_enter_personal, :url => c.url_for(:controller => 'projects') }
   
   def index
     @task   = Task.new(:date => Time.now.to_s(:date))
