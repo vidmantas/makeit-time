@@ -1,35 +1,43 @@
 <h2><%= link_to_protected h(@employee.sector.name),
-                          { :require => :sectors_view, :id => @employee.sector.id },
-                          @employee.sector %> &rarr; 
-    <%= link_to h(@employee.full_name), @employee %></h2>
+    { :require => :sectors_view, :id => @employee.sector.id },
+    @employee.sector %> &rarr; 
+  <%= link_to h(@employee.full_name), @employee %></h2>
 
-<% if require_permission :employees_edit, :id => @employee.id %>
 <p>
-  <%= link_to 'Redaguoti', edit_employee_path(@employee) %>
+  <% if require_permission(:employees_edit, :id => @employee.id) %>
+    <%= link_to t('edit'), edit_employee_path(@employee) %>
+  <% end %>
+  
+  <% if @employee == current_user %>
+    <%= link_to_function t('employee.change_pass'), "$('change_password').appear()" %>
+  
+    <div id="change_password" style="display: none; margin-bottom: 15px;">
+      <%= render :partial => 'change_password', :locals => { :user => @employee } %>
+    </div>
+  <% end %>
 </p>
-<% end %>
 
 <table>
-    <tr>
-        <th style="width: 185px">Vardas</th>
-        <th style="width: 185px">Pavardė</th>
-        <th style="width: 130px">Skyrius</th>
-    </tr>
-    <tr>
-        <td><%= h(@employee.first_name) %></td>
-        <td><%= h(@employee.last_name) %></td>
-        <td><%= link_to_protected h(@employee.sector.name), 
-                                  { :require => :sectors_view, :id => @employee.sector.id },
-                                  @employee.sector %></td>
-    </tr>
-    <tr>
-        <th colspan="2">El. pašto adresas</th>
-        <th>Pareigos</th>
-    </tr>
-    <tr>
-        <td colspan="2" style="width: 300px"><%= mail_to @employee.email, @employee.email%></td>
-        <td><%= h(@employee.position.name) %></td>
-    </tr>
+  <tr>
+    <th style="width: 185px">Vardas</th>
+    <th style="width: 185px">Pavardė</th>
+    <th style="width: 130px">Skyrius</th>
+  </tr>
+  <tr>
+    <td><%= h(@employee.first_name) %></td>
+    <td><%= h(@employee.last_name) %></td>
+    <td><%= link_to_protected h(@employee.sector.name), 
+        { :require => :sectors_view, :id => @employee.sector.id },
+        @employee.sector %></td>
+  </tr>
+  <tr>
+    <th colspan="2">El. pašto adresas</th>
+    <th>Pareigos</th>
+  </tr>
+  <tr>
+    <td colspan="2" style="width: 300px"><%= mail_to @employee.email, @employee.email%></td>
+    <td><%= h(@employee.position.name) %></td>
+  </tr>
 </table>
 
 <h2>Projektai</h2>
@@ -49,7 +57,7 @@
       <td><%=h p.code %></td>
       <td>
         <% if require_permission(:projects_view, :id => p.id) and
-              require_permission(:employees_view, :id => @employee.id) %>
+            require_permission(:employees_view, :id => @employee.id) %>
           <%= link_to h(p.name), employee_project_url(@employee, p) %>
         <% else %>
           <%=h p.name %>
@@ -59,8 +67,8 @@
         <% end %>
       </td>
       <td><%= link_to_protected p.manager.full_name, 
-                                { :require => :employees_view, :id => p.manager.id },
-                                p.manager %></td>
+          { :require => :employees_view, :id => p.manager.id },
+          p.manager %></td>
       <td><%= @employee.started_in_project(p.id) %></td>
       <td><%= @employee.finished_in_project(p.id) %></td>
       <td class="hours"><%= @employee.hours_spent_in_project(p.id).format_h %></td>

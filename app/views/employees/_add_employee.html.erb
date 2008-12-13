@@ -10,8 +10,12 @@
     <tr>
       <td><%= f.text_field :first_name, {:style => 'width: 185px'} %></td>
       <td><%= f.text_field :last_name, {:style => 'width: 185px'} %></td>
-      <td><%= f.collection_select :sector_id, Sector.all, :id, :name,
-                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+      <td>
+        <%#= f.collection_select :sector_id, Sector.all, :id, :name,
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %>
+        <%=h current_user.sector.name %>
+        <input type="hidden" name="employee[sector_id]" value="<%= current_user.sector.id %>" />
+      </td>
     </tr>
     <tr>
       <th colspan="2"><%= f.label :email, 'El. paštas' %></th>

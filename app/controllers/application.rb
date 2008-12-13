@@ -25,7 +25,8 @@ class ApplicationController < ActionController::Base
     when :task_enter_personal
       not c.is_top_manager
     when :employees_view_some
-      c.is_sector_manager or c.is_top_manager or c.is_project_manager
+      e = Employee.find(params[:id]) rescue false # if has params[:id] and trying to access report of himself
+      c.is_sector_manager or c.is_top_manager or c.is_project_manager or c == e
     when :employees_view_all
       c.is_top_manager
     when :employees_view

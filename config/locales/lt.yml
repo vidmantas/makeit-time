@@ -19,6 +19,7 @@ lt:
         not_a_number: "turi būti skaičius"
         invalid: "neteisingas"
         greater_than: "turi būti didesnis negu {{value}}"
+        too_short: "per trumpas (mažiausiai {{count}} simboliai)"
       models:
         employee:
           attributes:
@@ -26,6 +27,11 @@ lt:
               blank: "turi būti įrašyta"
             position_id:
               blank: "turi būti nurodytos"
+            password:
+              confirmation: "nesutampa su pakartotu"
+            email:
+              taken: jau užregistruotas
+            
         task:
           attributes:
             activity_id:
@@ -48,8 +54,17 @@ lt:
         first_name: "Vardas"
         login: "Prisijungimo vardas"
         password: "Slaptažodis"
+        current_password: "Dabartinis slaptažodis"
 
   pagination:
     back: « Atgal
     next: Pirmyn »
 
+  edit: Redaguoti
+
+  employee:
+    change_pass: Pasikeisti slaptažodį
+    curr_pass: Dabartinis slaptažodis
+    new_pass: Naujas slaptažodis
+    new_pass_repeat: Naujas slaptažodis (pakartoti)
+    pass_changed: Slaptažodis pakeistas sėkmingai!

@@ -55,6 +55,7 @@ class EmployeesController < ApplicationController
     if @employee.save
       flash[:notice] = 'Darbuotojas sukurtas sėkmingai.'
       render :update do |page|
+        page.remove 'add_employee'
         page.redirect_to :action => 'index'
       end
     else
@@ -90,6 +91,31 @@ class EmployeesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(employees_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  def change_password
+    @employee = Employee.find(params[:id])
+    if request.post? and @employee == current_user
+      @employee.password = params[:employee][:password]
+      @employee.password_confirmation = params[:employee][:password_confirmation]
+
+      # check password
+      es = EmployeeSession.new(:login => current_user.login, :password => params[:employee][:current_password])
+      @employee.errors.add(:current_password, :invalid) unless es.valid?
+        
+      if @employee.errors.empty? && @employee.save
+        flash[:notice] = t('employee.pass_changed')
+        render :update do |page|
+          page.remove 'change_password'
+          page.redirect_to :action => 'show', :id => @employee
+        end        
+      else
+        render :partial => 'change_password'
+      end
+    else
+      # should never happen :-)
+      render :nothing => true
     end
   end
 end

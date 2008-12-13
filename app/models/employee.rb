@@ -11,14 +11,16 @@ class Employee < ActiveRecord::Base
   validates_presence_of :first_name, :sector_id, :position_id, :last_name, :email
   validates_uniqueness_of :email, :if => lambda{ |e| !e.email.blank? }
   validates_format_of :email, :with => RFC822::EmailAddress, :if => lambda{ |e| !e.email.blank? }
+  validates_confirmation_of :password, :if => lambda{ |e| !e.password.blank? }
+  validates_length_of :password, :minimum => 3, :on => :update
+  
+  attr_protected :is_top_manager # can't be mass-assigned
+  attr_accessor :current_password # for changing password
   
   named_scope :all_sorted, :order => 'first_name, last_name'
-
-  # FIXME: Vidmantas, is this ok? :-)
-  def email=(value)
-    write_attribute(:email, value)
-    self.login = value unless self.login
-  end
+  
+  before_create :set_login
+  after_create :set_password_and_email
   
   def full_name
     "#{self.first_name} #{self.last_name}"
@@ -78,4 +80,41 @@ class Employee < ActiveRecord::Base
     self.projects.exists?(:manager_id => project_manager_id)
   end
 
+  protected
+  
+  def set_login
+    login = self.first_name 
+    index = number = 0
+    
+    while true
+      if Employee.find_by_login(login)
+        if self.last_name[index]
+          login << self.last_name[index].chr
+        else
+          number += 1
+          login << number.to_s
+        end
+        index += 1
+      else
+        break
+      end
+    end
+    
+    self.login = login
+  end
+  
+  def set_password_and_email
+    password = String.random
+    update_attribute(:password, password)
+    Mailer.deliver_send_password(self, password)
+  end
+end
+
+class String
+  def self.random(length = 6)
+    list    = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    random  = ''
+    1.upto(length) { random << list[rand(list.size-1)] }
+    return random
+  end
 end
