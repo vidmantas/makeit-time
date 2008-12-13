@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
       render :template => 'employees/project_report'
     else
       @project = Project.find(params[:id], :include => {:manager => :sector})
-      @graph = open_flash_chart_object(600,300,"/graphs/project_intensity/#{@project.id}")
+      @intensity_graph = open_flash_chart_object(600,300,"/graphs/project_intensity/#{@project.id}")
     end    
   end
 
@@ -52,7 +52,7 @@ class ProjectsController < ApplicationController
   end
 
   def create
-   return unless  assert_permission :projects_create
+   return unless assert_permission :projects_create
     @project = Project.new(params[:project])
     
     if @project.save

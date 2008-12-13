@@ -21,24 +21,25 @@ class GraphsController < ApplicationController
     step = (max - min) / 5
     
     # Graph
-    title = Title.new("Projekto intensyvumas")
-    
     manager_line = LineDot.new
     manager_line.text = "Vadovo skyrius"
+    manager_line.tip = "Vadovo skyrius<br>#val# val."
     manager_line.width = 4
-    manager_line.colour = '#DFC329'
+    manager_line.colour = '#6363AC'
     manager_line.dot_size = 5
     manager_line.values = manager_sector_data
     
-    others_line = LineHollow.new
+    others_line = LineDot.new
     others_line.text = "Kiti skyriai"
+    others_line.tip = "Kiti skyriai<br>#val# val."
     others_line.width = 1
-    others_line.colour = '#6363AC'
+    others_line.colour = '#DFC329'
     others_line.dot_size = 5
     others_line.values = other_sectors_data
 
-    total_line = Line.new
+    total_line = LineDot.new
     total_line.text = "Visi"
+    total_line.tip = "Visi<br>#val# val."
     total_line.width = 1
     total_line.colour = '#5E4725'
     total_line.dot_size = 5
@@ -46,19 +47,23 @@ class GraphsController < ApplicationController
     
     y = YAxis.new
     y.set_range(min, max, step)
+    y.colour = '#8393ca'
+    y.grid_colour = '#8393ca'
     
     x = XAxis.new
+    x.colour = '#8393ca'
+    x.grid_colour = '#8393ca'
     x.set_offset(false)
     x.set_labels(months)
     
     x_legend = XLegend.new("Mėnesiai")
-    x_legend.set_style('{font-size: 20px; color: #778877}')
+    x_legend.set_style('{font-size: 12px; color: #000;}')
     
     y_legend = YLegend.new("Įdirbis")
-    y_legend.set_style('{font-size: 20px; color: #770077}')
+    y_legend.set_style('{font-size: 12px; color: #000;}')
 
     chart = OpenFlashChart.new
-    chart.set_title(title)
+    chart.bg_colour = '#ffffff'
     chart.set_x_legend(x_legend)
     chart.set_y_legend(y_legend)
     chart.y_axis = y
