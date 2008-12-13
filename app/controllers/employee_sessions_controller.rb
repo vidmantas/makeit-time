@@ -22,4 +22,11 @@ class EmployeeSessionsController < ApplicationController
     flash[:notice] = I18n.t "logout_successful"
     redirect_back_or_default new_employee_sessions_url
   end
+  
+  protected
+  
+  def allow_printing?
+    false
+  end
+  
 end

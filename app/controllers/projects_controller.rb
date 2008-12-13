@@ -19,7 +19,7 @@ class ProjectsController < ApplicationController
   def show
     return unless assert_permission :projects_view, :id => params[:id]
     if params[:employee_id]
-      return unless assert_permission :employees_view, :id => params[:id]
+      return unless assert_permission :employees_view, :id => params[:employee_id]
       @project = Project.find(params[:id])
       @employee = Employee.find(params[:employee_id])
       @start = @employee.started_in_project(@project.id)

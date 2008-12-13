@@ -40,9 +40,11 @@
       <div class="clear"></div>
     </div>
     
+    <% if allow_printing? %>
     <div id="printer">
       <a href="#" onclick="window.print(); return false">Spausdinti</a>
     </div>
+    <% end %>
     
     <div id="content">
       <%= render :partial => 'shared/notices' %>

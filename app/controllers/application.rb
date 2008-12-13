@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   # Uncomment this to filter the contents of submitted sensitive data parameters
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password, :password_confirmation
-  helper_method :current_user_session, :current_user, :require_permission, :assert_permission
+  helper_method :current_user_session, :current_user, :require_permission, :assert_permission,
+    :allow_printing?
   before_filter :set_user_language
 
   def require_permission(key, options = {})
@@ -70,16 +71,25 @@ class ApplicationController < ActionController::Base
   def assert_permission(key, options = {})
     if not require_permission(key, options)
       if not current_user
-        flash[:notice] = 'Prašome prisijungti'
+        message = 'Prašome prisijungti'
         redirect_to :controller => 'employee_sessions', :action => 'new'
       else
-        flash[:notice] = "Neturite teisių peržiūrėti šį puslapį."
+        message = "Neturite teisių peržiūrėti šį puslapį."
         redirect_to :back rescue redirect_to options.fetch(:url, '/')
+      end
+      if options.fetch(:show_message, true)
+        flash[:notice] = message
       end
       false
     else
       true
     end
+  end
+
+  protected
+  
+  def allow_printing?
+    true
   end
   
   private
