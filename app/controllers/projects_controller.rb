@@ -28,7 +28,8 @@ class ProjectsController < ApplicationController
       render :template => 'employees/project_report'
     else
       @project = Project.find(params[:id], :include => {:manager => :sector})
-      @intensity_graph = open_flash_chart_object(600,300,"/graphs/project_intensity/#{@project.id}")
+      @intensity_graph = open_flash_chart_object(600, 300, "/graphs/project_intensity/#{@project.id}")
+      @sector_graph = open_flash_chart_object(200, 150, "/graphs/project_sectors/#{@project.id}")
     end    
   end
 

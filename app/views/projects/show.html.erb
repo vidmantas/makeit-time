@@ -9,34 +9,42 @@
   </p>
 <% end %>
 
-<table>
+<table class="floatl">
   <tr>
     <th style="width: 80px">Kodas</th>
-    <th colspan="2" style="width: 300px">Pavadinimas</th>
-    <th style="width: 180px">Projekto vadovas</th>
+    <th colspan="2" style="width: 230px">Pavadinimas</th>
   </tr>
   <tr>
     <td><%=h @project.code %></td>
     <td colspan="2"><%=h @project.name %></td>
+  </tr>
+  <tr>
+    <th>Projekto vadovas</th>
+    <th colspan="2">Skyrius</th>    
+  </tr>
+  <tr>
     <td><%= link_to_protected h(@project.manager.full_name), 
                               { :require => :employees_view, :id => @project.manager.id },
                               @project.manager %></td>
+    <td colspan="2"><%= link_to_protected h(@project.manager.sector.name), 
+                              { :require => :sectors_view, :id => @project.manager.sector.id },
+                              @project.manager.sector %></td>
   </tr>
   <tr>
     <th>Pradžia</th>
     <th>Pabaiga</th>
     <th>Įdirbis</th>
-    <th>Projekto skyrius</th>
   </tr>
   <tr>
     <td><%=h @project.start_date %></td>
     <td><%=h @project.end_date %></td>
     <td><%=h @project.all_hours.format_h %></td>
-    <td><%= link_to_protected h(@project.manager.sector.name), 
-                              { :require => :sectors_view, :id => @project.manager.sector.id },
-                              @project.manager.sector %></td>
   </tr>
 </table>
+<div class="floatl" style="margin-left: 10px">
+  <%= @sector_graph %>
+</div>
+<div class="clear"></div>
 
 <h2>Intensyvumas</h2>
 <p>

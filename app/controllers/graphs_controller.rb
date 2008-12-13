@@ -1,6 +1,7 @@
 class GraphsController < ApplicationController
   def project_intensity
     # Data
+    return unless assert_permission :projects_view, :id => params[:id]
     project = Project.find(params[:id])
     
     months    = []
@@ -21,9 +22,17 @@ class GraphsController < ApplicationController
     step = (max - min) / 5
     
     # Graph
+    total_line = LineDot.new
+    total_line.text = "Visi"
+    total_line.tip = "Visi (#x_label#)<br>#val# val."
+    total_line.width = 4
+    total_line.colour = '#5E4725'
+    total_line.dot_size = 5
+    total_line.values = all_sectors_data
+
     manager_line = LineDot.new
     manager_line.text = "Vadovo skyrius"
-    manager_line.tip = "Vadovo skyrius<br>#val# val."
+    manager_line.tip = "Vadovo skyrius (#x_label#)<br>#val# val."
     manager_line.width = 4
     manager_line.colour = '#6363AC'
     manager_line.dot_size = 5
@@ -31,19 +40,11 @@ class GraphsController < ApplicationController
     
     others_line = LineDot.new
     others_line.text = "Kiti skyriai"
-    others_line.tip = "Kiti skyriai<br>#val# val."
-    others_line.width = 1
+    others_line.tip = "Kiti skyriai (#x_label#)<br>#val# val."
+    others_line.width = 4
     others_line.colour = '#DFC329'
     others_line.dot_size = 5
     others_line.values = other_sectors_data
-
-    total_line = LineDot.new
-    total_line.text = "Visi"
-    total_line.tip = "Visi<br>#val# val."
-    total_line.width = 1
-    total_line.colour = '#5E4725'
-    total_line.dot_size = 5
-    total_line.values = all_sectors_data
     
     y = YAxis.new
     y.set_range(min, max, step)
@@ -56,23 +57,50 @@ class GraphsController < ApplicationController
     x.set_offset(false)
     x.set_labels(months)
     
-    x_legend = XLegend.new("Mėnesiai")
-    x_legend.set_style('{font-size: 12px; color: #000;}')
-    
-    y_legend = YLegend.new("Įdirbis")
+    y_legend = YLegend.new("Įdirbis (val.)")
     y_legend.set_style('{font-size: 12px; color: #000;}')
 
     chart = OpenFlashChart.new
     chart.bg_colour = '#ffffff'
-    chart.set_x_legend(x_legend)
     chart.set_y_legend(y_legend)
-    chart.y_axis = y
+    chart.set_y_axis(y)
     chart.set_x_axis(x)
 
+    chart.add_element(total_line)
     chart.add_element(manager_line)
     chart.add_element(others_line)
-    chart.add_element(total_line)
 
+    render :text => chart.to_s
+  end
+  
+  def project_sectors
+    # Data
+    return unless assert_permission :projects_view, :id => params[:id]
+    project = Project.find(params[:id])
+    values = []
+    Sector.find(:all).each do |sector|
+      if sector.visible
+        sector_data = project.graph_data_for_sector(sector.id)
+        hours = sector_data.sum
+        if hours > 0
+          values << PieValue.new(hours, sector.name)
+        end
+      end
+    end
+
+    # Pie
+    pie = Pie.new
+    pie.animate = false
+    pie.tooltip = '#val# val. (#percent#)'
+    pie.border = 2
+    pie.label_colour = '#8393ca'
+    pie.values = values
+    
+    # Chart
+    chart = OpenFlashChart.new
+    chart.bg_colour = '#ffffff'
+    chart.add_element(pie)
+    
     render :text => chart.to_s
   end
 end

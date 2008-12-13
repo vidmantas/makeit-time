@@ -13,6 +13,9 @@ body, td, th {
 .clear {
     clear: both;
 }
+.floatl {
+    float: left;
+}
 
 /* toolbar */
 #toolbar {
