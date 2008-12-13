@@ -7,6 +7,7 @@
     <%= javascript_include_tag :defaults %>
     <%= javascript_include_tag 'calendar/calendar', 'calendar/calendar-setup', 'calendar/calendar-lt-utf8', 'swfobject' %>
     <%= stylesheet_link_tag 'main', 'calendar-custom' %>
+    <%= stylesheet_link_tag 'print', :media => 'print' %>
   </head>
   <body>
     
@@ -37,6 +38,10 @@
       </ul>
       <% end %>
       <div class="clear"></div>
+    </div>
+    
+    <div id="printer">
+      <a href="#" onclick="window.print(); return false">Spausdinti</a>
     </div>
     
     <div id="content">

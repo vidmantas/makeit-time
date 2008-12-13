@@ -71,11 +71,11 @@ class Employee < ActiveRecord::Base
   end
   
   def is_sector_manager
-    self.is_top_manager || self.sector.manager == self
+    self.sector.manager == self
   end
   
-  def in_project_managed_by(project_manager)
-    self.projects.exists?(:manager_id => project_manager)
+  def in_project_managed_by(project_manager_id)
+    self.projects.exists?(:manager_id => project_manager_id)
   end
 
 end

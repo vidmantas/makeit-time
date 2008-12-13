@@ -63,6 +63,23 @@ body, td, th {
 #toolbar li.active a {
 }
 
+/* print button. */
+#printer {
+    float: right;
+    margin: 5px 20px 0 0;
+}
+#printer a {
+    color: #000;
+    padding-left: 25px;
+    background: url(../images/printer.png) no-repeat left center;
+    opacity: .65;
+    line-height: 12px;
+    font-size: 12px;
+}
+#printer a:hover {
+    opacity: 1;
+}
+
 /* body */
 #content {
     padding: 15px;
@@ -120,7 +137,7 @@ table.joined {
 }
 th, td {
     padding: 5px 7px 4px 6px;
-    whitespace: nowrap;
+    white-space: nowrap;
 }
 th {
     text-align: left;
