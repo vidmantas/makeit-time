@@ -66,7 +66,7 @@ body, td, th {
 /* print button. */
 #printer {
     float: right;
-    margin: 5px 20px 0 0;
+    margin: 5px 20px 10px 0;
 }
 #printer a {
     color: #000;
@@ -172,6 +172,7 @@ table.all-right td {
 /* sidebar */
 div.sidebar {
     float: right;
+    clear: right;
     width: 250px;
     padding: 0 0 0 10px;
     background: #fff;

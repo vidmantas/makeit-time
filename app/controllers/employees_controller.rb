@@ -1,11 +1,10 @@
 class EmployeesController < ApplicationController
   EMPLOYEES_PER_PAGE = 20
   
-  before_filter { |c| c.assert_permission :employees_view_some }
-  
   # GET /employees
   # GET /employees.xml
   def index
+    return unless assert_permission :employees_view_some
     @employees = Employee.paginate :page => params[:page], :per_page => EMPLOYEES_PER_PAGE, 
       :order => 'first_name, last_name', :include => [:sector, :position]
     @employee = Employee.new
