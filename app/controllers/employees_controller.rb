@@ -21,6 +21,7 @@ class EmployeesController < ApplicationController
     return unless assert_permission :employees_view, :id => params[:id]
     @employee = Employee.find(params[:id], :include => [:sector, :position])
     @projects = @employee.projects
+    @top_project_graph = open_flash_chart_object(300, 200, "/graphs/employee_top_projects/#{@employee.id}")
     
     respond_to do |format|
       format.html # show.html.erb

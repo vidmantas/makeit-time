@@ -1,4 +1,6 @@
 class GraphsController < ApplicationController
+  EMPLOYEE_TOP_PROJECTS = 5
+  
   def project_intensity
     # Data
     return unless assert_permission :projects_view, :id => params[:id]
@@ -88,6 +90,41 @@ class GraphsController < ApplicationController
       end
     end
 
+    # Pie
+    pie = Pie.new
+    pie.animate = false
+    pie.tooltip = '#val# val. (#percent#)'
+    pie.border = 2
+    pie.label_colour = '#8393ca'
+    pie.values = values
+    
+    # Chart
+    chart = OpenFlashChart.new
+    chart.bg_colour = '#ffffff'
+    chart.add_element(pie)
+    
+    render :text => chart.to_s
+  end
+  
+  def employee_top_projects
+    # Data
+    return unless assert_permission :employees_view, :id => params[:id]
+    employee = Project.find(params[:id])
+    top = Employee.find_by_sql ["SELECT
+      p.name, sum(t.hours_spent) AS hours
+      FROM employees_projects ep
+      INNER JOIN projects p ON p.id = ep.project_id
+      INNER JOIN tasks t ON t.project_id = p.id
+      WHERE ep.employee_id = ?
+      GROUP BY p.id
+      ORDER BY hours DESC
+      LIMIT 0, #{EMPLOYEE_TOP_PROJECTS}", employee.id]
+    
+    values = []
+    top.each do |p| 
+      values << PieValue.new(p.hours.to_i, p.name)
+    end
+    
     # Pie
     pie = Pie.new
     pie.animate = false
