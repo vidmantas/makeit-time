@@ -9,7 +9,7 @@ class Sector < ActiveRecord::Base
   named_scope :all_except, lambda{ |*args| {
       :conditions => ['visible = ? AND id != ?', true, args.first],
       :order      => 'name'
-  }}
+    }}
 
   named_scope :all, :conditions => ['visible = ?', true], :order => 'name'
     
@@ -17,15 +17,16 @@ class Sector < ActiveRecord::Base
     # We must receive all sectors, even those where sum(hours_spent) = 0.
     Sector.find_by_sql ["SELECT 
         s.id,
-        s.name,
-        SUM(t.hours_spent)  AS 'total_hours'
-      FROM tasks t 
-      INNER JOIN employees e ON e.id = t.employee_id
+        s.name, 
+        SUM(t.hours_spent) AS 'total_hours'
+      FROM employees_projects ep
+      INNER JOIN employees e ON e.id = ep.employee_id
       INNER JOIN sectors s ON s.id = e.sector_id
-      WHERE t.project_id = ?
-      GROUP BY s.id
+      LEFT OUTER JOIN tasks t ON (t.employee_id = e.id AND t.project_id = ?)
+      WHERE ep.project_id = ?
+      GROUP BY e.sector_id
       ORDER BY s.id = ? DESC, total_hours DESC", 
-      project_id, manager_sector_id
+      project_id, project_id, manager_sector_id
     ]
   end
   
@@ -175,7 +176,7 @@ class Sector < ActiveRecord::Base
       income_for_long_projects(start_date, end_date).to_f
   end
   
-   # iki 6 men trukmes
+  # iki 6 men trukmes
   def income_for_short_projects(start_date, end_date)
     projects_ids = self.has_projects(start_date, end_date).map(&:id)
     sql = "SELECT SUM(t.hours_spent) AS 'total_hours' 

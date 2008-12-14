@@ -109,7 +109,7 @@ class EmployeesController < ApplicationController
         flash[:notice] = t('employee.pass_changed')
         render :update do |page|
           page.remove 'change_password'
-          page.redirect_to :action => 'show', :id => @employee
+          page.redirect_to :back rescue redirect_to :action => 'show', :id => @employee
         end        
       else
         render :partial => 'change_password'

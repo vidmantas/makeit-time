@@ -12,7 +12,7 @@
     <%= link_to_function t('employee.change_pass'), "$('change_password').appear()" %>
   
     <div id="change_password" style="display: none; margin-bottom: 15px;">
-      <%= render :partial => 'change_password', :locals => { :user => @employee } %>
+      <%= render :partial => 'employees/change_password', :locals => { :user => @employee } %>
     </div>
   <% end %>
 </p>
