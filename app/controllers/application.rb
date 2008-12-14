@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
       not c.is_top_manager
     when :task_edit
       t = Task.find(options[:id])
-      puts Time.now - t.created_at
       t.employee == c and
-        (Time.now - t.created_at).round / (60 * 60 * 24) <= 5
+        t.created_at > 5.days.ago # rails way
+        # (Time.now - t.created_at).round / (60 * 60 * 24) <= 5
     when :employees_view_some
       e = Employee.find(params[:id]) rescue false # if has params[:id] and trying to access report of himself
       c.is_sector_manager or c.is_top_manager or c.is_project_manager or c == e
@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
       true
     end
   end
-
+  
   protected
   
   def allow_printing?

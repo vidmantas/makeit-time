@@ -242,6 +242,14 @@ class Sector < ActiveRecord::Base
     total
   end
   
+  def self.search(words)
+    self.find(:all, :conditions => Where { |w|
+      words.each do |word|
+        w.and 'name LIKE ?', "%#{word}%"
+      end
+    })
+  end
+  
   protected
   
   def to_date(date)

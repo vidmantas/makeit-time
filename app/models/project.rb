@@ -98,6 +98,14 @@ class Project < ActiveRecord::Base
     ])
   end
   
+  def self.search(words)
+    self.find(:all, :conditions => Where { |w|
+      words.each do |word|
+        w.and 'name LIKE ?', "%#{word}%"
+      end
+    })
+  end
+  
   memoize :total_value
   
   protected

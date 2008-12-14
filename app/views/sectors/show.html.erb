@@ -27,7 +27,7 @@
     <%= radio_button_tag 'duration', 'half' %> Pusmetis <%= select_tag :half, options_for_select(halfs) %>
     <%= radio_button_tag 'duration', 'quarter' %> Ketvirtis <%= select_tag :quarter, options_for_select(quarters) %>
     <%= radio_button_tag 'duration', 'month' %> Mėnesis <%= select_tag :month, options_for_select(months)  %>
-    <%= submit_tag 'Parodyti' %>
+    <%= submit_tag 'Parodyti' %> <%= loader %>
   <% end %>
 </p>
 

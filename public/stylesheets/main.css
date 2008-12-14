@@ -232,3 +232,23 @@ div.report-brief h3 {
 div.report-brief p {
     color: #333;
 }
+
+/* search */
+input.search {
+    background: url(../images/search.jpg) no-repeat right 0px;
+    width: 130px;
+}
+
+
+ul#search_results li {
+    background: #C5D2FC;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 0px;
+    width: 130px;
+    cursor: pointer;
+    margin: 0px;
+}
+
+ul#search_results li.selected {
+    background: #FFFFBB;
+}

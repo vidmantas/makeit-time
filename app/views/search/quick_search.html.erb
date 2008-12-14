@@ -1,0 +1,5 @@
+<ul id="search_results">
+  <% @results.each do |r| %>
+    <li onclick="location.href='<%= r[:url] %>'"><%= h(r[:name]) %></li>
+  <% end %>
+</ul>

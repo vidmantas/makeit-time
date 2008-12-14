@@ -62,6 +62,14 @@ class Employee < ActiveRecord::Base
       self.full_name
     end
   end
+  
+  def self.search(words)
+    self.find(:all, :conditions => Where { |w|
+      words.each do |word|
+        w.and 'first_name LIKE ? OR last_name LIKE ?', "%#{word}%", "%#{word}%"
+      end
+    })
+  end
 
   # Permissions
   # is_project_manager says if users manages/-ed a project
@@ -83,7 +91,7 @@ class Employee < ActiveRecord::Base
   protected
   
   def set_login
-    login = self.first_name 
+    login = self.first_name.dup # not by reference
     index = number = 0
     
     while true

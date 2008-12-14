@@ -12,5 +12,4 @@ class HomeController < ApplicationController
       :order      => 'date DESC, created_at DESC',
       :include    => [:activity, :project]
   end
-
 end

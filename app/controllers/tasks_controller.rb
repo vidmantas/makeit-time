@@ -62,6 +62,7 @@ class TasksController < ApplicationController
     if @task.update_attributes(params[:task].merge(:employee_id => current_user.id))
       flash[:notice] = 'Užduotis sėkmingai išsaugota.'
       render :update do |page|
+        page.remove "task-#{@task.id}-edit"
         page.redirect_to :back rescue redirect_to '/'
       end      
     else

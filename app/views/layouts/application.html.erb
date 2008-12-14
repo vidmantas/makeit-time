@@ -14,41 +14,47 @@
       
       <h1>MakeIT Time</h1>
       <% if current_user %>
-      <ul>
-        <% if require_permission :task_enter_personal %>
-        <%= menu_item "Įdirbis", :controller => 'home' %>
-        <% end %>
+        <ul>
+          <% if require_permission :task_enter_personal %>
+            <%= menu_item "Įdirbis", :controller => 'home' %>
+          <% end %>
+                  
+          <!-- any restrictions? -->
+          <%= menu_item "Mano laikas", :controller => 'my_time' %>
+        
+          <% if require_permission :projects_view_some %>
+            <%= menu_item "Projektai", :controller => 'projects' %>
+          <% end %>
+          <% if require_permission :employees_view_some %>
+            <%= menu_item "Darbuotojai", :controller => 'employees' %>
+          <% end %>
+          <% if require_permission :sectors_view_some %>
+            <%= menu_item "Skyriai", :controller => 'sectors' %>
+          <% end %>
+          <% if require_permission :reports_view %>
+            <%= menu_item "Ataskaitos", :controller => 'reports' %>
+          <% end %>
           
-        <!-- any restrictions? -->
-        <%= menu_item "Mano laikas", :controller => 'my_time' %>
-
-        <% if require_permission :projects_view_some %>
-        <%= menu_item "Projektai", :controller => 'projects' %>
-        <% end %>
-        <% if require_permission :employees_view_some %>
-        <%= menu_item "Darbuotojai", :controller => 'employees' %>
-        <% end %>
-        <% if require_permission :sectors_view_some %>
-        <%= menu_item "Skyriai", :controller => 'sectors' %>
-        <% end %>
-        <% if require_permission :reports_view %>
-        <%= menu_item "Ataskaitos", :controller => 'reports' %>
-        <% end %>
-  
-        <li class="last"><a href="/employee_sessions/destroy">Atsijungti</a></li>
-        <li class="last text"><%= link_to 'Prisijungęs: ' + h(current_user.full_name), current_user, 
-                                          :title => 'Peržiūrėti asmeninę informaciją' %></li>
-      </ul>
+          <li class="last"><a href="/employee_sessions/destroy">Atsijungti</a></li>
+          <li class="last text"><%= link_to 'Prisijungęs: ' + h(current_user.full_name), current_user, 
+            :title => 'Peržiūrėti asmeninę informaciją' %></li>
+        
+          <li class="last text">
+            <% form_for "quick", :url => { :controller => 'search', :action => 'quick_search' } do %>
+              <%= text_field_with_auto_complete :quick, :search, { :autocomplete => 'off', :class => 'search' }, { :url => { :controller => 'search', :action => 'quick_search' }, :method => :get }%>
+            <% end %>
+          </li>
+        </ul>
       <% end %>
       <div class="clear"></div>
     </div>
     
     <% if allow_printing? %>
-    <div id="printer">
-      <a href="#" onclick="window.print(); return false">Spausdinti</a>
-    </div>
+      <div id="printer">
+        <a href="#" onclick="window.print(); return false">Spausdinti</a>
+      </div>
     <% end %>
-    
+        
     <div id="content">
       <%= render :partial => 'shared/notices' %>
       <%= yield %>
