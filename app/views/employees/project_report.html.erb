@@ -7,13 +7,13 @@
     <%= link_to h(@project.name), employee_project_url(@employee, @project) %></h2>
 
 <% title "#{@employee.full_name} įdirbis projekte #{@project.name}" %>
-<table>
+<table class="sortable">
   <tr>
     <th>Mėnesis</th>
     <% Activity.all.each do |a| %>
-      <th><%=h a.name %></th>
+      <th class="number"><%=h a.name %></th>
     <% end %>
-    <th>Viso (val.)</th>
+    <th class="number">Viso (val.)</th>
   </tr>
   
   <% while @start.to_s[0..6] != @end.to_s[0..6] do %>

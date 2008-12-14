@@ -53,11 +53,11 @@
 
 <% @project.sectors.each do |s| %>
   <h2><%= s.name %> (<%= s.total_hours %> val.)</h2>
-  <table>
+  <table class="sortable">
     <tr>
       <th style="width: 360px">Vardas, Pavardė</th>
       <th style="width: 150px">Pareigos</th>
-      <th>Įdirbis</th>
+      <th class="number">Įdirbis</th>
     </tr>
     <% s.employees.each do |e| %>
       <% if @project.employees.include?(e) %>

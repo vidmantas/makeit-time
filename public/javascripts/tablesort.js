@@ -387,8 +387,8 @@ var SortableTable = {
 		nosortClass : 'nosort',
 		sortFirstAscendingClass : 'sortfirstasc',
 		sortFirstDecendingClass : 'sortfirstdesc',
-		rowEvenClass : 'roweven',
-		rowOddClass : 'rowodd',
+		rowEvenClass : 'even',
+		rowOddClass : 'odd',
 		tableScroll : 'class',   // off | on | class;
 		tableScrollClass : 'scroll'
 	},
