@@ -5,6 +5,7 @@ class Mailer < ActionMailer::Base
     from       'time@projektai.lt'
     sent_on    Time.now
     
-    body       :login => employee.login, :password => password
+    body       :login => employee.login, :password => password, 
+               :url => 'http://laikas.projektu-daktaras.lt/'
   end
 end
