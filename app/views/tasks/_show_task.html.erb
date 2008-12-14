@@ -1,6 +1,9 @@
-<div id="task-<%=task.id%>-edit" style="display: none">
-  <%= render :partial => 'tasks/edit_task', :locals => { :task => task, :odd => odd } %>
-</div>
+<% editable = require_permission :task_edit, :id => task.id %>
+<% if editable %>
+  <div id="task-<%=task.id%>-edit" style="display: none">
+    <%= render :partial => 'tasks/edit_task', :locals => { :task => task, :odd => odd } %>
+  </div>
+<% end %>
 <table class="joined" id="task-<%=task.id%>-show">
   <tr class="<%=odd%>" >
     <td style="width: 90px"><%= task.date %></td>
@@ -22,7 +25,9 @@
       <% end %>
     </td>
     <td class="hours">
-      <button onclick="$('task-<%=task.id%>-edit').show();$('task-<%=task.id%>-show').hide();">Redaguoti</button>
+      <% if editable %>
+        <button onclick="$('task-<%=task.id%>-edit').show();$('task-<%=task.id%>-show').hide();">Redaguoti</button>
+      <% end %>
     </td>
   </tr>
 </table>

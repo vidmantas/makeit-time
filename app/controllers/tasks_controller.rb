@@ -34,6 +34,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    return unless assert_permission :task_edit, :id => params[:id]
     @task = Task.find(params[:id])
   end
 
@@ -55,6 +56,7 @@ class TasksController < ApplicationController
   # PUT /tasks/1
   # PUT /tasks/1.xml
   def update
+    return unless assert_permission :task_edit, :id => params[:id]
     @task = Task.find(params[:id])
 
     if @task.update_attributes(params[:task].merge(:employee_id => current_user.id))
