@@ -1,9 +1,9 @@
 <h2><%= link_to_protected h(@project.manager.sector.name), 
-                          { :require => :sectors_view, :id => @project.manager.sector.id },
-                          @project.manager.sector %> &rarr;
-    <%= link_to h(@project.name), @project %></h2>
-
-<% if require_permission :projects_edit, :id => @project.id %>
+    { :require => :sectors_view, :id => @project.manager.sector.id },
+    @project.manager.sector %> &rarr;
+  <%= link_to h(@project.name), @project %></h2>
+  
+  <% if require_permission :projects_edit, :id => @project.id %>
   <p>
     <%= link_to 'Redaguoti', edit_project_path(@project) %>
   </p>
@@ -24,11 +24,11 @@
   </tr>
   <tr>
     <td><%= link_to_protected h(@project.manager.full_name), 
-                              { :require => :employees_view, :id => @project.manager.id },
-                              @project.manager %></td>
+        { :require => :employees_view, :id => @project.manager.id },
+        @project.manager %></td>
     <td colspan="2"><%= link_to_protected h(@project.manager.sector.name), 
-                              { :require => :sectors_view, :id => @project.manager.sector.id },
-                              @project.manager.sector %></td>
+        { :require => :sectors_view, :id => @project.manager.sector.id },
+        @project.manager.sector %></td>
   </tr>
   <tr>
     <th>Pradžia</th>
@@ -54,24 +54,24 @@
 <% @project.sectors.each do |s| %>
   <h2><%= s.name %> (<%= s.total_hours %> val.)</h2>
   <table>
-  <tr>
-    <th style="width: 360px">Vardas, Pavardė</th>
-    <th style="width: 150px">Pareigos</th>
-    <th>Įdirbis</th>
-  </tr>
-  <% s.employees.each do |e| %>
-    <% if @project.employees.include?(e) %>
-    <tr class="<%= cycle('', 'odd') %>">
-      <% if require_permission(:projects_view, :id => @project.id) and
-            require_permission(:employees_view, :id => e.id) %>
-      <td><%= link_to h(e.full_name), employee_project_url(e, @project) %></td>
-      <% else %>
-      <td><%=h e.full_name %></td>
-      <% end %>
-      <td><%= h(e.position.name) %></td>
-      <td class="hours"><%= e.hours_spent_in_project(@project.id).format_h %></td>
+    <tr>
+      <th style="width: 360px">Vardas, Pavardė</th>
+      <th style="width: 150px">Pareigos</th>
+      <th>Įdirbis</th>
     </tr>
+    <% s.employees.each do |e| %>
+      <% if @project.employees.include?(e) %>
+        <tr class="<%= cycle('', 'odd') %>">
+          <% if require_permission(:projects_view, :id => @project.id) and
+              require_permission(:employees_view, :id => e.id) %>
+            <td><%= link_to h(e.full_name), employee_project_url(e, @project) %></td>
+          <% else %>
+            <td><%=h e.full_name %></td>
+          <% end %>
+          <td><%= h(e.position.name) %></td>
+          <td class="hours"><%= e.hours_spent_in_project(@project.id).format_h %></td>
+        </tr>
+      <% end %>
     <% end %>
-  <% end %>
   </table>
 <% end %>

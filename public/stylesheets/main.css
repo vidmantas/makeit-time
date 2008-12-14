@@ -172,6 +172,18 @@ table.all-right td {
     text-align: right;
 }
 
+table.sortable th {
+    cursor: pointer;
+}
+
+th.sortasc {
+    background: #8393CA url('../images/down.gif') no-repeat right;
+}
+
+th.sortdesc {
+    background: #8393CA url('../images/up.gif') no-repeat right;
+}
+
 /* sidebar */
 div.sidebar {
     float: right;

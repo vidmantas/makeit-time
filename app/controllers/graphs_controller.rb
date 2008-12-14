@@ -110,15 +110,14 @@ class GraphsController < ApplicationController
     # Data
     return unless assert_permission :employees_view, :id => params[:id]
     employee = Project.find(params[:id])
-    top = Employee.find_by_sql ["SELECT
-      p.name, sum(t.hours_spent) AS hours
-      FROM employees_projects ep
-      INNER JOIN projects p ON p.id = ep.project_id
-      INNER JOIN tasks t ON t.project_id = p.id
-      WHERE ep.employee_id = ?
-      GROUP BY p.id
+    top = Employee.find_by_sql ["SELECT 
+        p.name, SUM(t.hours_spent) AS hours
+      FROM tasks t
+      INNER JOIN projects p ON p.id = t.project_id
+      WHERE t.employee_id = ?
+      GROUP BY t.project_id
       ORDER BY hours DESC
-      LIMIT 0, #{EMPLOYEE_TOP_PROJECTS}", employee.id]
+      LIMIT ?", employee.id, EMPLOYEE_TOP_PROJECTS]
     
     values = []
     top.each do |p| 

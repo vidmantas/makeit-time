@@ -4,8 +4,7 @@
   <head>
     <title><%= yield(:title) || 'MakeIT Time' %></title>
     <meta http-equiv="Content-Type" http-equiv="text/html; charset=utf-8" />
-    <%= javascript_include_tag :defaults %>
-    <%= javascript_include_tag 'calendar/calendar', 'calendar/calendar-setup', 'calendar/calendar-lt-utf8', 'swfobject' %>
+    <%= javascript_include_tag :all %>
     <%= stylesheet_link_tag 'main', 'calendar-custom' %>
     <%= stylesheet_link_tag 'print', :media => 'print' %>
   </head>
