@@ -31,7 +31,7 @@ private
 
   def rank(list, words)
     regexp = Regexp.union(*words)
-    list.sort! { |one, two| one[:name].scan(regexp).length <=> two[:name].scan(regexp).length }
+    list.sort! { |one, two| two[:name].scan(regexp).length <=> one[:name].scan(regexp).length }
   end
 
 end
