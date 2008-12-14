@@ -4,7 +4,7 @@ lt:
   login_submit: "Prisijungti"
   unable_to_login: "Prisijungti nepavyko"
   login_successful: "Sėkmingai prisijungėte!"
-  logout_successful: "Sėkmingtai atsijungėte!"
+  logout_successful: "Sėkmingai atsijungėte!"
   activerecord:
     errors:
       template:

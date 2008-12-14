@@ -29,4 +29,9 @@ class EmployeeSessionsController < ApplicationController
     false
   end
   
+  def show_notices?
+    # we render that in our template, so behold master!
+    false
+  end
+  
 end

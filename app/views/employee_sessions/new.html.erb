@@ -6,18 +6,23 @@
   </div>
 </div>
 <% form_for @user_session do |f| %>
+  <div class="fields">
+    <p>
+      <%= f.label :login, t('login') %>
+      <%= f.text_field :login %>
+    </p>
+    <p>
+      <%= f.label :password, t('password') %>
+      <%= f.password_field :password %>
+    </p>
+    <p>
+      <%= f.submit t('login_submit') %>
+    </p>
+  </div>
+  <%= render :partial => 'shared/notices' %>
   <%= f.error_messages :header_message => t('unable_to_login') %>
-  <p>
-    <%= f.label :login, t('login') %>
-    <%= f.text_field :login %>
-  </p>
-  <p>
-    <%= f.label :password, t('password') %>
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.submit t('login_submit') %>
-  </p>
+  <div class="big-logo"></div>
+  <div class="clear"></div>
 <% end %>
 <script type="text/javascript">
 $('employee_session_login').focus();

@@ -58,7 +58,9 @@
     <% end %>
         
     <div id="content">
-      <%= render :partial => 'shared/notices' %>
+      <% if show_notices? %>
+        <%= render :partial => 'shared/notices' %>
+      <% end %>
       <%= yield %>
     </div>    
   </body>

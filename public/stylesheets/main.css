@@ -262,6 +262,36 @@ div.sidebar li {
 }
 
 /* login */
+form.new_employee_session {
+    border-bottom: 1px solid #67749e;
+    padding-left: 15px;
+    margin-left: -15px;
+    padding-right: 15px;
+    margin-right: -15px;
+}
+form.new_employee_session div.fields {
+    float: left;
+}
+form.new_employee_session div.notice, 
+form.new_employee_session div.errorExplanation {
+    float: left;
+    width: 300px;
+    margin-left: 20px;
+}
+form.new_employee_session div.notice {
+    width: 200px;
+    margin-top: 15px; /* align with inputs */
+}
+form.new_employee_session div.big-logo {
+    float: left;
+    width: 229px;
+    height: 137px;
+    margin-left: 20px;
+    margin-top: -15px;
+    background: url(../images/front-big-logo.png);
+    border-left: 1px solid #67749e;
+    border-right: 1px solid #67749e;
+}
 form.new_employee_session label {
     font-weight: bold;
     display: block;
