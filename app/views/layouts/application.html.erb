@@ -38,20 +38,22 @@
           <li class="last"><a href="/employee_sessions/destroy">Atsijungti</a></li>
           <li class="last text"><%= link_to 'Prisijungęs: ' + h(current_user.full_name), current_user, 
             :title => 'Peržiūrėti asmeninę informaciją' %></li>
-        
-          <li class="last text">
-            <% form_for "quick", :url => { :controller => 'search', :action => 'quick_search' } do %>
-              <%= text_field_with_auto_complete :quick, :search, { :autocomplete => 'off', :class => 'search' }, { :url => { :controller => 'search', :action => 'quick_search' }, :method => :get }%>
-            <% end %>
-          </li>
         </ul>
       <% end %>
       <div class="clear"></div>
     </div>
     
-    <% if allow_printing? %>
-      <div id="printer">
-        <a href="#" onclick="window.print(); return false">Spausdinti</a>
+    <% if allow_tools? %>
+      <div id="tools">
+        <div class="search">
+          <% form_for "quick", :url => { :controller => 'search', :action => 'quick_search' } do %>
+            <%= text_field_with_auto_complete :quick, :search, 
+                  { :autocomplete => 'off', :class => 'search', :accesskey => 'f' }, 
+                  { :url => { :controller => 'search', :action => 'quick_search' }, :method => :get,
+                    :after_update_element => 'search_trigger', :select => 'where_is_the_waldo'  }%>
+          <% end %>
+        </div>
+        <div class="printer"><a href="#" onclick="window.print(); return false">Spausdinti</a></div>
       </div>
     <% end %>
         

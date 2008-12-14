@@ -25,7 +25,7 @@ class EmployeeSessionsController < ApplicationController
   
   protected
   
-  def allow_printing?
+  def allow_tools?
     false
   end
   

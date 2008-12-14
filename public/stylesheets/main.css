@@ -49,6 +49,10 @@ body, td, th {
 }
 #toolbar li.text {
     background: transparent;
+    margin-right: 0px;
+}
+#toolbar li.search {
+    margin-right: 0;
 }
 #toolbar li.text a {
     color: #000;
@@ -66,12 +70,15 @@ body, td, th {
 #toolbar li.active a {
 }
 
-/* print button. */
-#printer {
+/* toolbar button. */
+#tools {
     float: right;
     margin: 5px 20px 10px 0;
 }
-#printer a {
+#tools div {
+    float: left;
+}
+#tools div.printer a {
     color: #000;
     padding-left: 25px;
     background: url(../images/printer.png) no-repeat left center;
@@ -79,8 +86,52 @@ body, td, th {
     line-height: 12px;
     font-size: 12px;
 }
-#printer a:hover {
+#tools div.printer a:hover {
     opacity: 1;
+}
+
+/* search */
+#tools input.search {
+    padding: 2px;
+    margin-right: 10px;
+    border: 1px solid #888;
+    background: url(../images/search.png) no-repeat right center;
+    color: #888;
+    width: 140px;
+}
+ul#search_results {
+    width: 144px;
+    font-size: 12px;
+}
+ul#search_results li {
+    margin: 0px;
+    cursor: pointer;
+    background-color: #e8edfd;
+    padding-left: 22px;
+}
+ul#search_results strong {
+    font-weight: normal;
+    background: #FFFFBB;
+    color: #000;
+}
+ul#search_results li.sector {
+    background: url(../images/sector.png) no-repeat 2px center;
+}
+ul#search_results li.employee {
+    background: url(../images/employee.png) no-repeat 2px center;
+}
+ul#search_results li.project {
+    background: url(../images/project.png) no-repeat 2px center;
+}
+ul#search_results li.selected {
+    background-color: #C5D2FC;
+}
+ul#search_results a {
+    text-decoration: none;
+    color: #333;
+}
+ul#search_results li.selected a {
+    color: #000;
 }
 
 /* body */
@@ -171,15 +222,12 @@ tr td.hours {
 table.all-right td {
     text-align: right;
 }
-
 table.sortable th {
     cursor: pointer;
 }
-
 th.sortasc {
     background: #8393CA url('../images/down.gif') no-repeat right;
 }
-
 th.sortdesc {
     background: #8393CA url('../images/up.gif') no-repeat right;
 }
@@ -231,24 +279,4 @@ div.report-brief h3 {
 }
 div.report-brief p {
     color: #333;
-}
-
-/* search */
-input.search {
-    background: url(../images/search.jpg) no-repeat right 0px;
-    width: 130px;
-}
-
-
-ul#search_results li {
-    background: #C5D2FC;
-    -moz-border-radius-topleft: 0px;
-    -moz-border-radius-topright: 0px;
-    width: 130px;
-    cursor: pointer;
-    margin: 0px;
-}
-
-ul#search_results li.selected {
-    background: #FFFFBB;
 }

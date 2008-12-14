@@ -1,5 +1,8 @@
 <ul id="search_results">
+  <% if @results.length == 0 %>
+    <li class="not-found">Rezultatų nėra.</li>
+  <% end %>
   <% @results.each do |r| %>
-    <li onclick="location.href='<%= r[:url] %>'"><%= h(r[:name]) %></li>
+    <li class="<%= r[:kind].to_s %>"><a href="<%= r[:url] %>"><%= highlight(r[:name], @words) %></a></li>
   <% end %>
 </ul>

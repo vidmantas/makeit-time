@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user, :require_permission, :assert_permission,
-    :allow_printing?
+    :allow_tools?
   before_filter :set_user_language
 
   def require_permission(key, options = {})
@@ -97,7 +97,7 @@ class ApplicationController < ActionController::Base
   
   protected
   
-  def allow_printing?
+  def allow_tools?
     true
   end
   
