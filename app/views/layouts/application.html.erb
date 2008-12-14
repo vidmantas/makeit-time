@@ -28,7 +28,7 @@
         <% if require_permission :employees_view_some %>
         <%= menu_item "Darbuotojai", :controller => 'employees' %>
         <% end %>
-        <% if require_permission :sectors_view %>
+        <% if require_permission :sectors_view_some %>
         <%= menu_item "Skyriai", :controller => 'sectors' %>
         <% end %>
         <% if require_permission :reports_view %>

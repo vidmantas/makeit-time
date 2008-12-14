@@ -1,9 +1,9 @@
 class SectorsController < ApplicationController
-  before_filter { |c| c.assert_permission :sectors_view }
   
   # GET /sectors
   # GET /sectors.xml
   def index
+    return unless assert_permission :sectors_view_some
     @sectors = Sector.all(:include => :manager)
 
     respond_to do |format|
@@ -15,6 +15,7 @@ class SectorsController < ApplicationController
   # GET /sectors/1
   # GET /sectors/1.xml
   def show
+    return unless assert_permission :sectors_view, :id => params[:id]
     @sector = Sector.find(params[:id])
     
     respond_to do |format|
@@ -95,6 +96,7 @@ class SectorsController < ApplicationController
   end
   
   def report
+    return unless assert_permission :sectors_view_some
     if request.post?
       @start_date, @end_date = report_range
       

@@ -63,8 +63,11 @@ class ApplicationController < ActionController::Base
           project.manager == c
     when :projects_destroy
       c.is_sector_manager and Project.find(options[:id]).sector == c.sector
-    when :sectors_view
+    when :sectors_view_some
       c.is_sector_manager or c.is_top_manager
+    when :sectors_view
+      s = Sector.find(options[:id])
+      s.visible and (c.is_sector_manager or c.is_top_manager)
     when :sectors_edit
       false
     when :reports_view
