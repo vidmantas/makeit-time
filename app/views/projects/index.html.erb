@@ -30,7 +30,11 @@
     
     <td><%= link_to_protected h(project.manager.full_name), 
                               { :require => :employees_view, :id => project.manager.id },
-                              project.manager %></td>
+                              project.manager %>
+      <% if project.manager == current_user %>
+        <%= image_tag 'project-manager.png', :title => 'Jūs esate šio projekto vadovas' %>
+      <% end %>
+    </td>
                               
     <td><%= link_to_protected h(project.manager.sector.name), 
                               { :require => :sectors_view, :id => project.manager.sector },

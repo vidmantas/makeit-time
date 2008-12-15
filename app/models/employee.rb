@@ -63,6 +63,10 @@ class Employee < ActiveRecord::Base
     end
   end
   
+  def managed_projects
+    Project.find(:all, :conditions => ['manager_id = ?', self.id])
+  end
+  
   def self.search(words)
     self.find(:all, :conditions => Where { |w|
       words.each do |word|

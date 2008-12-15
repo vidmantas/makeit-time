@@ -216,7 +216,7 @@ tr.description td {
 tr.description td .none {
     color: #666;
 }
-tr td.hours {
+tr td.hours, tr th.hours {
     text-align: right;
 }
 table.all-right td {

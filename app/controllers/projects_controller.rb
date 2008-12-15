@@ -1,13 +1,29 @@
 class ProjectsController < ApplicationController
   PROJECTS_PER_PAGE = 20
+  TASKS_PER_PAGE = 10
   
   before_filter { |c| c.assert_permission :projects_view_some }
   
   # GET /projects
   # GET /projects.xml
   def index
+    # Select only viewable projects, en masse
+    conditions = []
+    if not current_user.is_top_manager
+      sql = ""; bound = []
+      if current_user.is_sector_manager
+        sql << "employees.sector_id = ? OR "
+        bound << current_user.sector.id
+      end
+      sql << "manager_id = ? OR projects.id IN (?)"
+      bound << current_user.id
+      bound << current_user.projects.map(&:project_id)
+      conditions = [sql] + bound
+    end
+
     @projects = Project.paginate :page => params[:page], :per_page => PROJECTS_PER_PAGE, 
-      :order => ['-id'], :include => [:manager]
+      :order => ['-projects.id'], :include => [:manager],
+      :conditions => conditions
     @project  = Project.new
     
     respond_to do |format|
@@ -22,9 +38,17 @@ class ProjectsController < ApplicationController
       return unless assert_permission :employees_view, :id => params[:employee_id]
       @project = Project.find(params[:id])
       @employee = Employee.find(params[:employee_id])
+      @tasks  = Task.paginate :page => params[:page], :per_page => TASKS_PER_PAGE,
+        :conditions => ['employee_id = ? AND project_id = ?', @employee.id, @project.id], 
+        :order      => 'date DESC, created_at DESC',
+        :include    => [:activity, :project]
       @start = @employee.started_in_project(@project.id)
-      # BUG: this crashes when '--' is returned
-      @end   = @employee.finished_in_project(@project.id) + 1.month
+      @end   = @employee.finished_in_project(@project.id)
+      begin
+        # BUG: this crashes when '--' is returned, so HACK
+        @end += 1.month
+      rescue
+      end
       render :template => 'employees/project_report'
     else
       @project = Project.find(params[:id], :include => {:manager => :sector})

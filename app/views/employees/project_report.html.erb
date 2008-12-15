@@ -29,3 +29,49 @@
       </tr>
   <% @start += 1.month end %>
 </table>
+
+<% if @tasks and 
+      require_permission :employees_project_view_hours,
+                         :project_id => @project.id,
+                         :employee_id => @employee.id %>
+  
+  <h2>Užduotys</h2>
+
+  <table>
+    <tr>
+      <th>Data</th>
+      <th>Projektas</th>
+      <th>Veikla</th>
+      <th class="hours">Trukmė</th>
+    </tr>
+    <% @tasks.each do |task|  %>
+    <% odd = cycle('', 'odd') %>
+    <tr class="<%=odd%>" >
+      <td style="width: 90px"><%= task.date %></td>
+      <td style="width: 190px">
+        <%= link_to_protected task.project.name, 
+                              { :require => :projects_view, :id => @project.id },
+                              employee_project_url(current_user, task.project) %>
+      </td>
+      <td style="width: 140px"><%= task.activity.name %></td>
+      <td style="width: 80px" class="hours">
+        <%= task.hours_spent.format_h %>
+      </td>
+    </tr>
+    <tr class="description <%=odd%>">
+      <td></td>
+      <td colspan="3">
+        <% if task.description.to_s.empty? %>
+          <span class="none">Aprašymas nepateiktas</span>
+        <% else %>
+          <%= task.description %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  <p>
+    <%= paginate @tasks %>
+  </p>
+
+<% end %>

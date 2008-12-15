@@ -75,8 +75,9 @@
           p.manager %></td>
       <td><%= @employee.started_in_project(p.id) %></td>
       <td><%= @employee.finished_in_project(p.id) %></td>
-      <td class="hours"><%= @employee.hours_spent_in_project(p.id).format_h %></td>
+      <td class="hours">
+          <%= @employee.hours_spent_in_project(p.id).format_h %>
+      </td>
     </tr>
   <% end %>
 </table>
-

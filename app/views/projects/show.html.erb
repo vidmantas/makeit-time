@@ -63,13 +63,15 @@
       <% if @project.employees.include?(e) %>
         <tr class="<%= cycle('', 'odd') %>">
           <% if require_permission(:projects_view, :id => @project.id) and
-              require_permission(:employees_view, :id => e.id) %>
+                require_permission(:employees_view, :id => e.id) %>
             <td><%= link_to h(e.full_name), employee_project_url(e, @project) %></td>
           <% else %>
             <td><%=h e.full_name %></td>
           <% end %>
           <td><%= h(e.position.name) %></td>
-          <td class="hours"><%= e.hours_spent_in_project(@project.id).format_h %></td>
+          <td class="hours">
+            <%= e.hours_spent_in_project(@project.id).format_h %>
+          </td>
         </tr>
       <% end %>
     <% end %>

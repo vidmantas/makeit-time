@@ -5,8 +5,25 @@ class EmployeesController < ApplicationController
   # GET /employees.xml
   def index
     return unless assert_permission :employees_view_some
+    
+    # Select only viewable employees
+    conditions = []
+    if not current_user.is_top_manager
+      sql = ""; bound = []
+      if current_user.is_sector_manager
+        sql << "employees.sector_id = ? OR "
+        bound << current_user.sector.id
+      end
+      sql << "employees.id = ? OR employees.id IN (?)"
+      bound << current_user.id
+      bound << EmployeesProjects.find(:all, 
+        :conditions => ['project_id IN (?)', current_user.managed_projects.map(&:id)]).map(&:employee_id)
+      conditions = [sql] + bound
+    end
+    
     @employees = Employee.paginate :page => params[:page], :per_page => EMPLOYEES_PER_PAGE, 
-      :order => 'first_name, last_name', :include => [:sector, :position]
+      :order => 'first_name, last_name', :include => [:sector, :position],
+      :conditions => conditions
     @employee = Employee.new
 
     respond_to do |format|
