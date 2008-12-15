@@ -167,7 +167,12 @@ class Sector < ActiveRecord::Base
   def switches_for_hours(start_date, end_date, hours = 1000)
     total_switches = total_switches(start_date, end_date)
     total_hours    = time_usage_for(start_date, end_date).to_f
-    sprintf("%.2f", total_switches/(total_hours/hours))
+    # Fix for NaN
+    if total_hours.zero?
+      '0.00'
+    else
+      sprintf("%.2f", total_switches/(total_hours/hours))
+    end
   end
   
   def income(start_date, end_date)

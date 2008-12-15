@@ -23,10 +23,13 @@
   <% form_remote_for "time", :url => { :action => 'report', :id => @sector.id }, 
     :update => 'report', :loading => "$('loading').show();", :complete => "$('loading').hide();" do |f| %>
     Metai: <%= select_tag :year, options_for_select(Project.distinct_years) %>
-    <%= radio_button_tag 'duration', '', :checked => true %> Metai
-    <%= radio_button_tag 'duration', 'half' %> Pusmetis <%= select_tag :half, options_for_select(halfs) %>
-    <%= radio_button_tag 'duration', 'quarter' %> Ketvirtis <%= select_tag :quarter, options_for_select(quarters) %>
-    <%= radio_button_tag 'duration', 'month' %> Mėnesis <%= select_tag :month, options_for_select(months)  %>
+    <%= radio_button_tag 'duration', '', :checked => true %> <label for="duration_">Metai</label>
+    <%= radio_button_tag 'duration', 'half' %> <label for="duration_half">Pusmetis</label> 
+      <%= select_tag :half, options_for_select(halfs) %>
+    <%= radio_button_tag 'duration', 'quarter' %> <label for="duration_quarter">Ketvirtis</label>
+      <%= select_tag :quarter, options_for_select(quarters) %>
+    <%= radio_button_tag 'duration', 'month' %> <label for="duration_month">Mėnesis</label>
+      <%= select_tag :month, options_for_select(months)  %>
     <%= submit_tag 'Parodyti' %> <%= loader %>
   <% end %>
 </p>
@@ -43,7 +46,7 @@
     <th style="width: 185px">Pareigos</th>
   </tr>
 <% @sector.employees.each do |e| %>
-  <tr class="<%= %>">
+  <tr class="<%= cycle('', 'odd') %>">
     <td><%= link_to h(e.full_name), e %></td>
     <td><%=h e.position.name %></td>
   </tr>

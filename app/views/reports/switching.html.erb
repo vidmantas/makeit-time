@@ -2,7 +2,7 @@
 
 <table>
   <tr>
-    <th>Laikotarpis/Padalinys</th>
+    <th></th>
     <% @sectors.each do |sector| -%>
       <th><%= link_to h(sector.name), sector %></th>
     <% end -%>
@@ -11,7 +11,7 @@
   
   <% @periods.reverse.each do |period| -%>
     <% total_switches = 0.0 %>
-    <tr>
+    <tr class="<%= cycle('', 'odd') %>">
       <td><%= period[:name] %></td>
       <% @sectors.each do |sector| -%>
         <% switches = sector.switches_for_hours(period[:starts], period[:ends]) %>
