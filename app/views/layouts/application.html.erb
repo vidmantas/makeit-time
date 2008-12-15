@@ -18,11 +18,9 @@
         <ul>
           <% if require_permission :task_enter_personal %>
             <%= menu_item "Įdirbis", :controller => 'home' %>
+            <%= menu_item "Mano laikas", :controller => 'my_time' %>
           <% end %>
-                  
-          <!-- any restrictions? -->
-          <%= menu_item "Mano laikas", :controller => 'my_time' %>
-        
+
           <% if require_permission :projects_view_some %>
             <%= menu_item "Projektai", :controller => 'projects' %>
           <% end %>
