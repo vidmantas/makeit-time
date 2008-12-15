@@ -121,9 +121,11 @@ class Employee < ActiveRecord::Base
   end
   
   def set_password_and_email
-    password = String.random
-    update_attribute(:password, password)
-    Mailer.deliver_send_password(self, password)
+    if password.nil?
+      password = String.random
+      update_attribute(:password, password)
+      Mailer.deliver_send_password(self, password)
+    end
   end
 end
 
