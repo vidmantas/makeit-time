@@ -13,7 +13,7 @@ class Employee < ActiveRecord::Base
   validates_uniqueness_of :email, :if => lambda{ |e| !e.email.blank? }
   validates_format_of :email, :with => RFC822::EmailAddress, :if => lambda{ |e| !e.email.blank? }
   validates_confirmation_of :password, :if => lambda{ |e| !e.password.blank? }
-  validates_length_of :password, :minimum => 3, :on => :update
+  validates_length_of :password, :minimum => 3, :on => :update, :if => lambda{ |e| !e.password.blank? }
   
   attr_protected :is_top_manager # can't be mass-assigned
   attr_accessor :current_password # for changing password
