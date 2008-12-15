@@ -100,6 +100,8 @@ class Employee < ActiveRecord::Base
   protected
   
   def set_login
+    return unless login.nil?
+    
     login = self.first_name.dup # not by reference
     index = number = 0
     
