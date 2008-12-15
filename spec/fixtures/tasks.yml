@@ -139,3 +139,60 @@ no_name:
   activity: holidays
   hours_spent: 130
   date: 2007-02-02
+
+# adomas switches
+switching_one:
+  project: sap1
+  employee: adomas
+  activity: programming
+  date: 2008-11-01
+  hours_spent: 8
+  
+switching_two:
+  project: sap2
+  employee: adomas
+  activity: programming
+  date: 2008-11-02
+  hours_spent: 8
+  
+switching_three:
+  project: sap3
+  employee: adomas
+  activity: programming
+  date: 2008-11-03
+  hours_spent: 8
+  
+switching_four:
+  project: sap2
+  employee: adomas
+  activity: programming
+  date: 2008-11-08
+  hours_spent: 8
+  
+switching_five:
+  project: sap1
+  employee: adomas
+  activity: programming
+  date: 2008-11-12
+  hours_spent: 8
+  
+switching_six:
+  project: sap1
+  employee: adomas
+  activity: programming
+  date: 2008-11-13
+  hours_spent: 8
+  
+switching_seven:
+  project: sap2
+  employee: adomas
+  activity: programming
+  date: 2008-11-14
+  hours_spent: 8
+  
+switching_eight:
+  project: sap3
+  employee: adomas
+  activity: programming
+  date: 2008-11-15
+  hours_spent: 8

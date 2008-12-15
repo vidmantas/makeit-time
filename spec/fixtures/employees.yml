@@ -29,6 +29,13 @@ teta_liucija:
   position: developer
   login: liucija
 
+adomas:
+  first_name: Adomas
+  last_name: Tikras
+  sector: switching
+  position: developer
+  login: adomas
+
 vadas:
   first_name: Vadas
   last_name: Vadas

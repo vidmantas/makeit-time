@@ -12,3 +12,8 @@ vadovu:
   code: 0
   name: Managers
   manager: vadas
+  
+switching:
+  code: 3
+  name: Switching
+  manager: adomas

@@ -33,3 +33,30 @@ progress:
   end_date: 2005-12-10
   employees: jonas, dede_sigitas
   duration: 11
+  
+sap1:
+  manager: adomas
+  code: 4
+  name: Switching test
+  start_date: 2008-01-01
+  end_date: 2008-12-01
+  employees: adomas
+  duration: 12
+
+sap2:
+  manager: adomas
+  code: 5
+  name: Switching test
+  start_date: 2008-01-01
+  end_date: 2008-12-01
+  employees: adomas
+  duration: 12
+
+sap3:
+  manager: adomas
+  code: 6
+  name: Switching test
+  start_date: 2008-01-01
+  end_date: 2008-12-01
+  employees: adomas
+  duration: 12
