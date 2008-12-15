@@ -2,10 +2,11 @@
   <%= f.error_messages %>
   <table class="joined">
     <tr class="description <%=odd%>">
-      <td style="width: 90px"><%= f.text_field :date, {:style => 'width: 80px'} %></td>
+      <td style="width: 90px"><%= f.text_field :date, 
+                                    {:style => 'width: 80px', :id => "edit_task_#{task.id}_date"} %></td>
       <td style="width: 190px"><%= f.collection_select :project_id, current_user.projects, :id, :name, 
                 {:include_blank => '- Pasirinkite -'}, {:style => 'width: 180px'} %></td>
-      <td style="width: 140px"><%= f.collection_select :activity_id, Activity.enterable, :id, :name, 
+      <td style="width: 140px"><%= f.collection_select :activity_id, Activity.all, :id, :name, 
                 {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
       <td style="width: 80px" class="hours"><%= f.text_field :hours_spent, {:style => 'width: 30px'} %> val.</td>
     </tr>
@@ -14,4 +15,7 @@
       <td class="hours"><%= f.submit "Išsaugoti" %></td>
     </tr>
   </table>
+  
+  <%= calendar "edit_task_#{task.id}_date" %>
+  
 <% end -%>

@@ -30,4 +30,7 @@
     <%= f.submit "Sukurti" %>
     <a href="javascript:;" onclick="$('add_project').toggle(); $('add_project_button').show()">Atšaukti</a>
   </p>
+  
+  <%= calendar "project_start_date" %>
+  <%= calendar "project_end_date" %>
 <% end %>
