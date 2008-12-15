@@ -4,6 +4,7 @@ class Employee < ActiveRecord::Base
   acts_as_authentic :validate_fields => false
 
   has_many :tasks, :dependent => :destroy
+  has_many :rest_months, :dependent => :destroy
   belongs_to :sector
   belongs_to :position
   has_and_belongs_to_many :projects
@@ -73,6 +74,10 @@ class Employee < ActiveRecord::Base
         w.and 'first_name LIKE ? OR last_name LIKE ?', "%#{word}%", "%#{word}%"
       end
     })
+  end
+  
+  def self.total_rest_months(employees_ids, start_date, end_date)
+    RestMonth.count(:id, :conditions => ['employee_id IN(?) AND (date BETWEEN DATE(?) AND DATE(?))', employees_ids, start_date, end_date])
   end
 
   # Permissions

@@ -4,4 +4,5 @@ task :import => :environment do
   ImportEmployees.new
   ImportProjects.new
   ImportTasks.new
+  ImportRestMonths.new
 end

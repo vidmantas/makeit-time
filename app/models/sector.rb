@@ -101,14 +101,16 @@ class Sector < ActiveRecord::Base
     sql = "
       SELECT SUM(`hours_spent`) AS `total_hours`
       FROM tasks t
-      WHERE t.employee_id IN(?) AND t.date >= ? AND t.date <= ?
+      INNER JOIN activities a ON a.id = t.activity_id
+      WHERE a.is_billable = ? AND t.employee_id IN(?) AND t.date >= ? AND t.date <= ?
     "
-    Sector.find_by_sql([sql, employees_ids, start_date, end_date]).first.total_hours
+    Sector.find_by_sql([sql, true, employees_ids, start_date, end_date]).first.total_hours
   end
   
   def theoretical_hours(start_date, end_date)
     period = Time.parse(end_date).month - Time.parse(start_date).month + 1    
-    self.employees.size * period * NORMAL_WORK_LOAD
+    total = self.employees.size * period * NORMAL_WORK_LOAD
+    total - (Employee.total_rest_months(self.employees.map(&:id), start_date, end_date).to_i * NORMAL_WORK_LOAD)
   end
   
   def overtime(start_date, end_date)

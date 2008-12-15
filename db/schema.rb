@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081212115255) do
+ActiveRecord::Schema.define(:version => 20081215185854) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -79,6 +79,15 @@ ActiveRecord::Schema.define(:version => 20081212115255) do
   add_index "projects", ["end_date"], :name => "index_projects_on_end_date"
   add_index "projects", ["manager_id"], :name => "index_projects_on_manager_id"
   add_index "projects", ["start_date"], :name => "index_projects_on_start_date"
+
+  create_table "rest_months", :force => true do |t|
+    t.integer  "employee_id"
+    t.date     "date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rest_months", ["employee_id"], :name => "index_rest_months_on_employee_id"
 
   create_table "sectors", :force => true do |t|
     t.string   "code",       :limit => 10

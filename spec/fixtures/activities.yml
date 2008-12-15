@@ -5,3 +5,7 @@ analysis:
 programming:
   name: Programming
   is_billable: true
+
+holidays:
+  name: Holidays
+  is_billable: false

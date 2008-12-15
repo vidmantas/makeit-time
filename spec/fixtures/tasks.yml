@@ -131,3 +131,11 @@ progress_antra:
   activity: programming
   hours_spent: 30
   date: 2005-06-01
+
+
+# not billable tests
+no_name:
+  employee: jonas
+  activity: holidays
+  hours_spent: 130
+  date: 2007-02-02
