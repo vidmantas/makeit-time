@@ -7,9 +7,9 @@ class CreateExampleTopManager < ActiveRecord::Migration
       :last_name      => 'Direktorius',
       :email          => 'direktorius@projektai.lt',
       :sector         => Sector.find_by_code(0),
-      :position       => Position.find_by_name('Vadovas'),
-      :is_top_manager => true
+      :position       => Position.find_by_name('Vadovas')
     )
+    e.is_top_manager = true
     
     s = Sector.find_by_code(0)
     s.manager = e
