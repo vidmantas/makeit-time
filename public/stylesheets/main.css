@@ -16,6 +16,9 @@ body, td, th {
 .floatl {
     float: left;
 }
+.small-box {
+    padding-top: 10px;
+}
 
 /* toolbar */
 #toolbar {
@@ -279,13 +282,17 @@ form.new_employee_session div.errorExplanation {
     margin-left: 20px;
 }
 form.new_employee_session div.notice {
-    width: 200px;
+    width: 0;
+    padding-right: 200px;
+    margin-right: -200px;
     margin-top: 15px; /* align with inputs */
 }
 form.new_employee_session div.big-logo {
     float: left;
-    width: 229px;
+    width: 0;
     height: 137px;
+    padding-right: 229px;
+    margin-right: -229px;
     margin-left: 20px;
     margin-top: -15px;
     background: url(../images/front-big-logo.png);

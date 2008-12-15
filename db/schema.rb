@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20081215185854) do
     t.datetime "updated_at"
   end
 
+  add_index "rest_months", ["date"], :name => "index_rest_months_on_date"
   add_index "rest_months", ["employee_id"], :name => "index_rest_months_on_employee_id"
 
   create_table "sectors", :force => true do |t|
