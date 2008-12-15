@@ -314,3 +314,28 @@ div.report-brief h3 {
 div.report-brief p {
     color: #333;
 }
+
+/* reports menu */
+ul.reports-menu {
+    float: left;
+    list-style-type: none;
+    border-right: 1px solid #67749e;
+    margin-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 200px;
+}
+ul.reports-menu li {
+    margin-bottom: 5px;
+}
+ul.reports-menu li a {
+    display: block;
+    width: 150px;
+    padding: 5px 10px 5px 5px;
+    background: #8393ca;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-size: 12px;
+}
+ul.reports-menu li.active a, ul.reports-menu a:hover {
+    background: #67749e !important;
+}
