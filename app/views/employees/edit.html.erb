@@ -15,8 +15,13 @@
     <tr>
       <td><%= f.text_field :first_name, {:style => 'width: 185px'} %></td>
       <td><%= f.text_field :last_name, {:style => 'width: 185px'} %></td>
+      <% if @employee.sector.visible %>
       <td><%= f.collection_select :sector_id, Sector.all, :id, :name,
                 {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
+      <% else %>
+      <td><%=h @employee.sector.name %></td>
+      <% end %>
+      </tr>
     </tr>
     <tr>
       <th colspan="2"><%= f.label :email, 'El. paštas' %></th>
