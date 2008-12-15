@@ -282,9 +282,6 @@ form.new_employee_session div.errorExplanation {
     margin-left: 20px;
 }
 form.new_employee_session div.notice {
-    width: 0;
-    padding-right: 200px;
-    margin-right: -200px;
     margin-top: 15px; /* align with inputs */
 }
 form.new_employee_session div.big-logo {
