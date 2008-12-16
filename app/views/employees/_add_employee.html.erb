@@ -1,4 +1,4 @@
-<% remote_form_for @employee, :update => 'add_employee' do |f| %>
+<% remote_form_for @employee, :update => 'add_employee', :loading => "$('loading').show();", :complete => "$('loading').hide();" do |f| %>
   <%= f.error_messages %>
   
   <table>
@@ -31,7 +31,7 @@
     </tr>
   </table>
   <p>
-    <%= f.submit "Registruoti" %>
+    <%= f.submit "Registruoti" %> <%= loader %>
     <a href="javascript:;" onclick="$('add_employee').toggle(); $('add_employee_button').show()">Atšaukti</a>
   </p>
 <% end %>

@@ -1,4 +1,4 @@
-<% remote_form_for @task, :update => 'add_task' do |f| %>
+<% remote_form_for @task, :update => 'add_task', :loading => "$('loading').show();", :complete => "$('loading').hide();" do |f| %>
   <%= f.error_messages %>
 
   <!-- look ma, tables. -->
@@ -15,14 +15,15 @@
                 {:include_blank => '- Pasirinkite -'}, {:style => 'width: 200px'} %></td>
       <td><%= f.collection_select :activity_id, Activity.enterable, :id, :name, 
                 {:include_blank => '- Pasirinkite -'}, {:style => 'width: 150px'} %></td>
-      <td><%= f.text_field :hours_spent, {:style => 'width: 30px'} %> val.</td>
+      <td><%#= f.text_field :hours_spent, {:style => 'width: 30px'} %>
+        <%= f.select :hours_spent, (0..10).to_a %> val.</td>
     </tr>
     <tr>
       <th colspan="4"><%= f.label :description, 'Aprašymas' %></th>
     </tr>
     <tr>
       <td colspan="3"><%= f.text_field :description, {:style => 'width: 450px'} %></td>
-      <td><%= f.submit "Įvesti" %></td>
+      <td><%= f.submit "Įvesti" %> <%= loader %></td>
     </tr>
   </table>
   

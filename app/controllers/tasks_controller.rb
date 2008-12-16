@@ -46,6 +46,7 @@ class TasksController < ApplicationController
     if @task.save
       flash[:notice] = 'Užduotis sėkmingai įvesta.'
       render :update do |page|
+        page.remove 'add_task'
         page.redirect_to :back rescue redirect_to '/'
       end      
     else

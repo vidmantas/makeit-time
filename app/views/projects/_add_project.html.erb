@@ -1,4 +1,4 @@
-<% remote_form_for @project, :update => 'add_project' do |f| %>
+<% remote_form_for @project, :update => 'add_project', :loading => "$('loading').show();", :complete => "$('loading').hide();" do |f| %>
   <%= f.error_messages %>
 
   <table>
@@ -28,7 +28,7 @@
     </tr>
   </table>
   <p>
-    <%= f.submit "Sukurti" %>
+    <%= f.submit "Sukurti" %> <%= loader %>
     <a href="javascript:;" onclick="$('add_project').toggle(); $('add_project_button').show()">Atšaukti</a>
   </p>
   

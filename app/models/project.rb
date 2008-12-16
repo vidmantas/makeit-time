@@ -115,4 +115,10 @@ class Project < ActiveRecord::Base
     self.start_date.each_month_until(self.end_date) { months += 1 }
     self.duration = months
   end
+  
+  def validate
+    if self.start_date and self.end_date and self.start_date > self.end_date
+      self.errors.add(:end_date, :cant_be_lower)
+    end
+  end
 end

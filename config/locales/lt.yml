@@ -20,6 +20,7 @@ lt:
         invalid: "neteisingas"
         greater_than: "turi būti didesnis negu {{value}}"
         too_short: "per trumpas (mažiausiai {{count}} simboliai)"
+        not_found: nerastas
       models:
         employee:
           attributes:
@@ -36,6 +37,17 @@ lt:
           attributes:
             activity_id:
               blank: "turi būti nurodyta"
+            date:
+              cant_be_in_future: "negali būti ateityje"
+        project:
+          attributes:
+            start_date:
+              blank: turi būti nurodyta
+            end_date:
+              blank: turi būti nurodyta
+              cant_be_lower: negali būti prieš pradžios datą
+            code:
+              taken: jau užimtas
             
     models:
       task: "užduoties"
@@ -46,6 +58,7 @@ lt:
         hours_spent: "Įdirbis"
         project_id: "Projektas"
         activity_id: "Veikla"
+        date: "Data"
       employee:
         sector_id: "Sektorius"
         last_name: "Pavardė"
@@ -55,6 +68,12 @@ lt:
         login: "Prisijungimo vardas"
         password: "Slaptažodis"
         current_password: "Dabartinis slaptažodis"
+      project:
+        name: Pavadinimas
+        code: Projekto kodas
+        manager_id: Projekto vadovas
+        start_date: Projekto pradžios data
+        end_date: Projekto pabaigos data
 
   pagination:
     back: « Atgal

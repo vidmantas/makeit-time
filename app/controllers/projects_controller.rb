@@ -83,6 +83,7 @@ class ProjectsController < ApplicationController
     if @project.save
       flash[:notice] = 'Projektas buvo sėkmingai išsaugotas.'
       render :update do |page|
+        page.remove 'add_project'
         page.redirect_to :action => 'index'
       end
     else
