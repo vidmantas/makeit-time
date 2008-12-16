@@ -115,8 +115,9 @@ class EmployeesController < ApplicationController
   def change_password
     @employee = Employee.find(params[:id])
     if request.post? and @employee == current_user
-      @employee.password = params[:employee][:password]
+      @employee.password  = params[:employee][:password]
       @employee.password_confirmation = params[:employee][:password_confirmation]
+      @employee.dont_validate_credentials = true
 
       # check password
       es = EmployeeSession.new(:login => current_user.login, :password => params[:employee][:current_password])

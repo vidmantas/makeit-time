@@ -9,14 +9,15 @@ class Employee < ActiveRecord::Base
   belongs_to :position
   has_and_belongs_to_many :projects
   
-  validates_presence_of :first_name, :sector_id, :position_id, :last_name, :email
+  validates_presence_of :first_name, :sector_id, :position_id
+  validates_presence_of :last_name, :email, :if => lambda{ |e| e.dont_validate_credentials.blank? }
   validates_uniqueness_of :email, :if => lambda{ |e| !e.email.blank? }
   validates_format_of :email, :with => RFC822::EmailAddress, :if => lambda{ |e| !e.email.blank? }
   validates_confirmation_of :password, :if => lambda{ |e| !e.password.blank? }
   validates_length_of :password, :minimum => 3, :on => :update, :if => lambda{ |e| !e.password.blank? }
   
-  attr_protected :is_top_manager # can't be mass-assigned
-  attr_accessor :current_password # for changing password
+  attr_protected :is_top_manager, :dont_validate_credentials # can't be mass-assigned
+  attr_accessor :current_password, :dont_validate_credentials # for changing password
   
   before_create :set_login
   after_create :set_password_and_email
