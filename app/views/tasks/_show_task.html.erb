@@ -21,7 +21,7 @@
       <% if task.description.to_s.empty? %>
         <span class="none">Aprašymas nepateiktas</span>
       <% else %>
-        <%= task.description %>
+        <%= truncate task.description, :length => 50 %>
       <% end %>
     </td>
     <td class="hours">

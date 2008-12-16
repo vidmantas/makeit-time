@@ -47,7 +47,9 @@
   </tr>
 <% @sector.employees.each do |e| %>
   <tr class="<%= cycle('', 'odd') %>">
-    <td><%= link_to h(e.full_name), e %></td>
+    <td><%= link_to_protected h(e.full_name), 
+                              { :require => :employees_view, :id => e.id },
+                              e %></td>
     <td><%=h e.position.name %></td>
   </tr>
 <% end %>
