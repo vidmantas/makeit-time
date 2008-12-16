@@ -13,7 +13,8 @@
     <tr>
       <td><%= f.text_field :code, {:style => 'width: 75px'} %></td>
       <td colspan="2"><%= f.text_field :name, {:style => 'width: 290px'} %></td>
-      <td><%= f.collection_select :manager_id, Employee.all_sorted, :id, :name_with_sector,
+      <td><%= f.collection_select :manager_id, Employee.of_sector_sorted(current_user.sector),
+                :id, :name_with_sector,
                 {}, {:style => 'width: 170px'} %></td>
     </tr>
     <tr>

@@ -18,8 +18,6 @@ class Employee < ActiveRecord::Base
   attr_protected :is_top_manager # can't be mass-assigned
   attr_accessor :current_password # for changing password
   
-  named_scope :all_sorted, :order => 'first_name, last_name'
-  
   before_create :set_login
   after_create :set_password_and_email
   
@@ -79,6 +77,10 @@ class Employee < ActiveRecord::Base
   def self.total_rest_months(employees_ids, start_date, end_date)
     RestMonth.count(:id, :conditions => ['employee_id IN(?) AND (date BETWEEN DATE(?) AND DATE(?))', employees_ids, start_date, end_date])
   end
+  
+  def self.of_sector_sorted(sector)
+    self.find(:all, :conditions => ['sector_id = ?', sector.id], :order => 'first_name, last_name')
+  end
 
   # Permissions
   # is_project_manager says if users manages/-ed a project
@@ -90,7 +92,7 @@ class Employee < ActiveRecord::Base
   end
   
   def is_sector_manager
-    self.sector.manager == self
+    not self.is_top_manager and self.sector.manager == self
   end
   
   def in_project_managed_by(project_manager_id)
