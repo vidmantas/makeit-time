@@ -10,6 +10,7 @@ class CreateExampleTopManager < ActiveRecord::Migration
       :position       => Position.find_by_name('Vadovas')
     )
     e.is_top_manager = true
+    e.save(false)
     
     s = Sector.find_by_code(0)
     s.manager = e
