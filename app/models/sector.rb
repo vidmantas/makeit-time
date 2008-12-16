@@ -2,6 +2,7 @@ class Sector < ActiveRecord::Base
   extend ActiveSupport::Memoizable
 
   NORMAL_WORK_LOAD = 130
+  SWITCHES_FORGET_PERIOD_DAYS = 60
   
   belongs_to :manager, :class_name => 'Employee'
   has_many :employees, :order => 'first_name, last_name'
@@ -144,22 +145,31 @@ class Sector < ActiveRecord::Base
     total = 0
     
     self.employees.each do |employee|
-      ids = Task.find(:all, :select => 'project_id', 
+      ids = Task.find(:all, :select => 'project_id, date', 
         :conditions => ['employee_id = ? AND date >= ? AND date <= ?',
-          employee.id, start_date, end_date], :order => 'date').map(&:project_id)
-      
-      #logger.warn "IDS=#{ids.inspect}"
-      
-      # Sugrupuojam ids pagal persijungimus, tarpinius "ignoruojam"
-      # rezultatas: [[1, 2], [2, 1], [1, 3], [3, 4], [4, 8]] ir t.t.
+          employee.id, start_date, end_date], :order => 'date')
+
+      # Join ranges of tasks on the same project
       switches = []
-      ids.each_with_index do |task, index|
-        switches << [task, ids[index+1]] if task != ids[index+1] 
+      ids.each do |t|
+        id = t.project_id
+        if switches.last and switches.last[:id] == id
+          switches.last[:end] = t.date # Expand range
+        else
+          switches << {:id => id, :start => t.date, :end => t.date}
+        end
       end
-      
-      # Jeigu yra situacija [1, 2], [2, 1] - tai yra persijungimas
-      switches.each_with_index do |switch, index|
-        total += 1 if !switches[index+1].nil? and switch.first == switches[index+1].last
+
+      seen = Hash.new
+      switches.each do |t|
+        # Logic is as following: if we have worked on this project
+        # in last SWITCHES_FORGET_PERIOD_DAYS days, consider that
+        # switching. Otherwise, don't.
+        id = t[:id]
+        if seen.key? id and (t[:start] - seen[id]) <= SWITCHES_FORGET_PERIOD_DAYS
+          total += 1
+        end
+        seen[id] = t[:end]
       end
     end
     
