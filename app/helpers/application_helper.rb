@@ -35,7 +35,8 @@ module ApplicationHelper
   end
   
   def paginate(obj)
-    will_paginate obj, :previous_label => t('pagination.back'), :next_label => t('pagination.next')
+    will_paginate obj, :previous_label => t('pagination.back'),
+      :prev_label => t('pagination.back'), :next_label => t('pagination.next')
   end
 end
 
