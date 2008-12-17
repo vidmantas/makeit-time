@@ -4,15 +4,20 @@
     <tr class="description <%=odd%>">
       <td style="width: 90px"><%= f.text_field :date, 
                                     {:style => 'width: 80px', :id => "edit_task_#{task.id}_date"} %></td>
-      <td style="width: 190px"><%= f.collection_select :project_id, current_user.projects, :id, :name, 
-                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 180px'} %></td>
-      <td style="width: 140px"><%= f.collection_select :activity_id, Activity.all, :id, :name, 
-                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 130px'} %></td>
-      <td style="width: 100px" class="hours"><%= f.text_field :hours_spent, {:style => 'width: 30px'} %> val.</td>
+      <td style="width: 160px"><%= f.collection_select :project_id, current_user.projects, :id, :name, 
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 160px'} %></td>
+      <td style="width: 120px"><%= f.collection_select :activity_id, Activity.all, :id, :name, 
+                {:include_blank => '- Pasirinkite -'}, {:style => 'width: 120px'} %></td>
+      <td style="width: 150px" class="hours"><%= f.text_field :hours_spent, {:style => 'width: 30px'} %> val.</td>
     </tr>
     <tr class="description <%=odd%>">
-      <td colspan="3"><%= f.text_field :description, {:style => 'width: 430px'} %></td>
-      <td class="hours"><%= f.submit "Išsaugoti" %> <%= loader "loading-#{task.id}" %></td>
+      <td colspan="3">
+        <%= f.text_field :description, {:style => 'width: 370px'} %>
+      </td>
+      <td class="hours">
+        <input type="button" value="Atšaukti" onclick="$('task-<%=task.id%>-edit').hide();$('task-<%=task.id%>-show').show();" />
+        <%= f.submit "Išsaugoti" %> <%= loader "loading-#{task.id}" %>
+      </td>
     </tr>
   </table>
   
