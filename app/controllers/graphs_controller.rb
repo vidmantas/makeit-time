@@ -1,5 +1,6 @@
 class GraphsController < ApplicationController
   EMPLOYEE_TOP_PROJECTS = 5
+  INTENSITY_VERTICAL_THRESHOLD = 10
   
   def project_intensity
     # Data
@@ -53,11 +54,17 @@ class GraphsController < ApplicationController
     y.colour = '#8393ca'
     y.grid_colour = '#8393ca'
     
+    x_labels = XAxisLabels.new
+    if months.length > INTENSITY_VERTICAL_THRESHOLD
+      x_labels.set_vertical()
+    end
+    x_labels.labels = months
+    
     x = XAxis.new
     x.colour = '#8393ca'
     x.grid_colour = '#8393ca'
     x.set_offset(false)
-    x.set_labels(months)
+    x.set_labels(x_labels)
     
     y_legend = YLegend.new("Įdirbis (val.)")
     y_legend.set_style('{font-size: 12px; color: #000;}')
