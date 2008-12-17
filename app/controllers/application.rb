@@ -103,7 +103,7 @@ class ApplicationController < ActionController::Base
   end
   
   def sort
-    if params[:id]
+    if params[:id] and /^[-_a-z]+$/.match(params[:id])
       if session["#{self.controller_name}_sort_column"] == params[:id]
         switch_order_by
       else
