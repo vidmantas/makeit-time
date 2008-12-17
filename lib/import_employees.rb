@@ -12,9 +12,13 @@ class ImportEmployees < Import
     import do |row|
       login, sector_id = row[0].strip, row[1].strip
       
+      name = login.scan(/(\w+)([A-Z])|(\w+)/).flatten.compact
+      last_name = name.size == 2 ? name.last : ''
+      
       unless Employee.find_by_login(login)
         e = Employee.new(
-          :first_name   => login,
+          :first_name   => name.first,
+          :last_name    => last_name,
           :login        => login,
           :sector       => Sector.find_by_code(sector_id),
           :position     => default_position,

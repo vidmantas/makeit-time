@@ -14,7 +14,7 @@ class ImportTasks < Import
       project_code, login, year, month, hours = 
         row[0].strip, row[1].strip, row[2].strip, row[3].strip, row[4].strip.to_i
       
-      project   = Project.find_by_code(project_code)
+      project   = Project.find_by_code(project_code.rjust(3, '0'))
       employee  = Employee.find_by_login(login)
       
       if !project.nil? and !employee.nil?
@@ -38,6 +38,9 @@ class ImportTasks < Import
           hours -= 7
           date += 1.day
         end
+      else
+        puts "Employee #{login}"
+        exit
       end
       index += 1
     end

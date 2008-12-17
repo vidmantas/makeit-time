@@ -344,6 +344,6 @@ ul.reports-menu li.active a, ul.reports-menu a:hover {
 }
 
 /* sortable table */
-tr.sortable {
+th.sortable {
     cursor: pointer;
 }

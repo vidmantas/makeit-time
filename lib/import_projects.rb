@@ -15,7 +15,7 @@ class ImportProjects < Import
         manager = Employee.find_by_login(manager_login)
         p = Project.new(
           :code       => code.rjust(3, '0'),
-          :name       => "#{code} projektas",
+          :name       => "#{code.rjust(3, '0')} projektas",
           :manager    => manager,
           :start_date => Time.now, # will be set after 
           :end_date   => Time.now  # tasks import

@@ -109,7 +109,7 @@ class GraphsController < ApplicationController
   def employee_top_projects
     # Data
     return unless assert_permission :employees_view, :id => params[:id]
-    employee = Project.find(params[:id])
+    employee = Employee.find(params[:id])
     top = Employee.find_by_sql ["SELECT 
         p.name, SUM(t.hours_spent) AS hours
       FROM tasks t
@@ -120,9 +120,14 @@ class GraphsController < ApplicationController
       LIMIT ?", employee.id, EMPLOYEE_TOP_PROJECTS]
     
     values = []
+    total_top = 0
     top.each do |p| 
       values << PieValue.new(p.hours.to_i, p.name)
+      total_top += p.hours.to_i
     end
+    
+    others_total = employee.tasks.sum(:hours_spent).to_i - total_top
+    values << PieValue.new(others_total, "Kiti projektai")
     
     # Pie
     pie = Pie.new
