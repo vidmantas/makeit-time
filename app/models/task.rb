@@ -22,7 +22,7 @@ class Task < ActiveRecord::Base
     self.errors.add_to_base "Dienos laiko limitas (#{HOURS_PER_DAY_LIMIT} val.) viršytas" if total + self.hours_spent.to_i > HOURS_PER_DAY_LIMIT
     
     # Future?
-    if self.date > Date.today
+    if self.date and self.date > Date.today
       self.errors.add(:date, :cant_be_in_future)
     end
   end

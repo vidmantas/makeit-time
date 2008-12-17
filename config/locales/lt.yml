@@ -39,6 +39,7 @@ lt:
               blank: "turi būti nurodyta"
             date:
               cant_be_in_future: "negali būti ateityje"
+              blank: turi būti nurodyta
         project:
           attributes:
             start_date:
