@@ -53,8 +53,10 @@
                <%if @project.employees.include? e %>checked="checked"<% end %>
                />
       </td>
-      <td><%= link_to h(e.full_name), e %></td>
-      <td><%= link_to h(e.sector.name), e.sector %></td>
+      <td><%= link_to_protected h(e.full_name), 
+              { :require => :employees_view, :id => e.id }, e %></td>
+      <td><%= link_to_protected h(e.sector.name), 
+              { :require => :sectors_view, :id => e.sector.id }, e.sector %></td>
       <td><%=h e.position.name %></td>
     </tr>
     <% end %>

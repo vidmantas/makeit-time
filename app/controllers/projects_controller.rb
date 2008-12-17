@@ -73,7 +73,8 @@ class ProjectsController < ApplicationController
   def edit
     return unless assert_permission :projects_edit, :id => params[:id]
     @project = Project.find(params[:id])
-    @employees = Employee.find(:all)
+    @employees = Employee.find(:all, :conditions => ['sectors.visible = ?', true],
+      :include => 'sector')
   end
 
   def create

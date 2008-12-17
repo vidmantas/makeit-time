@@ -22,7 +22,7 @@ class EmployeesController < ApplicationController
       sql << "employees.id = ? OR employees.id IN (?)"
       bound << current_user.id
       bound << EmployeesProjects.find(:all, 
-        :conditions => ['project_id IN (?)', current_user.managed_projects.map(&:id)]).map(&:employee_id)
+        :conditions => ['project_id IN (?)', current_user.managed_projects.map(&:id)]).map(&:employee_id).uniq
       conditions = [sql] + bound
     end
     
