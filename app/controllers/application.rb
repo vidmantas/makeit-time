@@ -42,6 +42,7 @@ class ApplicationController < ActionController::Base
       e == c or 
         e.in_project_managed_by(c) or
         (c.is_sector_manager and e.sector == c.sector) or
+        (c.is_sector_manager and e.in_project_of_sector(c.sector.id)) or
         (c.is_top_manager)
     when :employees_project_view_hours
       e = Employee.find(options[:employee_id])

@@ -11,8 +11,13 @@ class EmployeesController < ApplicationController
     if not current_user.is_top_manager
       sql = ""; bound = []
       if current_user.is_sector_manager
-        sql << "employees.sector_id = ? OR "
+        sql << "employees.sector_id = ? OR employees.id IN (?) OR "
         bound << current_user.sector.id
+        sector_employee_ids = current_user.sector.employees.map(&:id).uniq
+        sector_project_ids = Project.find(:all,
+          :conditions => ['manager_id IN (?)', sector_employee_ids]).map(&:id)
+        bound << EmployeesProjects.find(:all,
+          :conditions => ['project_id IN (?)', sector_project_ids]).map(&:employee_id)
       end
       sql << "employees.id = ? OR employees.id IN (?)"
       bound << current_user.id

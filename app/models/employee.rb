@@ -99,6 +99,13 @@ class Employee < ActiveRecord::Base
   def in_project_managed_by(project_manager_id)
     self.projects.exists?(:manager_id => project_manager_id)
   end
+  
+  def in_project_of_sector(sector_id)
+    project_ids = Project.find(:all, :select => 'id', 
+      :conditions => ['employees.sector_id = ?', sector_id],
+      :include => ['manager']).map(&:id)
+    self.projects.exists?(['id IN (?)', project_ids])
+  end
 
   protected
   
