@@ -12,7 +12,13 @@ class Task < ActiveRecord::Base
   
   def validate
     # 10 hours per day limit
-    total = Task.sum(:hours_spent, :conditions => ['date = ? AND employee_id = ?', self.date, self.employee_id])
+    conditions = if self.new_record?
+      ['date = ? AND employee_id = ?', self.date, self.employee_id]
+    else
+      ['date = ? AND employee_id = ? AND id != ?', self.date, self.employee_id, self.id]
+    end
+    
+    total = Task.sum(:hours_spent, :conditions => conditions)
     self.errors.add_to_base "Dienos laiko limitas (#{HOURS_PER_DAY_LIMIT} val.) viršytas" if total + self.hours_spent.to_i > HOURS_PER_DAY_LIMIT
     
     # Future?

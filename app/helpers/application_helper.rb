@@ -13,8 +13,8 @@ module ApplicationHelper
     CODE
   end
   
-  def loader
-    render :partial => 'shared/loader'
+  def loader(dom_id = 'loading')
+    render :partial => 'shared/loader', :locals => { :id => dom_id }
   end
   
   def menu_item(name, opts = {})

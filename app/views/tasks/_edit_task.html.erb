@@ -1,4 +1,4 @@
-<% remote_form_for task, :update => "task-#{task.id}-edit" do |f| -%>
+<% remote_form_for task, :update => "task-#{task.id}-edit", :loading => "$('loading-#{task.id}').show();", :complete => "$('loading-#{task.id}').hide();" do |f| -%>
   <%= f.error_messages %>
   <table class="joined">
     <tr class="description <%=odd%>">
@@ -12,7 +12,7 @@
     </tr>
     <tr class="description <%=odd%>">
       <td colspan="3"><%= f.text_field :description, {:style => 'width: 430px'} %></td>
-      <td class="hours"><%= f.submit "Išsaugoti" %></td>
+      <td class="hours"><%= f.submit "Išsaugoti" %> <%= loader "loading-#{task.id}" %></td>
     </tr>
   </table>
   
