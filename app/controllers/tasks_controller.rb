@@ -34,7 +34,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
-    return unless assert_permission :task_edit, :id => params[:id]
+    return unless assert_permission :tasks_edit, :id => params[:id]
     @task = Task.find(params[:id])
   end
 
@@ -57,7 +57,7 @@ class TasksController < ApplicationController
   # PUT /tasks/1
   # PUT /tasks/1.xml
   def update
-    return unless assert_permission :task_edit, :id => params[:id]
+    return unless assert_permission :tasks_edit, :id => params[:id]
     @task = Task.find(params[:id])
 
     if @task.update_attributes(params[:task].merge(:employee_id => current_user.id))
@@ -75,12 +75,9 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.xml
   def destroy
+    return unless assert_permission :tasks_destroy, :id => params[:id]
     @task = Task.find(params[:id])
     @task.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(tasks_url) }
-      format.xml  { head :ok }
-    end
+    page.redirect_to :back rescue redirect_to '/'
   end
 end

@@ -22,13 +22,15 @@ class ApplicationController < ActionController::Base
     return false unless current_user
     c = current_user
     case key
-    when :task_enter_personal
+    when :tasks_enter_personal
       not c.is_top_manager
-    when :task_edit
+    when :tasks_edit
       t = Task.find(options[:id])
       t.employee == c and
-        t.created_at > 5.days.ago # rails way
-      # (Time.now - t.created_at).round / (60 * 60 * 24) <= 5
+        t.created_at > 5.days.ago
+    when :tasks_destroy
+      t = Task.find(options[:id])
+      t.employee == c
     when :employees_view_some
       e = Employee.find(params[:id]) rescue false # if has params[:id] and trying to access report of himself
       c.is_sector_manager or c.is_top_manager or c.is_project_manager or c == e

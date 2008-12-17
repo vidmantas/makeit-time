@@ -222,6 +222,9 @@ tr.description td .none {
 tr td.hours, tr th.hours {
     text-align: right;
 }
+tr td.hours form, tr td.hours div {
+    display: inline;
+}
 table.all-right td {
     text-align: right;
 }

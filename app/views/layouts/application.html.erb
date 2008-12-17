@@ -16,7 +16,7 @@
       <h1>MakeIT Time</h1>
       <% if current_user %>
         <ul>
-          <% if require_permission :task_enter_personal %>
+          <% if require_permission :tasks_enter_personal %>
             <%= menu_item "Įdirbis", :controller => 'home' %>
             <%= menu_item "Mano laikas", :controller => 'my_time' %>
           <% end %>

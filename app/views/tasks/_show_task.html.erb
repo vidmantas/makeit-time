@@ -1,4 +1,4 @@
-<% editable = require_permission :task_edit, :id => task.id %>
+<% editable = require_permission :tasks_edit, :id => task.id %>
 <% if editable %>
   <div id="task-<%=task.id%>-edit" style="display: none">
     <%= render :partial => 'tasks/edit_task', :locals => { :task => task, :odd => odd } %>
@@ -12,8 +12,8 @@
                             { :require => :projects_view, :id => task.project.id },
                             employee_project_url(current_user, task.project) %>
     </td>
-    <td style="width: 140px"><%= task.activity.name %></td>
-    <td style="width: 80px" class="hours"><%= task.hours_spent.format_h %></td>
+    <td style="width: 120px"><%= task.activity.name %></td>
+    <td style="width: 120px" class="hours"><%= task.hours_spent.format_h %></td>
   </tr>
   <tr class="description <%=odd%>">
     <td></td>
@@ -21,12 +21,14 @@
       <% if task.description.to_s.empty? %>
         <span class="none">Aprašymas nepateiktas</span>
       <% else %>
-        <%= truncate task.description, :length => 50 %>
+        <%= truncate task.description, :length => 40 %>
       <% end %>
     </td>
     <td class="hours">
       <% if editable %>
-        <button onclick="$('task-<%=task.id%>-edit').show();$('task-<%=task.id%>-show').hide();">Redaguoti</button>
+        <%= button_to "Trinti", { :controller =>'tasks', :action => 'destroy', :id => task.id },
+                      :confirm => 'Ar tikrai norite ištrint?', :method => :delete %>
+        <input type="button" onclick="$('task-<%=task.id%>-edit').show();$('task-<%=task.id%>-show').hide();" value="Redaguoti"/>
       <% end %>
     </td>
   </tr>
