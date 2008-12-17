@@ -22,7 +22,7 @@ class EmployeesController < ApplicationController
     end
     
     @employees = Employee.paginate :page => params[:page], :per_page => EMPLOYEES_PER_PAGE, 
-      :order => 'first_name, last_name', :include => [:sector, :position],
+      :order => sort_order, :include => [:sector, :position],
       :conditions => conditions
     @employee = Employee.new
 

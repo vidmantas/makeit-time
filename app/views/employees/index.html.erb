@@ -14,9 +14,9 @@
 
 <table>
   <tr>
-    <th style="width: 260px">Vardas, Pavardė</th>
-    <th style="width: 100px">Skyrius</th>
-    <th style="width: 150px">Pareigos</th>
+    <th style="width: 260px" <%= sort :employees, :by => 'employees-first_name' %>>Vardas, Pavardė</th>
+    <th style="width: 100px" <%= sort :employees, :by => 'sectors-name' %>>Skyrius</th>
+    <th style="width: 150px" <%= sort :employees, :by => 'positions-name' %>>Pareigos</th>
   </tr>
 <% for employee in @employees %>
   <tr class="<%= cycle('', 'odd') %>">

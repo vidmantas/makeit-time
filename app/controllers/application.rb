@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
       t = Task.find(options[:id])
       t.employee == c and
         t.created_at > 5.days.ago # rails way
-        # (Time.now - t.created_at).round / (60 * 60 * 24) <= 5
+      # (Time.now - t.created_at).round / (60 * 60 * 24) <= 5
     when :employees_view_some
       e = Employee.find(params[:id]) rescue false # if has params[:id] and trying to access report of himself
       c.is_sector_manager or c.is_top_manager or c.is_project_manager or c == e
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     when :projects_edit
       project = Project.find(options[:id])
       (c.is_sector_manager and project.manager.sector == c.sector) or
-          project.manager == c
+        project.manager == c
     when :projects_destroy
       c.is_sector_manager and Project.find(options[:id]).sector == c.sector
     when :sectors_view_some
@@ -99,6 +99,19 @@ class ApplicationController < ActionController::Base
       false
     else
       true
+    end
+  end
+  
+  def sort
+    if params[:id]
+      if session["#{self.controller_name}_sort_column"] == params[:id]
+        switch_order_by
+      else
+        session["#{self.controller_name}_sort_column"] = params[:id]
+        session["#{self.controller_name}_sort_by"] = 'asc'
+      end
+      
+      redirect_to :back rescue redirect_to :action => 'index'
     end
   end
   
@@ -135,5 +148,23 @@ class ApplicationController < ActionController::Base
 
   def set_user_language
     I18n.locale = 'lt'
+  end
+  
+  def switch_order_by
+    session["#{self.controller_name}_sort_by"] = if session["#{self.controller_name}_sort_by"] == 'asc'
+      'desc'
+    else
+      'asc'
+    end
+  end
+  
+  def sort_order  
+    if session["#{self.controller_name}_sort_column"]
+      order = "#{session["#{self.controller_name}_sort_column"].gsub('-', '.')} "
+      order << session["#{self.controller_name}_sort_by"]
+    else
+      order = "#{self.controller_name}.id DESC"
+    end
+    order << ", #{self.controller_name}.created_at DESC"
   end
 end

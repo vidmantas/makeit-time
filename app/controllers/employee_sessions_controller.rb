@@ -19,7 +19,9 @@ class EmployeeSessionsController < ApplicationController
 
   def destroy
     current_user_session.destroy
-    flash[:notice] = I18n.t "logout_successful"
+    # flash[:notice] = I18n.t "logout_successful"
+    # doesn't make sense now
+    reset_session
     redirect_back_or_default new_employee_sessions_url
   end
   

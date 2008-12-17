@@ -15,14 +15,14 @@ class ProjectsController < ApplicationController
         sql << "employees.sector_id = ? OR "
         bound << current_user.sector.id
       end
-      sql << "manager_id = ? OR projects.id IN (?)"
+      sql << "projects.manager_id = ? OR projects.id IN (?)"
       bound << current_user.id
       bound << current_user.projects.map(&:project_id)
       conditions = [sql] + bound
     end
 
     @projects = Project.paginate :page => params[:page], :per_page => PROJECTS_PER_PAGE, 
-      :order => ['-projects.id'], :include => [:manager],
+      :order => sort_order, :include => { :manager => :sector },
       :conditions => conditions
     @project  = Project.new
     

@@ -38,6 +38,23 @@ module ApplicationHelper
     will_paginate obj, :previous_label => t('pagination.back'),
       :prev_label => t('pagination.back'), :next_label => t('pagination.next')
   end
+  
+  def sort(controller, options)
+    column = options[:by].to_s
+    
+    logger.warn "#{controller} opts: #{options.inspect}"
+    logger.warn "Session: #{session["#{controller}_sort_column"]} #{session["#{controller}_sort_by"]}"
+    html = 'class="sortable'
+    if session["#{controller}_sort_column"] == column
+      if session["#{controller}_sort_by"] == 'desc'
+        html << ' sortdesc'
+      else
+        html << ' sortasc'
+      end
+    end
+    
+    html << "\" onclick=\"location.href='#{url_for(:controller => controller, :action => 'sort', :id => column)}'\""
+  end
 end
 
 # FIXME: dunno where is the right place to put this

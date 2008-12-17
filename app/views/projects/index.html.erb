@@ -14,12 +14,12 @@
 
 <table>
   <tr>
-    <th style="width: 30px">#</th>
-    <th style="width: 150px">Pavadinimas</th>
-    <th style="width: 155px">Projekto vadovas</th>
-    <th>Skyrius</th>
-    <th>Pradžia</th>
-    <th>Pabaiga</th>
+    <th style="width: 30px" <%= sort :projects, :by => 'projects-code' %>>#</th>
+    <th style="width: 150px" <%= sort :projects, :by => 'projects-name' %>>Pavadinimas</th>
+    <th style="width: 155px" <%= sort :projects, :by => 'employees-first_name' %>>Projekto vadovas</th>
+    <th <%= sort :projects, :by => 'sectors-name' %>>Skyrius</th>
+    <th <%= sort :projects, :by => 'projects-start_date' %>>Pradžia</th>
+    <th <%= sort :projects, :by => 'projects-end_date' %>>Pabaiga</th>
   </tr>
 <% for project in @projects %>
   <tr class="<%= cycle('', 'odd') %>">
