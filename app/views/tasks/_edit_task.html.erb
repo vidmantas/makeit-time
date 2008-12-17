@@ -8,7 +8,7 @@
                 {:include_blank => '- Pasirinkite -'}, {:style => 'width: 160px'} %></td>
       <td style="width: 120px"><%= f.collection_select :activity_id, Activity.all, :id, :name, 
                 {:include_blank => '- Pasirinkite -'}, {:style => 'width: 120px'} %></td>
-      <td style="width: 150px" class="hours"><%= f.text_field :hours_spent, {:style => 'width: 30px'} %> val.</td>
+      <td style="width: 150px" class="hours"><%= f.select :hours_spent, (1..10).to_a %> val.</td>
     </tr>
     <tr class="description <%=odd%>">
       <td colspan="3">
