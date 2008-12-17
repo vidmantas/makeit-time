@@ -14,7 +14,7 @@ class ImportProjects < Import
       unless manager_login =~ /NEĮVYKĘS/i
         manager = Employee.find_by_login(manager_login)
         p = Project.new(
-          :code       => code,
+          :code       => code.rjust(3, '0'),
           :name       => "#{code} projektas",
           :manager    => manager,
           :start_date => Time.now, # will be set after 
