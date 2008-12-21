@@ -77,27 +77,6 @@ describe Sector, "in switching report" do
   end
 end
 
-# describe Sector, "in switching report #2" do
-#   fixtures :all
-# 
-#   it "should return 0 as total switches for '2008-11-01 -- 2008-11-05' period" do
-#     sectors(:switching).total_switches('2008-11-01', '2008-11-05').should == 0
-#   end
-#   
-#   it "should return 1 as total switches for '2008-11-01 -- 2008-11-10' period" do
-#     sectors(:switching).total_switches('2008-11-01', '2008-11-10').should == 1
-#   end
-# 
-#   it "should return 3 as total switches for '2008-11-01 -- 2008-11-15' period" do
-#     sectors(:switching).total_switches('2008-11-01', '2008-11-15').should == 3
-#   end
-# 
-#   it "should return 4 as total switches for '2008-11-02 -- 2008-11-16' period" do
-#     sectors(:switching).total_switches('2008-11-02', '2008-11-16').should == 4
-#   end
-# 
-# end
-
 describe Sector, "in progress report" do
   fixtures :all
   # time usage is already tested
