@@ -53,6 +53,7 @@ lt:
     models:
       task: "užduoties"
       employee: "darbuotojo"
+      project: "projekto"
 
     attributes:
       task:
