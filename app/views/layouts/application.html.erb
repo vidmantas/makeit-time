@@ -45,7 +45,8 @@
     <% if allow_tools? %>
       <div id="tools">
         <div class="search">
-          <% form_for "quick", :url => { :controller => 'search', :action => 'quick_search' } do %>
+          <% form_for "quick", :url => { :controller => 'search', :action => 'quick_search' },
+                :html => { :onsubmit => 'return false;' } do %>
             <%= text_field_with_auto_complete :quick, :search, 
                   { :autocomplete => 'off', :class => 'search', :accesskey => 'f' }, 
                   { :url => { :controller => 'search', :action => 'quick_search' }, :method => :get,
