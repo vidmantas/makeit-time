@@ -1,5 +1,6 @@
 class CreateExampleTopManager < ActiveRecord::Migration
   def self.up
+    #Employee.reset_column_information
     e = Employee.create(
       :login          => 'vadovas',
       :password       => 'vadovas',

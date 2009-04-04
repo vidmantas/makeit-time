@@ -11,7 +11,7 @@ namespace :db do
     end
     
     # skyriai
-    %w[Skyrius1 Skyrius2 Skyrius3].each_with_index do |name, index|
+    %w[Department1 Department2 Department3].each_with_index do |name, index|
       Sector.create(:name => name, :code => "##{index}")
     end
     
@@ -25,7 +25,10 @@ namespace :db do
       e.sector_id   = random_sector.id
       e.email       = Faker::Internet.free_email
       e.position_id = random_position.id
+      e.login       = Faker::Internet.user_name
     end
+    
+    Employee.all.each { |e| e.update_attribute(:password, 'test') } 
     
     Sector.all.each do |s|
       s.manager_id = random_employee.id

@@ -5,7 +5,7 @@
 # ENV['RAILS_ENV'] ||= 'production'
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.2.2' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
@@ -56,7 +56,7 @@ Rails::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_timetrack_session',
-    :secret      => 'b6efc5a51999ac702f0af16391d58ad69f5f0ebb3661d0284e9a3d0919a9f441bf435f19720204151d6463efe649644a91b31788620b3cbdae01508f9890168d'
+    :secret      => '!!!!CHANGE THIS IN PRODUCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
   }
 
   # Use the database for sessions instead of the cookie-based default,
@@ -75,8 +75,6 @@ Rails::Initializer.run do |config|
   
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'hpricot'
-  config.gem 'rspec', :lib => 'spec'
-  #config.gem 'rspec-rails', :lib => "spec/rails"
   config.gem "authlogic"
 end
 

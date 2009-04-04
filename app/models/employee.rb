@@ -1,7 +1,11 @@
 class Employee < ActiveRecord::Base
   include RFC822
   
-  acts_as_authentic :validate_fields => false
+  acts_as_authentic do |c|
+    c.validate_email_field = false
+    c.validate_login_field = false
+    c.validate_password_field = false
+  end
 
   has_many :tasks, :dependent => :destroy
   has_many :rest_months, :dependent => :destroy
